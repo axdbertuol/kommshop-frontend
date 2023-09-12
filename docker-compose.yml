@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  kommshop-nextjs:
+    build:
+      context: .
+    ports:
+      - 3001:3001
+    tty: true
+    networks:
+      - kommshop-broker_rabbitmq-network
+
+networks:
+  kommshop-broker_rabbitmq-network:
+    external: true
