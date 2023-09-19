@@ -1,6 +1,6 @@
 'use server'
 import amqp, { Channel, Connection } from 'amqplib'
-import { Observable, from } from 'rxjs'
+import { from } from 'rxjs'
 
 const AMQP_URL = 'amqp://rabbitmq:5672'
 const RESPONSE_QUEUE_NAME = 'product_change'
@@ -21,7 +21,7 @@ export async function setupListener(queueName: string) {
 
 export async function observe() {
   return from(setupListener('')).subscribe(
-    ({ connection, channel }: { connection: Connection; channel: Channel }) => {
+    ({ channel }: { connection: Connection; channel: Channel }) => {
       let result
       return channel.consume(RESPONSE_QUEUE_NAME, (message) => {
         console.log('oi', message)

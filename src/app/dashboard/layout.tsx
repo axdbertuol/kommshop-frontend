@@ -1,5 +1,5 @@
-import KommSidebar from '@/components/KommSidebar'
-import NavbarWithCTAButton from '@/components/Navbar'
+'use client'
+import Sidebar from '@/components/Sidebar'
 
 export default function DashboardLayout({
   children, // will be a page or nested layout
@@ -7,12 +7,9 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div>
-      <NavbarWithCTAButton />
-      <section className="w-full px-24 py-16">
-        <KommSidebar />
-        {children}
-      </section>
+    <div className="flex">
+      <Sidebar />
+      <section className="w-full px-24 py-16">{children}</section>
     </div>
   )
 }

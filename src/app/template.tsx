@@ -1,4 +1,5 @@
-import SessionProviderWrapper from '@/utils/SessionProviderWrapper'
+import Nav from '@/components/Nav'
+import SessionProviderWrapper from '@/components/SessionProviderWrapper'
 import { Session } from 'next-auth'
 import React from 'react'
 import { ReactNode } from 'react'
@@ -11,6 +12,9 @@ export default function Template({
   props: { session: Session }
 }) {
   return (
-    <SessionProviderWrapper session={props?.session}>{children}</SessionProviderWrapper>
+    <SessionProviderWrapper session={props?.session}>
+      <Nav />
+      {children}
+    </SessionProviderWrapper>
   )
 }

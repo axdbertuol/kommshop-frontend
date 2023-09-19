@@ -2,7 +2,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import Product from './Product'
-import fetchProducts from '@/app/_fetch-products'
+// import fetchProducts from '@/app/_fetch-products'
 import ProductCard from './ProductCard'
 
 // type Props = {}
@@ -30,7 +30,7 @@ const mock = [
     _id: '2',
   },
   {
-    name: 'Product 3',
+    name: 'Product 3 Product 3Product 3Product 3Product 3',
     description: '',
     category: 'Category 1',
     price: '14.99',
@@ -83,7 +83,7 @@ export default function ProductList() {
   }, [])
 
   return (
-    <div className="flex sm:flex-col md:flex-row  gap-y-8 gap-x-4 flex-wrap justify-start md:mx-16">
+    <div className="flex sm:flex-col md:flex-row gap-y-8 gap-x-4 flex-wrap justify-start ">
       {loading ? (
         <span className="text-center">Loading...</span>
       ) : (

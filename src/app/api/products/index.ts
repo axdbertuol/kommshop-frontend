@@ -1,8 +1,8 @@
 // pages/api/fetch-product-updates.js
 import { connect } from 'amqplib'
-import { headers } from 'next/headers'
+// import { headers } from 'next/headers'
 
-export default async function GET(request: Request) {
+export default async function GET() {
   try {
     // Connect to the AMQP broker
     const connection = await connect('amqp://rabbitmq:5672') // Replace with your broker URL
@@ -17,11 +17,11 @@ export default async function GET(request: Request) {
     const responseQueue = 'response_queue'
     await channel.assertQueue(responseQueue)
     const response = await channel.get(responseQueue)
-    const headersList = headers()
-    const responseInit = {
-      status: 200,
-      headers: { referer: headersList.get('referer') },
-    }
+    // const headersList = headers()
+    // const responseInit = {
+    //   status: 200,
+    //   headers: { referer: headersList.get('referer') },
+    // }
     await channel.close()
     await connection.close()
     if (response) {

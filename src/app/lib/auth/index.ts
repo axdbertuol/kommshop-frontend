@@ -3,7 +3,6 @@ import NextAuth, { AuthOptions, Session } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 import KeycloakProvider from 'next-auth/providers/keycloak'
 import jwtDecode from 'jwt-decode'
-import { randomBytes, randomUUID } from 'crypto'
 
 async function refreshAccessToken(token: Token) {
   console.log('Refreshing access token', token)
@@ -24,7 +23,6 @@ async function refreshAccessToken(token: Token) {
   return {
     ...token,
     access_token: refreshToken.access_token,
-    decoded: jwtDecode(refreshToken.access_token),
     id_token: refreshToken.id_token,
     expires_at: Math.floor(Date.now() / 1000) + refreshToken.expires_in,
     refresh_token: refreshToken.refresh_token,
@@ -33,7 +31,6 @@ async function refreshAccessToken(token: Token) {
 
 type Token =
   | {
-      decoded?: { realm_access: { roles: string[] } }
       access_token?: string
       id_token?: string
       expires_at?: number
@@ -58,18 +55,17 @@ export const authOptions: AuthOptions = {
       issuer: process.env.KEYCLOAK_ISSUER,
       // authorization: 'http://localhost:3001/signup',
     }),
-    // ...add more providers here
   ],
-  // session: {
-  //   generateSessionToken: () => {
-  //     return randomUUID?.() ?? randomBytes(32).toString('hex')
+  session: {
+    // generateSessionToken: () => {
+    //   return randomUUID?.() ?? randomBytes(32).toString('hex')
+    // },
+    // maxAge: 60,
+  },
+  // events: {
+  //   async signIn(message) {
   //   },
   // },
-  events: {
-    async signIn(message) {
-      console.log(message)
-    },
-  },
   callbacks: {
     async jwt({ token, account }) {
       const nowTimeStamp = Math.floor(Date.now() / 1000)
@@ -78,7 +74,6 @@ export const authOptions: AuthOptions = {
         // account is only available the first time this callback is called on a new session (after the user signs in)
         const newToken = {
           ...token,
-          decoded: jwtDecode(account.access_token ?? ''),
           access_token: account.access_token,
           id_token: account.id_token,
           expires_at: account.expires_at ?? nowTimeStamp,
@@ -106,20 +101,24 @@ export const authOptions: AuthOptions = {
     },
     async session({ session, token }: { session: Session; token: Token }) {
       // Send properties to the client
+      let decoded
+      try {
+        decoded = jwtDecode(token?.access_token ?? '') as {
+          realm_access: { roles: string[] }
+          exp?: number
+        }
+      } catch (err) {
+        console.log(err)
+      }
+
       const newSession = {
         ...session,
         user: {
           ...session.user,
-          ...(token.decoded ? { roles: token.decoded.realm_access.roles } : {}),
-          ...(token.error ? { error: token.error } : {}),
-          ...(token.id ? { id: token.id } : {}),
+          roles: decoded?.realm_access.roles ?? '',
         },
-        access_token: encrypt(token.access_token ?? '').slice(
-          0,
-          token?.access_token?.length ?? 33
-        ),
-        id_token: encrypt(token.id_token ?? '').slice(0, token?.id_token?.length ?? 33),
-        error: token.error,
+        access_token: token.access_token && encrypt(token.access_token),
+        id_token: token.id_token && encrypt(token.id_token),
       }
       return newSession
     },
