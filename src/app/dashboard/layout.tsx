@@ -1,4 +1,3 @@
-'use client'
 import Sidebar from '@/components/Sidebar'
 
 export default function DashboardLayout({
@@ -9,7 +8,7 @@ export default function DashboardLayout({
   return (
     <div className="flex">
       <Sidebar />
-      <section className="w-full px-24 py-16">{children}</section>
+      <section className="w-full px-24 py-8 ">{children}</section>
     </div>
   )
 }

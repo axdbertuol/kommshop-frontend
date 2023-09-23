@@ -7,14 +7,18 @@ function useURLSearchParams() {
   const pathname = usePathname()
 
   const updateSearchParams = useCallback(
-    (name: string, value: string) => {
-      if (!searchParams) return
+    (name: string, value: string, options?: { replace: boolean }) => {
       const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
-
-      params.set(name, value)
-
-      const updatedQueryString = params.toString()
-      router.push(pathname + '?' + updatedQueryString)
+      const allParams = params.getAll(name)
+      console.log(params, allParams, name, value, options)
+      if (allParams.includes(value)) {
+        params.delete(name, value)
+      } else if (params.has(name)) {
+        params.append(name, value)
+      } else {
+        params.set(name, value)
+      }
+      router.push(pathname + '?' + params.toString())
     },
     [searchParams, router, pathname]
   )

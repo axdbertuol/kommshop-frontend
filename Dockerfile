@@ -20,7 +20,7 @@ COPY . .
 # RUN pnpm build
 
 # Expose the port that the Next.js app will run on
-EXPOSE 3001
+EXPOSE 3000
 
 # Set the command to run the Next.js app
 CMD ["pnpm", "dev"]

@@ -6,7 +6,6 @@ import jwtDecode from 'jwt-decode'
 
 async function refreshAccessToken(token: Token) {
   console.log('Refreshing access token', token)
-  console.log(process.env.REFRESH_TOKEN_URL)
   const resp = await fetch(`${process.env.REFRESH_TOKEN_URL}`, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -61,6 +60,8 @@ export const authOptions: AuthOptions = {
     //   return randomUUID?.() ?? randomBytes(32).toString('hex')
     // },
     // maxAge: 60,
+    // remember: always check if keycloak session maxAge is same
+    maxAge: 1800,
   },
   // events: {
   //   async signIn(message) {
