@@ -2,7 +2,7 @@
 
 import { cn } from '@/app/lib/utils'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
-import { LabelValue } from '@/store/SearchContextProvider'
+import { LabelValue } from '@/types/common'
 import React from 'react'
 
 export function LinkURLText({

@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import { CommandInput, CommandList, CommandEmpty, Command } from './ui/command'
 import { Button } from './ui/button'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
-import { LabelValue } from '@/store/SearchContextProvider'
 import CommandSearchSuggestions from './CommandSearchSuggestions'
+import { LabelValue } from '@/types/common'
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   suggestions?: {

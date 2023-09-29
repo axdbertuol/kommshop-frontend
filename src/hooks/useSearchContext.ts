@@ -1,6 +1,7 @@
 'use client'
 import { Product } from '@/components/ProductList'
-import { LabelValue, SearchContext } from '@/store/SearchContextProvider'
+import { SearchContext } from '@/components/providers/SearchContextProvider'
+import { LabelValue } from '@/types/common'
 import { useContext, useEffect } from 'react'
 
 type Props = {

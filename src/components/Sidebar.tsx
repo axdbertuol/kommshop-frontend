@@ -3,7 +3,7 @@ import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible'
 import { NavigationMenu } from '@/components/ui/navigation-menu'
 import { cn } from '@/app/lib/utils'
 import React, { useState } from 'react'
-import SideNavLink from './SideNavLink'
+import SideNavLink from './nav/SideNavLink'
 import ShopBag from './icons/ShopBag'
 import AnimatedArrow from './icons/AnimatedArrow'
 

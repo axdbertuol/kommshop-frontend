@@ -1,5 +1,5 @@
 import React from 'react'
-import { Badge, BadgeProps } from './ui/badge'
+import { Badge, BadgeProps } from '../ui/badge'
 import { cn } from '@/app/lib/utils'
 
 type Props = {

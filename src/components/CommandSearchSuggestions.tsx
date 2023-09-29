@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { CommandGroup, CommandItem } from './ui/command'
-import { LabelValue } from '@/store/SearchContextProvider'
+import { LabelValue } from '@/types/common'
 
 type Props = {
   suggestions: LabelValue[] | null | undefined

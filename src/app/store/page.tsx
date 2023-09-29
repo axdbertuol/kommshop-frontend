@@ -1,5 +1,5 @@
-import SearchSegment from '@/components/segments/search-segment'
-import ListingSegment from '@/components/segments/listing-segment'
+import SearchSegment from '@/components/section-segments/search-segment'
+import ListingSegment from '@/components/section-segments/listing-segment'
 
 const filtersMock = [
   {

@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import FilterBadge from './FilterBadge'
+import FilterBadge from './buttons/FilterBadge'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
 import { Button } from './ui/button'
 import useSearchContext from '@/hooks/useSearchContext'

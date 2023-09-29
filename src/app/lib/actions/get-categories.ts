@@ -1,16 +1,16 @@
 import { cache } from 'react'
 import { Entity } from 'kommshop-types'
-import * as zod from 'zod'
+import * as z from 'zod'
 import 'server-only'
-import { LabelValue } from '@/store/SearchContextProvider'
+import { LabelValue } from '@/types/common'
 
 export const preload = (id?: string) => {
   void getCategories(id)
 }
-const schema = zod.array(
-  zod.object({
-    _id: zod.string(),
-    name: zod.string(),
+const schema = z.array(
+  z.object({
+    _id: z.string(),
+    name: z.string(),
   })
 )
 const fetchCategories = async (search?: string | null) => {

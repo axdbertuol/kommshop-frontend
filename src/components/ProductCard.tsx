@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Button } from './ui/button'
-import LikeButton from './LikeButton'
+import LikeButton from './buttons/LikeButton'
 import HoverableImage from './HoverableImage'
 
 export type ProductProps = {

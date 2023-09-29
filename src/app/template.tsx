@@ -1,5 +1,5 @@
-import Nav from '@/components/Nav'
-import SessionProviderWrapper from '@/components/SessionProviderWrapper'
+import Nav from '@/components/nav/Nav'
+import SessionProviderWrapper from '@/components/providers/SessionProviderWrapper'
 import { Session } from 'next-auth'
 import React from 'react'
 import { ReactNode } from 'react'

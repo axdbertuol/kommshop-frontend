@@ -1,5 +1,5 @@
 'use client'
-import { defaultSearchCtxValues } from './constants'
+import { defaultSearchCtxValues } from '../../store/constants'
 import React, {
   Dispatch,
   ReactNode,
@@ -8,20 +8,16 @@ import React, {
   useMemo,
   useReducer,
 } from 'react'
-import { searchReducer } from './reducers'
-import { Action, SearchActionsEnum, SearchContextActions } from './actions'
+import { searchReducer } from '../../store/reducers'
+import { Action, SearchActionsEnum, SearchContextActions } from '../../store/actions'
 import { Product } from '@/components/ProductList'
+import { LabelValue } from '@/types/common'
 
 export type SearchContextType = {
   searchValue?: string | null
   filters: LabelValue[] | null
   categories: LabelValue[] | null
   products?: Product[] | null
-}
-
-export type LabelValue = {
-  label: string
-  value: string
 }
 
 export const SearchContext = createContext<{

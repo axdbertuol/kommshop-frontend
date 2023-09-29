@@ -1,7 +1,7 @@
-import { CollapsibleContent } from './ui/collapsible'
-import { NavigationMenuLink } from './ui/navigation-menu'
+import { CollapsibleContent } from '../ui/collapsible'
+import { NavigationMenuLink } from '../ui/navigation-menu'
 import Link from 'next/link'
-import { navigationMenuTriggerStyle } from './ui/navigation-menu'
+import { navigationMenuTriggerStyle } from '../ui/navigation-menu'
 import { cn } from '@/app/lib/utils'
 import React from 'react'
 
