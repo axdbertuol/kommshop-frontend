@@ -35,7 +35,7 @@ export default function ProductCard(
           />
           <Button
             className="w-[125px] "
-            onClick={() => console.log('click')}
+            // onClick={() => console.log('click')}
           >
             Add to Cart
           </Button>

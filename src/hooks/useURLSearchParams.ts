@@ -14,7 +14,8 @@ function useURLSearchParams() {
       if (allParams.includes(value)) {
         params.delete(name, value)
       } else if (params.has(name)) {
-        params.append(name, value)
+        if (options?.replace === true) params.set(name, value)
+        else params.append(name, value)
       } else {
         params.set(name, value)
       }
@@ -26,7 +27,22 @@ function useURLSearchParams() {
     router.push(pathname)
   }, [router, pathname])
 
-  return { clearSearchParams, updateSearchParams, searchParams, router, pathname }
+  const deleteSearchParam = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
+      params.delete(name)
+    },
+    [searchParams]
+  )
+
+  return {
+    clearSearchParams,
+    updateSearchParams,
+    deleteSearchParam,
+    searchParams,
+    router,
+    pathname,
+  }
 }
 
 export default useURLSearchParams

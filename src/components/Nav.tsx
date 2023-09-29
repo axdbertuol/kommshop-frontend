@@ -1,7 +1,6 @@
 'use client'
 import React from 'react'
 import { MainNav } from './MainNav'
-import { Search } from './Search'
 import { UserNav } from './UserNav'
 
 function Nav() {
@@ -11,7 +10,6 @@ function Nav() {
         <h2>Kommshop</h2>
         <MainNav className="ml-auto" />
         <div className="ml-auto flex items-center space-x-4">
-          <Search />
           <UserNav />
         </div>
       </div>

@@ -1,5 +1,5 @@
 'use client'
-import { defaultSearchCtxValues } from '@/lib/constants'
+import { defaultSearchCtxValues } from './constants'
 import React, {
   Dispatch,
   ReactNode,
@@ -10,10 +10,18 @@ import React, {
 } from 'react'
 import { searchReducer } from './reducers'
 import { Action, SearchActionsEnum, SearchContextActions } from './actions'
+import { Product } from '@/components/ProductList'
 
 export type SearchContextType = {
   searchValue?: string | null
-  filters: string[] | null
+  filters: LabelValue[] | null
+  categories: LabelValue[] | null
+  products?: Product[] | null
+}
+
+export type LabelValue = {
+  label: string
+  value: string
 }
 
 export const SearchContext = createContext<{
@@ -25,6 +33,8 @@ export const SearchContext = createContext<{
   actions: {
     setSearchValue: () => null,
     setFilters: () => null,
+    setCategories: () => null,
+    // setProducts: () => null,
   },
   dispatch: () => null,
 })
@@ -34,6 +44,8 @@ const initializer = (action: Action): SearchContextType => {
   return {
     searchValue: null,
     filters: null,
+    categories: null,
+    products: null,
   }
 }
 
@@ -48,8 +60,12 @@ function SearchContextProvider({ children }: { children: ReactNode }) {
     dispatch({ type: SearchActionsEnum.SET_SEARCH_VALUE, searchValue })
   }, [])
 
-  const setFilters = useCallback((filters: string[] | null) => {
+  const setFilters = useCallback((filters: LabelValue[] | null) => {
     dispatch({ type: SearchActionsEnum.SET_FILTERS, filters })
+  }, [])
+
+  const setCategories = useCallback((categories: LabelValue[] | null) => {
+    dispatch({ type: SearchActionsEnum.SET_CATEGORIES, categories })
   }, [])
 
   const contextValue = useMemo(() => {
@@ -62,7 +78,7 @@ function SearchContextProvider({ children }: { children: ReactNode }) {
     <SearchContext.Provider
       value={{
         state: contextValue,
-        actions: { setSearchValue, setFilters },
+        actions: { setSearchValue, setFilters, setCategories },
         dispatch,
       }}
     >

@@ -1,5 +1,5 @@
 import { SearchContextType } from './SearchContextProvider'
-import { defaultSearchCtxValues } from '@/lib/constants'
+import { defaultSearchCtxValues } from './constants'
 import { Action } from './actions'
 
 export function searchReducer(
@@ -21,6 +21,11 @@ export function searchReducer(
       return {
         ...state,
         filters: action.filters,
+      }
+    case 'SET_CATEGORIES':
+      return {
+        ...state,
+        categories: action.categories,
       }
     default:
       return state

@@ -1,29 +1,24 @@
 'use client'
-import React from 'react'
-import {
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  Command,
-} from './ui/command'
+import React, { useState } from 'react'
+import { CommandInput, CommandList, CommandEmpty, Command } from './ui/command'
 import { Button } from './ui/button'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
+import { LabelValue } from '@/store/SearchContextProvider'
+import CommandSearchSuggestions from './CommandSearchSuggestions'
 
-type Props = {
-  defaultFilters: {
-    label: string
-    value: string
-  }[]
-} & React.HTMLAttributes<HTMLElement>
+type Props = React.HTMLAttributes<HTMLElement> & {
+  suggestions?: {
+    categories: LabelValue[] | null | undefined
+    products: LabelValue[] | null | undefined
+  }
+}
 
-function CommandSearch({ defaultFilters, ...props }: Props) {
-  const { searchParams } = useURLSearchParams()
-  const searchValue = searchParams.get('search') ?? undefined
-
-  function handleOnChange(search: string) {
-    // handleSearchValue(search)
+function CommandSearch({ ...props }: Props) {
+  const [searchInputValue, setSearchInputValue] = useState<string | undefined>()
+  const { updateSearchParams } = useURLSearchParams()
+  async function handleOnChange(search: string) {
+    setSearchInputValue(search)
+    updateSearchParams('search', search, { replace: true })
   }
 
   function handleSubmit(): React.FormEventHandler<HTMLInputElement> | undefined {
@@ -31,30 +26,26 @@ function CommandSearch({ defaultFilters, ...props }: Props) {
   }
 
   return (
-    <div className="relative md:w-[25vw] flex items-center w-full border border-input rounded-md focus-within:ring-1 focus-within:ring-ring">
+    <div className="relative flex items-center w-full border border-input rounded-md focus-within:ring-1 focus-within:ring-ring">
       <Command className="group transition-all flex flex-row  ">
         <CommandInput
-          className="text-primary-foreground flex-auto md:w-[12vw]"
+          className="text-primary-foreground flex-auto md:w-[25vw]"
           placeholder="Search products..."
-          value={searchValue}
+          value={searchInputValue}
           onValueChange={handleOnChange}
         />
-        <CommandList className="absolute scale-y-0 top-10 flex z-30 h-fit w-full transition-transform rounded  group-focus-within:scale-y-100">
+        <CommandList className="absolute scale-y-0 top-10 flex z-30 h-fit w-full transition-transform rounded  group-focus-within:scale-y-100 bg-secondary-black-400">
           <CommandEmpty>No results found.</CommandEmpty>
-          <CommandGroup
-            heading="Suggestions"
-            className="z-30"
-          >
-            {defaultFilters?.map((filter, index) => (
-              <CommandItem
-                key={index}
-                className="w-full"
-                // onClick={}
-              >
-                {filter.label}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <div className="flex">
+            <CommandSearchSuggestions
+              suggestions={props?.suggestions?.categories}
+              heading={'Categories'}
+            />
+            <CommandSearchSuggestions
+              suggestions={props?.suggestions?.products}
+              heading={'Suggestions'}
+            />
+          </div>
         </CommandList>
       </Command>
       <Button

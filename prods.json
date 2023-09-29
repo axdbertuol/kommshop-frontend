@@ -1,0 +1,8 @@
+{
+    "id": ObjectID(),
+    "name": "Carpet Hirado",
+    "description": "A pretty Carpet!",
+    "category": "Furniture",
+    "price": 100.0
+}
+

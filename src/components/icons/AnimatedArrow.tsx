@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/app/lib/utils'
 import { useTheme } from 'next-themes'
 import React from 'react'
 

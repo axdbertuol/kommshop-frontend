@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge, BadgeProps } from './ui/badge'
-import { cn } from '@/lib/utils'
+import { cn } from '@/app/lib/utils'
 
 type Props = {
   children: React.ReactNode

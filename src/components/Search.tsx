@@ -1,6 +1,6 @@
 'use client'
 import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { cn } from '@/app/lib/utils'
 import React from 'react'
 
 export function Search({ className }: React.HTMLAttributes<HTMLElement>) {

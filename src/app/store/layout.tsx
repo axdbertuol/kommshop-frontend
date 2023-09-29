@@ -7,8 +7,8 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex">
-      <Sidebar />
-      <section className="w-full px-24 py-8 ">{children}</section>
+      {/* <Sidebar /> */}
+      <section className="w-full">{children}</section>
     </div>
   )
 }

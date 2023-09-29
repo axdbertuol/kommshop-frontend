@@ -34,9 +34,7 @@ export default function DefaultForm() {
       </div>
       <Button
         type="submit"
-        onClick={() =>
-          signIn('keycloak', { callbackUrl: 'http://localhost:3000/dashboard' })
-        }
+        onClick={() => signIn('keycloak', { callbackUrl: 'http://localhost:3000/store' })}
       >
         Submit
       </Button>
