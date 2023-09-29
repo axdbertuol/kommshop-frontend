@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import ProductList from '../ProductList'
-import { getProducts } from '@/app/lib/get-products'
+import { getProducts } from '@/app/lib/actions/get-products'
 
 type Props = {
   searchParams?: { cat?: string }
