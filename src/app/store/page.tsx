@@ -47,11 +47,9 @@ const getFilters = async () => {
 export default async function Page({
   params,
   searchParams,
-  pathname,
 }: {
   params: { username: string }
   searchParams: { cat: string; search: string }
-  pathname: string
 }) {
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
   console.log('asdasd', searchParams, params)

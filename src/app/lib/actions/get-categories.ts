@@ -14,13 +14,12 @@ const schema = z.array(
   })
 )
 const fetchCategories = async (search?: string | null) => {
+  const url = new URL('http://localhost:3333/categories')
+  if (search) url.searchParams.set('name', search)
   try {
-    const myRequest = await fetch(
-      new URL(`http://localhost:3333/categories${search ? `?name=${search}` : ''}`),
-      {
-        headers: { 'Content-Type': 'application/json' },
-      }
-    )
+    const myRequest = await fetch(url, {
+      headers: { 'Content-Type': 'application/json' },
+    })
     return (await myRequest.json()) as Entity.Category[] | null | undefined
   } catch (err) {
     console.error(err, 'errro!')

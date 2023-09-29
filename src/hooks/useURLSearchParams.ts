@@ -12,7 +12,7 @@ function useURLSearchParams() {
       const allParams = params.getAll(name)
       console.log(params, allParams, name, value, options)
       if (allParams.includes(value)) {
-        params.delete(name, value)
+        params.delete(name)
       } else if (params.has(name)) {
         if (options?.replace === true) params.set(name, value)
         else params.append(name, value)

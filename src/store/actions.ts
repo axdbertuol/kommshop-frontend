@@ -1,4 +1,4 @@
-import { LabelValue } from '../components/providers/SearchContextProvider'
+import type { LabelValue } from '@/types/common'
 import type { Entity } from 'kommshop-types'
 export type Action =
   | {
