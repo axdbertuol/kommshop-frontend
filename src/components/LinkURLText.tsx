@@ -22,6 +22,7 @@ export function LinkURLText({
         className
       )}
       onClick={() => updateSearchParams(searchParamName, data.value, { replace: true })}
+      role="link"
     >
       {data.label}
     </span>
