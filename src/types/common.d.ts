@@ -5,5 +5,7 @@ export type LabelValue = {
   value: string
 }
 
+export type SearchParams = { cat?: string; search?: string }
+
 export type Product = Entity.Product
 export type Category = Entity.Category

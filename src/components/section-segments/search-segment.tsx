@@ -5,9 +5,10 @@ import CommandSearch from '../CommandSearch'
 import CategoriesBar from '../CategoriesBar'
 import { getCategories } from '@/app/lib/actions/get-categories'
 import { getProducts } from '@/app/lib/actions/get-products'
+import { SearchParams } from '@/types/common'
 
 type Props = {
-  searchParams: { cat: string; search: string }
+  searchParams: SearchParams
 }
 
 async function SearchSegment({ searchParams }: Props) {

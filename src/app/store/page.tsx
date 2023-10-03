@@ -1,5 +1,6 @@
 import SearchSegment from '@/components/section-segments/search-segment'
 import ListingSegment from '@/components/section-segments/listing-segment'
+import { SearchParams } from '@/types/common'
 
 const filtersMock = [
   {
@@ -49,7 +50,7 @@ export default async function Page({
   searchParams,
 }: {
   params: { username: string }
-  searchParams: { cat: string; search: string }
+  searchParams: SearchParams
 }) {
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
   console.log('asdasd', searchParams, params)

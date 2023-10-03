@@ -2,9 +2,10 @@
 import { getCategories } from '@/app/lib/actions/get-categories'
 import React from 'react'
 import { LinkURLText } from './LinkURLText'
+import { SearchParams } from '@/types/common'
 
 type Props = {
-  searchParams: { search: string }
+  searchParams?: SearchParams
 }
 async function CategoriesBar({ searchParams }: Props) {
   // const { categories } = useSearchContext(null)
