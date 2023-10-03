@@ -1,4 +1,4 @@
-import { Product } from '@/components/ProductList'
+import { Product } from '@/types/common'
 import { cache } from 'react'
 import 'server-only'
 

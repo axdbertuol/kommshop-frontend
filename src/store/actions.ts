@@ -1,5 +1,4 @@
 import type { LabelValue } from '@/types/common'
-import type { Entity } from 'kommshop-types'
 export type Action =
   | {
       type: SearchActionsEnum.INIT
@@ -37,6 +36,3 @@ export type SearchContextActions = {
       | null
   ) => void
 }
-
-export type Product = Entity.Product
-export type Category = Entity.Category

@@ -10,17 +10,15 @@ import {
 import { Button } from './ui/button'
 import LikeButton from './buttons/LikeButton'
 import HoverableImage from './HoverableImage'
+import { Product } from '@/types/common'
+import { useSession } from 'next-auth/react'
 
 export type ProductProps = {
   imgSrc?: string
-  name: string
-  price: string
-  description: string
-  id?: string
-}
+} & Omit<Product, 'category'>
 export default function ProductCard(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { name, price, description, id }: ProductProps
+  { name, price, description, _id, favouritedBy }: ProductProps
 ) {
   return (
     <Card className="w-[300px]">

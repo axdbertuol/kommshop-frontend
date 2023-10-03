@@ -1,19 +1,7 @@
 // 'use client'
 import React, { Suspense } from 'react'
-// import { useState } from 'react'
-import Product from './Product'
-// import fetchProducts from '@/app/_fetch-products'
 import ProductCard from './ProductCard'
-
-// type Props = {}
-
-export type Product = {
-  name: string
-  description?: string | ''
-  category: string
-  price: string
-  _id?: string
-}
+import { Product } from '@/types/common'
 
 export default function ProductList({ data }: { data: Product[] | null | undefined }) {
   // const [products, setProducts] = useState<Product[] | null>(data ?? null)
@@ -44,7 +32,7 @@ export default function ProductList({ data }: { data: Product[] | null | undefin
               name={product.name}
               price={product.price}
               description={product?.description ?? ''}
-              id={product._id}
+              _id={product._id}
             />
           </Suspense>
         )
