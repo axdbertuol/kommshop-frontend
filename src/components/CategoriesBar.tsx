@@ -9,6 +9,7 @@ type Props = {
 async function CategoriesBar({ searchParams }: Props) {
   // const { categories } = useSearchContext(null)
   const data = await getCategories()
+  // TODO: make a page for each category
   return (
     <div className="flex gap-x-4">
       {data?.map((category, index) => (

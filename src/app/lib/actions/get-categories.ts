@@ -27,6 +27,7 @@ const fetchCategories = async (search?: string | null) => {
 }
 
 const parseResults = async (json: Entity.Category[] | null | undefined) => {
+  if (!json) return null
   const parsedJson = await schema.parseAsync(json)
 
   const result = parsedJson.map((category) => ({
