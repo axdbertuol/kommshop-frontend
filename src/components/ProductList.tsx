@@ -2,6 +2,7 @@
 import React, { Suspense } from 'react'
 import ProductCard from './ProductCard'
 import { Product } from '@/types/common'
+import CardSkeleton from './CardSkeleton'
 
 export default function ProductList({ data }: { data: Product[] | null | undefined }) {
   // const [products, setProducts] = useState<Product[] | null>(data ?? null)
@@ -25,7 +26,7 @@ export default function ProductList({ data }: { data: Product[] | null | undefin
         return (
           <Suspense
             key={index}
-            fallback={<>Carregando...</>}
+            fallback={<CardSkeleton />}
           >
             <ProductCard
               imgSrc={''}
