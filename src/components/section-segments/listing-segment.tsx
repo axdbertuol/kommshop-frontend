@@ -9,7 +9,7 @@ type Props = {
 
 async function ListingSegment({ searchParams }: Props) {
   // useSearchContext({ products: initialProducts })
-  const data = await getProducts(searchParams?.search ?? '')
+  const data = await getProducts(searchParams?.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
       <Suspense fallback={<>Loading...</>}>

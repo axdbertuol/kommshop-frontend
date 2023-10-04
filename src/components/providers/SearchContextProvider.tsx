@@ -10,11 +10,10 @@ import React, {
 } from 'react'
 import { searchReducer } from '../../store/reducers'
 import { Action, SearchActionsEnum, SearchContextActions } from '../../store/actions'
-import { Product } from '@/components/ProductList'
-import { LabelValue } from '@/types/common'
+import { LabelValue, Product } from '@/types/common'
 
 export type SearchContextType = {
-  searchValue?: string | null
+  searchValue?: string
   filters: LabelValue[] | null
   categories: LabelValue[] | null
   products?: Product[] | null
@@ -38,7 +37,7 @@ export const SearchContext = createContext<{
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const initializer = (action: Action): SearchContextType => {
   return {
-    searchValue: null,
+    searchValue: '',
     filters: null,
     categories: null,
     products: null,

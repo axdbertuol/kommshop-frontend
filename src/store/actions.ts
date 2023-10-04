@@ -5,7 +5,7 @@ export type Action =
       searchValue: string | null
       filters: LabelValue[] | null
     }
-  | { type: SearchActionsEnum.SET_SEARCH_VALUE; searchValue: string | null }
+  | { type: SearchActionsEnum.SET_SEARCH_VALUE; searchValue: string | undefined }
   | {
       type: SearchActionsEnum.SET_FILTERS
       filters: LabelValue[] | null

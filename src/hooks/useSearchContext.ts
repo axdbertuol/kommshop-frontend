@@ -1,16 +1,17 @@
 'use client'
-import { Product } from '@/components/ProductList'
 import { SearchContext } from '@/components/providers/SearchContextProvider'
-import { LabelValue } from '@/types/common'
+import { LabelValue, Product } from '@/types/common'
 import { useContext, useEffect } from 'react'
 
-type Props = {
-  filters?: LabelValue[] | null
-  categories?: LabelValue[] | null
-  products?: Product[] | null
-} | null
+type Props =
+  | {
+      filters?: LabelValue[] | null
+      categories?: LabelValue[] | null
+      products?: Product[] | null
+    }
+  | undefined
 
-function useSearchContext(props: Props) {
+function useSearchContext(props: Props = {}) {
   const { state, actions } = useContext(SearchContext)
   useEffect(() => {
     if (props?.filters) {

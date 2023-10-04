@@ -53,7 +53,6 @@ export default async function Page({
   searchParams: SearchParams
 }) {
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
-  console.log('asdasd', searchParams, params)
 
   // const defaultCategories = await getCategories()
   // console.log('oiere', defaultFilters, defaultCategories)

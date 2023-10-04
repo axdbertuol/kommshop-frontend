@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 export const defaultSearchCtxValues = {
-  searchValue: null,
+  searchValue: '',
   // setSearchValue: (value: string | null) => {},
   filters: null,
   categories: null,

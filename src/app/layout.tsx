@@ -1,6 +1,8 @@
 import { ThemeProvider } from '@/components/providers/ThemeProvider'
 import './globals.css'
 import { Inter } from 'next/font/google'
+import React from 'react'
+import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,13 +15,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-        >
-          {children}
-        </ThemeProvider>
+        <QueryClientWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            {children}
+          </ThemeProvider>
+        </QueryClientWrapper>
       </body>
     </html>
   )

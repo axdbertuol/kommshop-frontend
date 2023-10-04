@@ -7,13 +7,15 @@ import { LabelValue } from '@/types/common'
 export const preload = (id?: string) => {
   void getCategories(id)
 }
-const schema = z.array(
-  z.object({
-    _id: z.string(),
-    name: z.string(),
-  })
-)
-const fetchCategories = async (search?: string | null) => {
+const schema = z
+  .array(
+    z.object({
+      _id: z.coerce.string(),
+      name: z.string(),
+    })
+  )
+  .optional()
+export const fetchCategories = async (search?: string | null) => {
   const url = new URL('http://localhost:3333/categories')
   if (search) url.searchParams.set('name', search)
   try {
@@ -26,18 +28,24 @@ const fetchCategories = async (search?: string | null) => {
   }
 }
 
-const parseResults = async (json: Entity.Category[] | null | undefined) => {
+export const parseResults = async (json: Entity.Category[] | null | undefined) => {
   if (!json) return null
-  const parsedJson = await schema.parseAsync(json)
-
-  const result = parsedJson.map((category) => ({
+  let data
+  try {
+    data = await schema.parseAsync(json)
+  } catch (err) {
+    console.warn(err)
+  }
+  if (!data) return null
+  const result = data.map((category: { _id: string; name: string }) => ({
     value:
       category.name.at(0)?.toLowerCase() +
       category.name.substring(1, category.name.length),
     label: category.name,
+    type: 'category',
     _id: category._id,
   }))
-  return result as LabelValue[]
+  return result as LabelValue[] | { _id: string; type: string }[]
 }
 
 export const getCategories = cache((id?: string) =>
