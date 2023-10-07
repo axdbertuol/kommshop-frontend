@@ -14,7 +14,7 @@ type Props = {
 
 async function FiltersBar() {
   const { updateSearchParams, clearSearchParams } = useURLSearchParams()
-  const { filters } = useSearchContext(null)
+  const { filters } = useSearchContext()
 
   return (
     <div className="px-16 w-full flex flex-col items-center justify-center gap-y-8">

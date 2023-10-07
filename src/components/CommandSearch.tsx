@@ -14,12 +14,10 @@ type Props = React.HTMLAttributes<HTMLElement> & {
 function CommandSearch({ ...props }: Props) {
   const [open, setOpen] = useState(false)
   const { searchValue, setSearchValue } = useSearchContext()
-  // const { shouldRefetch, setShouldRefetch } = useSearchContext()
   const { updateSearchParams } = useURLSearchParams()
 
   async function handleOnChange(search: string) {
     setSearchValue(search)
-    // await mutation.mutateAsync(search)
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -29,11 +27,7 @@ function CommandSearch({ ...props }: Props) {
       setSearchValue('')
     }
   }
-  // console.log('data', data, props.suggestions)
-  // console.log('isLoading', isLoading)
-  // console.log('isError', isError)
-  // console.log('isSuccess', isSuccess)
-  // console.log('isFetching', isFetching)
+
   return (
     <form
       className="relative flex items-center "
@@ -55,10 +49,12 @@ function CommandSearch({ ...props }: Props) {
           }}
           onValueChange={handleOnChange}
         />
-        <CommandSearchList
-          suggestions={props?.suggestions}
-          open={open}
-        />
+        {props?.suggestions && (
+          <CommandSearchList
+            suggestions={props.suggestions}
+            open={open}
+          />
+        )}
       </Command>
       <Button
         type="submit"

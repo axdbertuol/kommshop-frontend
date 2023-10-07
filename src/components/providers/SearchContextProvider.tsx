@@ -51,7 +51,7 @@ function SearchContextProvider({ children }: { children: ReactNode }) {
     initializer
   )
 
-  const setSearchValue = useCallback((searchValue: string | null) => {
+  const setSearchValue = useCallback((searchValue: string | undefined) => {
     dispatch({ type: SearchActionsEnum.SET_SEARCH_VALUE, searchValue })
   }, [])
 

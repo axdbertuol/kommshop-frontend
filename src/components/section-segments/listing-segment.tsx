@@ -11,7 +11,7 @@ async function ListingSegment({ searchParams }: Props) {
   // useSearchContext({ products: initialProducts })
   const data = await getProducts(searchParams?.search)
   return (
-    <div className="flex flex-col items-center gap-y-4 ">
+    <div className="flex flex-col items-center gap-y-4 min-h-screen">
       <Suspense fallback={<>Loading...</>}>
         <ProductList data={data} />
       </Suspense>

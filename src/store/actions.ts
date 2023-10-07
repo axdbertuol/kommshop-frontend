@@ -25,7 +25,7 @@ export enum SearchActionsEnum {
 
 export type SearchContextActions = {
   setCategories: (categories: { label: string; value: string }[]) => void
-  setSearchValue: (value: string | null) => void
+  setSearchValue: (value: string | undefined) => void
   // setProducts: (value: Entity.Product[] | null) => void
   setFilters: (
     value:

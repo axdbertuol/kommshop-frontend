@@ -4,7 +4,11 @@ import ProductCard from './ProductCard'
 import { Product } from '@/types/common'
 import CardSkeleton from './CardSkeleton'
 
-export default function ProductList({ data }: { data: Product[] | null | undefined }) {
+export default async function ProductList({
+  data,
+}: {
+  data: Product[] | null | undefined
+}) {
   // const [products, setProducts] = useState<Product[] | null>(data ?? null)
   // const [loading, setLoading] = useState<boolean>(false)
   // console.log('darta', data)

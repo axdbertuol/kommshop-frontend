@@ -13,7 +13,6 @@ export const fetchProducts = async (search?: string | null, category?: string | 
     const myRequest = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
     })
-    console.log('req', myRequest)
     return (await myRequest.json()) as Product[] | null | undefined
   } catch (err) {
     console.error(err, 'errro!')
