@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import ProductList from '../ProductList'
-import { getProducts } from '@/app/lib/actions/get-products'
+import getProducts from '@/app/lib/actions/get-products'
 import { SearchParams } from '@/types/common'
 
 type Props = {
@@ -8,8 +8,11 @@ type Props = {
 }
 
 async function ListingSegment({ searchParams }: Props) {
-  // useSearchContext({ products: initialProducts })
-  const data = await getProducts(searchParams?.search)
+  const data = await getProducts(searchParams?.search).then((r) => {
+    console.log('get products finished')
+    return r
+  })
+
   return (
     <div className="flex flex-col items-center gap-y-4 min-h-screen">
       <Suspense fallback={<>Loading...</>}>

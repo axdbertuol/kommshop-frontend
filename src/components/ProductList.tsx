@@ -9,21 +9,6 @@ export default async function ProductList({
 }: {
   data: Product[] | null | undefined
 }) {
-  // const [products, setProducts] = useState<Product[] | null>(data ?? null)
-  // const [loading, setLoading] = useState<boolean>(false)
-  // console.log('darta', data)
-  // const deferredProds = useDeferredValue(products)
-  // console.log(products, initialProducts)
-  // const setProdCallback = useCallback(
-  //   () => setProducts(products),
-  //   [products]
-  // )
-  // useEffect(() => {
-  //   if (products) {
-  //     setLoading(false)
-  //   }
-  // }, [products])
-
   return (
     <div className="grid grid-flow-row md:grid-cols-3 lg:grid-cols-4 gap-4 border-t border-t-primary-300 py-8">
       {data?.map((product, index) => {
@@ -33,11 +18,11 @@ export default async function ProductList({
             fallback={<CardSkeleton />}
           >
             <ProductCard
+              _id={product._id}
               imgSrc={''}
               name={product.name}
               price={product.price}
               description={product?.description ?? ''}
-              _id={product._id}
             />
           </Suspense>
         )

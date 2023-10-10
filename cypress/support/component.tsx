@@ -25,6 +25,9 @@ import { HeadManagerContext } from 'next/dist/shared/lib/head-manager-context.sh
 import { Head } from 'next/document'
 import { ReactNode } from 'react'
 import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
+import SearchContextProvider from '@/components/providers/SearchContextProvider'
+import { ThemeProvider } from '@/components/providers/ThemeProvider'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -83,8 +86,28 @@ Cypress.Commands.add('nextMount', (component, options) => {
 
   return mount(
     <HeadManagerContext.Provider value={headManager}>
-      <AppRouterContext.Provider value={router}>{component}</AppRouterContext.Provider>
+      <AppRouterContext.Provider value={router}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+        >
+          <SearchContextProvider>
+            <QueryClientWrapper>{component}</QueryClientWrapper>
+          </SearchContextProvider>
+        </ThemeProvider>
+      </AppRouterContext.Provider>
     </HeadManagerContext.Provider>,
     options
   )
+})
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // we expect a 3rd party library error with message 'list not defined'
+  // and don't want to fail the test so we return false
+  if (err.message.includes('Invariant: missing action dispatcher')) {
+    return false
+  }
+  // we still want to ensure there are no other unexpected
+  // errors, so we let them fail the test
 })

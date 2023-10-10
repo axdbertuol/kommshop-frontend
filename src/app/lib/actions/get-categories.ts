@@ -4,9 +4,6 @@ import * as z from 'zod'
 import 'server-only'
 import { LabelValue } from '@/types/common'
 
-export const preload = (id?: string) => {
-  void getCategories(id)
-}
 const schema = z
   .array(
     z.object({
@@ -45,9 +42,9 @@ export const parseResults = async (json: Entity.Category[] | null | undefined) =
     type: 'category',
     _id: category._id,
   }))
-  return result as LabelValue[] | { _id: string; type: string }[]
+  return result as LabelValue[] & { _id: string; type: string }[]
 }
 
-export const getCategories = cache((id?: string) =>
-  fetchCategories(id).then(parseResults)
-)
+const getCategories = cache((name?: string) => fetchCategories(name).then(parseResults))
+
+export default getCategories

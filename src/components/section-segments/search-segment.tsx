@@ -4,7 +4,7 @@ import React from 'react'
 import CommandSearch from '../CommandSearch'
 import CategoriesBar from '../CategoriesBar'
 import { SearchParams } from '@/types/common'
-import { getSuggestions } from '@/app/lib/actions/get-suggestions'
+import getSuggestions from '@/app/lib/actions/get-suggestions'
 
 type Props = {
   searchParams: SearchParams

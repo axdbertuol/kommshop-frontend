@@ -1,6 +1,7 @@
 import SearchSegment from '@/components/section-segments/search-segment'
 import ListingSegment from '@/components/section-segments/listing-segment'
 import { SearchParams } from '@/types/common'
+import getProducts from '@/app/lib/actions/get-products'
 
 const filtersMock = [
   {
@@ -55,8 +56,8 @@ export default async function Page({
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
 
   // const defaultCategories = await getCategories()
-  // console.log('oiere', defaultFilters, defaultCategories)
-
+  console.log('preload starting', searchParams)
+  getProducts(searchParams?.search).then(() => console.log('preload finished'))
   return (
     <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
       {/* <SuspenseList revealOrder="forwards"> */}

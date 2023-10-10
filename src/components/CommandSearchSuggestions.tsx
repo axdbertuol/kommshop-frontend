@@ -1,18 +1,20 @@
 'use client'
 import React, { KeyboardEvent } from 'react'
 import { LabelValue } from '@/types/common'
-import useSearchContext from '@/hooks/useSearchContext'
 import { CommandGroup } from './ui/command'
 import { cn } from '@/app/lib/utils'
 
 type Props = {
   suggestions: LabelValue[] | null | undefined
   heading?: string
-  // handleSelect: (value: string) => void
+  onSelectSuggestion: (value: string) => void
 } & React.HTMLAttributes<HTMLDivElement>
-function CommandSearchSuggestions({ heading, suggestions, className }: Props) {
-  const { setSearchValue } = useSearchContext()
-
+function CommandSearchSuggestions({
+  heading,
+  suggestions,
+  className,
+  onSelectSuggestion,
+}: Props) {
   return (
     <CommandGroup className="flex flex-col gap-1">
       <span className="text-xs text-secondary-black-100">{heading}</span>
@@ -24,27 +26,26 @@ function CommandSearchSuggestions({ heading, suggestions, className }: Props) {
           <li
             key={index + suggestion.label}
             className={cn(
-              'w-full cursor-pointer ring-0 z-40 px-2 transition-all group ',
+              'w-full cursor-pointer ring-0 z-40 py-2 transition-all group rounded-md',
               className
             )}
           >
-            <button
-              type="button"
-              value={suggestion.value}
-              className="w-full text-left focus-within:border transition group-hover:bg-secondary-black-200 rounded-md"
+            <span
+              className="w-full text-left transition-all rounded-md bg-inherit px-2  py-2 shadow-none group-hover:bg-primary-400"
               role="listitem"
+              tabIndex={0}
               onClick={() => {
-                setSearchValue(suggestion.value)
+                onSelectSuggestion(suggestion.value)
               }}
               onKeyDownCapture={(e: KeyboardEvent<HTMLButtonElement>) => {
                 if (e.key === 'Enter' || e.key === 'Return') {
                   e.preventDefault()
-                  setSearchValue(suggestion.value)
+                  onSelectSuggestion(suggestion.value)
                 }
               }}
             >
-              <span className="text-sm">{suggestion.label}</span>
-            </button>
+              {suggestion.label}
+            </span>
           </li>
         ))}
       </ul>

@@ -21,8 +21,10 @@ export const fetchSuggestions = async (search?: string) => {
   const result = [products, categories].flat()
   return result as Suggestion[]
 }
-export const getSuggestions = cache(fetchSuggestions)
+const getSuggestions = cache(fetchSuggestions)
 
 export const fetchSuggestionsClient = async (search?: string) => {
   return await fetchSuggestions(search)
 }
+
+export default getSuggestions
