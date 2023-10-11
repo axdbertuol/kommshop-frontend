@@ -7,11 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Button } from './ui/button'
-import LikeButton from './buttons/LikeButton'
-import HoverableImage from './HoverableImage'
+import { Button } from '../ui/button'
+import LikeButton from '../buttons/LikeButton'
+import HoverableImage from '../HoverableImage'
 import { Product } from '@/types/common'
-import { useSession } from 'next-auth/react'
 
 export type ProductProps = {
   imgSrc?: string

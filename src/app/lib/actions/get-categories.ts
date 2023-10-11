@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { Entity } from 'kommshop-types'
 import * as z from 'zod'
 import 'server-only'
-import { LabelValue } from '@/types/common'
+import { Suggestion } from '@/types/common'
 
 const schema = z
   .array(
@@ -42,7 +42,7 @@ export const parseResults = async (json: Entity.Category[] | null | undefined) =
     type: 'category',
     _id: category._id,
   }))
-  return result as LabelValue[] & { _id: string; type: string }[]
+  return result as Suggestion[]
 }
 
 const getCategories = cache((name?: string) => fetchCategories(name).then(parseResults))

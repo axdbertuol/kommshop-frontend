@@ -17,6 +17,7 @@ export type SearchContextType = {
   filters: LabelValue[] | null
   categories: LabelValue[] | null
   products?: Product[] | null
+  suggestionsListOpen?: boolean
 }
 
 export const SearchContext = createContext<{
@@ -29,7 +30,7 @@ export const SearchContext = createContext<{
     setSearchValue: () => null,
     setFilters: () => null,
     setCategories: () => null,
-    // setProducts: () => null,
+    setSuggestionsListOpen: () => null,
   },
   dispatch: () => null,
 })
@@ -38,6 +39,7 @@ export const SearchContext = createContext<{
 const initializer = (action: Action): SearchContextType => {
   return {
     searchValue: '',
+    suggestionsListOpen: false,
     filters: null,
     categories: null,
     products: null,
@@ -62,6 +64,9 @@ function SearchContextProvider({ children }: { children: ReactNode }) {
   const setCategories = useCallback((categories: LabelValue[] | null) => {
     dispatch({ type: SearchActionsEnum.SET_CATEGORIES, categories })
   }, [])
+  const setSuggestionsListOpen = (open?: boolean) => {
+    dispatch({ type: SearchActionsEnum.SET_SUGGESTIONS_LIST_OPEN, open })
+  }
 
   const contextValue = useMemo(() => {
     return {
@@ -73,7 +78,7 @@ function SearchContextProvider({ children }: { children: ReactNode }) {
     <SearchContext.Provider
       value={{
         state: contextValue,
-        actions: { setSearchValue, setFilters, setCategories },
+        actions: { setSearchValue, setFilters, setCategories, setSuggestionsListOpen },
         dispatch,
       }}
     >

@@ -1,17 +1,17 @@
 'use client'
-import { Suggestion } from '@/types/common'
+import { useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { Suggestion } from '@/types/common'
 import CommandSearchSuggestions from './CommandSearchSuggestions'
 import getSuggestions from '@/app/lib/actions/get-suggestions'
 import useSearchContext from '@/hooks/useSearchContext'
 import { cn } from '@/app/lib/utils'
-import { useCallback } from 'react'
 import useDeferredFilteredData from '@/hooks/useFilteredData'
 
 export const queryFn = async (value?: string) => {
   return new Promise((resolve) => {
     setTimeout(async () => resolve(await getSuggestions(value)), 0)
-  }) as Promise<Suggestion[] | null>
+  }) as Promise<Record<string, Suggestion[]> | null>
 }
 
 function CommandSearchList({
@@ -19,7 +19,7 @@ function CommandSearchList({
   className,
   onSelectSuggestion,
 }: {
-  suggestions: Suggestion[] | null
+  suggestions: Record<string, Suggestion[]> | null
   className: string
   onSelectSuggestion: (value: string) => void
 } & React.HTMLAttributes<HTMLElement>) {
@@ -36,34 +36,38 @@ function CommandSearchList({
   })
 
   const callbackFilter = useCallback(
-    (type: string) => data?.filter((item) => item.type === type).filter(Boolean),
+    () =>
+      (data &&
+        Object.entries(data)
+          .filter((entry) => entry?.[1].length !== 0)
+          .filter(Boolean)) ||
+      [],
     [data]
   )
-  const allSuggestions = []
-  const deferredProducts = useDeferredFilteredData(() => callbackFilter('product'))
-  if (deferredProducts) allSuggestions.push(deferredProducts)
-  const deferredCategories = useDeferredFilteredData(() => callbackFilter('category'))
-  if (deferredCategories) allSuggestions.push(deferredCategories)
+  const deferredSuggestions = useDeferredFilteredData(callbackFilter)
 
   return (
     <div
       className={cn(
-        'absolute top-10 flex flex-col z-30  opacity-0 w-full transition-transform rounded bg-secondary-black-400 px-4 py-2',
-        className
+        'absolute top-10 flex flex-col z-30  opacity-0 w-full transition-transform rounded bg-secondary-black-400 px-4 py-2 ease-in-out',
+        className,
+        isFetching && 'opacity-50'
       )}
       data-cy="CommandSearchList"
     >
-      {allSuggestions.length === 0 && <span className="h-[20px]">No results found.</span>}
-      {isSuccess && allSuggestions && allSuggestions?.length > 0 && (
+      {deferredSuggestions.flat().length === 0 && (
+        <span className="h-[20px]">No results found.</span>
+      )}
+      {isSuccess && deferredSuggestions?.length > 0 && (
         <div
           className={cn('flex flex-row', (isFetching || isPreviousData) && 'opacity-50')}
         >
-          {allSuggestions.map((suggest, index) => {
+          {deferredSuggestions.map(([heading, suggest], index) => {
             return (
               <CommandSearchSuggestions
                 key={index}
                 suggestions={suggest}
-                heading={suggest?.[0]?.type}
+                heading={heading}
                 onSelectSuggestion={onSelectSuggestion}
               />
             )

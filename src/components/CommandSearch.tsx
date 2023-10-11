@@ -1,5 +1,5 @@
 'use client'
-import React, { FormEvent, useState, KeyboardEvent, useRef } from 'react'
+import React, { FormEvent, KeyboardEvent, useRef } from 'react'
 import { CommandInput, Command } from './ui/command'
 import { Button } from './ui/button'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
@@ -9,17 +9,18 @@ import CommandSearchList from './CommandSearchList'
 import { cn } from '@/app/lib/utils'
 
 type Props = React.HTMLAttributes<HTMLElement> & {
-  suggestions: Suggestion[] | null
+  suggestions: Record<string, Suggestion[]> | null
 }
 
 function CommandSearch({ ...props }: Props) {
-  const [open, setOpen] = useState(false)
-  const { searchValue, setSearchValue } = useSearchContext()
+  const { searchValue, setSearchValue, suggestionsListOpen, setSuggestionsListOpen } =
+    useSearchContext()
   const { updateSearchParams } = useURLSearchParams()
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   function handleOnChange(search: string) {
     setSearchValue(search)
+    if (search) setSuggestionsListOpen(true)
   }
 
   function handleSubmit(e: FormEvent<HTMLFormElement | HTMLInputElement>) {
@@ -27,13 +28,13 @@ function CommandSearch({ ...props }: Props) {
     if (searchValue) {
       updateSearchParams('search', searchValue, { replace: true })
       setSearchValue('')
-      setOpen(false)
+      setSuggestionsListOpen(false)
     }
   }
 
   function handleSelect(value: string) {
     setSearchValue(value)
-    setOpen(false)
+    setSuggestionsListOpen(false)
     inputRef.current?.focus()
   }
 
@@ -42,7 +43,7 @@ function CommandSearch({ ...props }: Props) {
       className="relative flex items-center"
       onSubmit={handleSubmit}
       onMouseLeave={() => {
-        setOpen(() => false)
+        setSuggestionsListOpen(false)
       }}
     >
       <Command className="transition-all flex flex-row w-full border border-input rounded-md focus-within:ring-1 focus-within:ring-ring  ">
@@ -52,10 +53,10 @@ function CommandSearch({ ...props }: Props) {
           placeholder="Search products..."
           value={searchValue ?? undefined}
           onClick={() => {
-            setOpen(() => true)
+            setSuggestionsListOpen(true)
           }}
           onMouseEnter={() => {
-            setOpen(() => true)
+            setSuggestionsListOpen(true)
           }}
           onKeyDownCapture={(e: KeyboardEvent<HTMLInputElement>) => {
             if (e.key === 'Enter' || e.key === 'Return') {
@@ -65,10 +66,13 @@ function CommandSearch({ ...props }: Props) {
           }}
           onValueChange={handleOnChange}
         />
-        {props?.suggestions && (
+        {suggestionsListOpen && (
           <CommandSearchList
             suggestions={props.suggestions}
-            className={cn(open && 'h-fit opacity-100 transition-transform translate-y-0')}
+            className={cn(
+              suggestionsListOpen &&
+                'h-fit opacity-100 transition-transform translate-y-0'
+            )}
             onSelectSuggestion={handleSelect}
           />
         )}

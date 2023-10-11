@@ -27,6 +27,11 @@ export function searchReducer(
         ...state,
         categories: action.categories,
       }
+    case 'SET_SUGGESTIONS_LIST_OPEN':
+      return {
+        ...state,
+        suggestionsListOpen: action.open,
+      }
     default:
       return state
   }

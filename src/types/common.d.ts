@@ -9,8 +9,5 @@ export type SearchParams = { cat?: string; search?: string }
 
 export type Product = Entity.Product
 export type Category = Entity.Category
-export type Suggestions = {
-  [key: string]: (LabelValue[] & { type: string }) | null
-}
 
 export type Suggestion = LabelValue & { type: string; _id?: string }

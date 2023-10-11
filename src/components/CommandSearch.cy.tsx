@@ -1,29 +1,51 @@
 import React from 'react'
 import CommandSearch from './CommandSearch'
 import '@/app/globals.css'
-import { LabelValue } from '@/types/common'
+import { Suggestion } from '@/types/common'
 import * as CommandSearchList from './CommandSearchList'
 
-const mock: (LabelValue & { _id: string; type: string })[] = [
-  {
-    _id: '',
-    type: 'product',
-    label: 'product',
-    value: 'product',
-  },
-  {
-    _id: '',
-    type: 'product',
-    label: 'product',
-    value: 'product',
-  },
-  {
-    _id: '',
-    type: 'category',
-    label: 'category',
-    value: 'category',
-  },
-]
+const mock: Record<string, Suggestion[]> = {
+  products: [
+    {
+      _id: '',
+      type: 'product',
+      label: 'product',
+      value: 'product',
+    },
+    {
+      _id: '',
+      type: 'product',
+      label: 'product',
+      value: 'product',
+    },
+    {
+      _id: '',
+      type: 'category',
+      label: 'category',
+      value: 'category',
+    },
+  ],
+  categories: [
+    {
+      _id: '',
+      type: 'product',
+      label: 'product',
+      value: 'product',
+    },
+    {
+      _id: '',
+      type: 'product',
+      label: 'product',
+      value: 'product',
+    },
+    {
+      _id: '',
+      type: 'category',
+      label: 'category',
+      value: 'category',
+    },
+  ],
+}
 
 describe('<CommandSearch />', () => {
   beforeEach(() => {
@@ -83,7 +105,7 @@ describe('<CommandSearch />', () => {
     cy.get('button[type=submit]')
       .click()
       .then(() => {
-        cy.get('[data-cy=CommandSearchList]').should('not.be.visible')
+        cy.get('[data-cy=CommandSearchList]').should('not.exist')
       })
   })
   it('should clear search value after submit', () => {
@@ -96,6 +118,20 @@ describe('<CommandSearch />', () => {
       .click()
       .then(() => {
         cy.get('input').should('not.contain.value')
+      })
+  })
+
+  it('should show suggestions after focusing input and typing', () => {
+    cy.nextMount(
+      <div className="p-8 bg-slate-50 text-slate-700 !important">
+        <CommandSearch suggestions={mock} />
+      </div>
+    )
+    cy.get('input')
+      .focus()
+      .type('a')
+      .then(() => {
+        cy.get('[data-cy=CommandSearchList]').should('be.visible')
       })
   })
 })

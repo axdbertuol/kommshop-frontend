@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react'
-import ProductList from '../ProductList'
+import React from 'react'
 import getProducts from '@/app/lib/actions/get-products'
 import { SearchParams } from '@/types/common'
+import ProductListWrapper from '../product/ProductListWrapper'
+import ProductList from '../product/ProductList'
 
 type Props = {
   searchParams?: SearchParams
@@ -15,9 +16,9 @@ async function ListingSegment({ searchParams }: Props) {
 
   return (
     <div className="flex flex-col items-center gap-y-4 min-h-screen">
-      <Suspense fallback={<>Loading...</>}>
+      <ProductListWrapper>
         <ProductList data={data} />
-      </Suspense>
+      </ProductListWrapper>
     </div>
   )
 }

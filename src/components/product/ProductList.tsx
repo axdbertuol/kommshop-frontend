@@ -1,17 +1,17 @@
-// 'use client'
-import React, { Suspense } from 'react'
-import ProductCard from './ProductCard'
+'use client'
 import { Product } from '@/types/common'
-import CardSkeleton from './CardSkeleton'
+import { Suspense, memo } from 'react'
+import CardSkeleton from '../CardSkeleton'
+import ProductCard from './ProductCard'
 
-export default async function ProductList({
-  data,
-}: {
+type Props = {
   data: Product[] | null | undefined
-}) {
+}
+function ProductList({ data }: Props) {
+  if (!data || data.length === 0) return <>Nothing was found :(</>
   return (
-    <div className="grid grid-flow-row md:grid-cols-3 lg:grid-cols-4 gap-4 border-t border-t-primary-300 py-8">
-      {data?.map((product, index) => {
+    <>
+      {data.map((product, index) => {
         return (
           <Suspense
             key={index}
@@ -26,7 +26,9 @@ export default async function ProductList({
             />
           </Suspense>
         )
-      })}
-    </div>
+      }) ?? <Suspense fallback={<CardSkeleton />}>not found</Suspense>}
+    </>
   )
 }
+
+export default memo(ProductList)

@@ -34,18 +34,6 @@ const getFilters = async () => {
   return res
 }
 
-// const getCategories = async () => {
-//   // const res = await fetch()
-//   const res = await new Promise<typeof categoriesMock>((resolve) =>
-//     setTimeout(() => resolve(categoriesMock), 50)
-//   )
-//   return res
-// }
-
-// export const preload = (id: string) => {
-//   void getItem(id)
-// }
-
 export default async function Page({
   params,
   searchParams,

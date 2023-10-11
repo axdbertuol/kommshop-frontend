@@ -1,11 +1,11 @@
 'use client'
 import React, { KeyboardEvent } from 'react'
-import { LabelValue } from '@/types/common'
+import { Suggestion } from '@/types/common'
 import { CommandGroup } from './ui/command'
 import { cn } from '@/app/lib/utils'
 
 type Props = {
-  suggestions: LabelValue[] | null | undefined
+  suggestions: Suggestion[]
   heading?: string
   onSelectSuggestion: (value: string) => void
 } & React.HTMLAttributes<HTMLDivElement>
