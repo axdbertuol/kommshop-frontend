@@ -1,4 +1,6 @@
-import authHandler from '@/app/lib/auth'
-// this will refresh an expired access token, when needed
+import { authOptions } from '@/app/lib/auth/firebase'
+import NextAuth from 'next-auth'
+
+const authHandler = NextAuth(authOptions)
 
 export { authHandler as GET, authHandler as POST }

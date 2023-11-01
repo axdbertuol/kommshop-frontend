@@ -1,5 +1,5 @@
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from './lib/auth'
+import { authOptions } from './lib/auth/firebase'
 
 export default async function Page() {
   const session = await getServerSession(authOptions)

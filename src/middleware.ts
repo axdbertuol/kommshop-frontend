@@ -1,5 +1,4 @@
 import { withAuth } from 'next-auth/middleware'
-import { authOptions } from './app/lib/auth'
 import { NextRequest } from 'next/server'
 
 export default withAuth(
@@ -11,9 +10,9 @@ export default withAuth(
     // jwt: {decode: authOptions.jwt?.decode},
 
     callbacks: {
-      authorized: ({ token }) => {
-        console.log('token', token)
-        return !!token
+      authorized: (obj) => {
+        console.log('qeee', obj)
+        return true
       },
     },
   }
