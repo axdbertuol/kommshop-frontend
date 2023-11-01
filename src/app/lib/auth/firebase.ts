@@ -1,7 +1,9 @@
 import { FirestoreAdapter, initFirestore } from '@auth/firebase-adapter'
 import { cert } from 'firebase-admin/app'
-import { AuthOptions } from 'next-auth'
+import { AuthOptions, Session } from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import admin from 'firebase-admin'
+import { AdapterUser } from 'next-auth/adapters'
 
 export const firestore = initFirestore({
   credential: cert({
@@ -43,18 +45,47 @@ export const authOptions: AuthOptions = {
   adapter: FirestoreAdapter(firestore),
   providers: [
     GoogleProvider({
+      profile(profile, tokens) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          role: profile?.role ?? 'client',
+        }
+      },
       clientId: process.env.GOOGLE_CLIENT_ID ?? '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
     }),
   ],
+  events: {
+    createUser(message) {
+      console.log('user created', JSON.stringify(message))
+    },
+  },
   callbacks: {
     async signIn(params) {
-      // console.log('asd', params?.account)
-      // console.log('dsad', params?.profile)
-      // if (account.provider === 'google') {
-      //   return profile.email_verified && profile.email.endsWith('@example.com')
-      // }
-      return true // Do different verification for other providers that don't have `email_verified`
+      console.log(params)
+      return true
+    },
+    session({
+      session,
+      user,
+    }: {
+      session: Session
+      user: AdapterUser & { role?: string }
+    }) {
+      if (user.role) {
+        const newSession = {
+          ...session,
+          user: {
+            ...session.user,
+            role: user.role,
+          },
+        }
+        return newSession
+      }
+      return session
     },
   },
 }
