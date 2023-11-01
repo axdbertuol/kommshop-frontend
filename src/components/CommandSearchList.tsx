@@ -37,11 +37,11 @@ function CommandSearchList({
 
   const callbackFilter = useCallback(
     () =>
-      (data &&
-        Object.entries(data)
-          .filter((entry) => entry?.[1].length !== 0)
-          .filter(Boolean)) ||
-      [],
+      data
+        ? Object.entries(data as Record<string, Suggestion[]>)
+            .filter((entry) => entry?.[1].length !== 0)
+            .filter(Boolean)
+        : [],
     [data]
   )
   const deferredSuggestions = useDeferredFilteredData(callbackFilter)
