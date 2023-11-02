@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { MainNav } from './MainNav'
-import { UserNav } from './UserNav'
+import { MemoizedUserNav } from './UserNav'
 
 function Nav() {
   return (
@@ -10,7 +10,7 @@ function Nav() {
         <h2>Kommshop</h2>
         <MainNav className="ml-auto" />
         <div className="ml-auto flex items-center space-x-4">
-          <UserNav />
+          <MemoizedUserNav />
         </div>
       </div>
     </div>

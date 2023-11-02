@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { memo } from 'react'
 
 export function UserNav() {
   const { data: session, status } = useSession()
@@ -78,3 +79,5 @@ export function UserNav() {
     </DropdownMenu>
   )
 }
+
+export const MemoizedUserNav = memo(UserNav)
