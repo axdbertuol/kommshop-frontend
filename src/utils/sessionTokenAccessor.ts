@@ -1,5 +1,5 @@
 import { Session, getServerSession } from 'next-auth'
-import { authOptions } from '../app/lib/auth'
+import { authOptions } from '../app/lib/auth/firebase'
 import { decrypt } from './encryption'
 
 export async function getAccessToken() {

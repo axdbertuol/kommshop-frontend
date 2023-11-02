@@ -43,6 +43,7 @@
     "react-server-dom-webpack": "0.0.0-experimental-dddfe6882-20231005",
     "rxjs": "^7.8.1",
     "server-only": "^0.0.1",
+    "slugify": "^1.6.6",
     "ws": "^8.14.2"
   },
   "devDependencies": {
