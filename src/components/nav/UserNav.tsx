@@ -12,10 +12,12 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { signIn, signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 import { memo } from 'react'
 
 export function UserNav() {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
   if (status === 'unauthenticated') {
     return <Button onClick={() => signIn()}>Sign in</Button>
@@ -56,7 +58,7 @@ export function UserNav() {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.push('/settings/profile')}>
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
