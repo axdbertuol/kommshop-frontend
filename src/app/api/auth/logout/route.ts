@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/lib/auth'
+import { authOptions } from '@/app/lib/auth/firebase'
 import { getServerSession } from 'next-auth'
 import { getIdToken } from '@/utils/sessionTokenAccessor'
 

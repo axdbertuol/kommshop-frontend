@@ -7,7 +7,10 @@ import { redirect } from 'next/navigation'
 export async function generateStaticParams() {
   const products = await getProducts()
 
-  return products?.map((product) => ({
+  if (!products || products.length === 0) {
+    return Promise.reject()
+  }
+  return products.map((product) => ({
     slug: slug(product.name, String(product._id)),
   }))
 }

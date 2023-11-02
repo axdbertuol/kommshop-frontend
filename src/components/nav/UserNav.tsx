@@ -18,7 +18,7 @@ export function UserNav() {
   const { data: session, status } = useSession()
 
   if (status === 'unauthenticated') {
-    return <Button onClick={() => signIn('keycloak')}>Sign in</Button>
+    return <Button onClick={() => signIn()}>Sign in</Button>
   }
   if (status === 'loading') {
     return <>Loading...</>
