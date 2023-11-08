@@ -1,7 +1,7 @@
 import SearchSegment from '@/components/section-segments/search-segment'
 import ListingSegment from '@/components/section-segments/listing-segment'
 import { SearchParams } from '@/types/common'
-import getProducts from '@/app/lib/actions/get-products'
+import getProducts from '@/app/lib/actions/getters/get-products'
 
 const filtersMock = [
   {

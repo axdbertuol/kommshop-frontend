@@ -1,5 +1,5 @@
 import React from 'react'
-import getProducts from '@/app/lib/actions/get-products'
+import getProducts from '@/app/lib/actions/getters/get-products'
 import { SearchParams } from '@/types/common'
 import ProductListWrapper from '../product/ProductListWrapper'
 import ProductList from '../product/ProductList'
