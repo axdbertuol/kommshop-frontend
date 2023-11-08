@@ -1,5 +1,5 @@
 'use server'
-import getCategories from '@/app/lib/actions/get-categories'
+import getCategories from '@/app/lib/actions/getters/get-categories'
 import React from 'react'
 import { LinkURLText } from './LinkURLText'
 import { SearchParams } from '@/types/common'

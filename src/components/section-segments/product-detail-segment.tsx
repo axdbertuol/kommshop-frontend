@@ -1,5 +1,5 @@
 import React from 'react'
-import getProduct from '@/app/lib/actions/get-product'
+import getProduct from '@/app/lib/actions/getters/get-product'
 import ProductDetail from '../product/ProductDetail'
 import { redirect } from 'next/navigation'
 
