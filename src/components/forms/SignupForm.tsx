@@ -1,18 +1,21 @@
 'use client'
-
-import { signIn } from 'next-auth/react'
 import { Input } from '../ui/input'
-import { Button } from '../ui/button'
+import React, { useState } from 'react'
+import { useFormStatus } from 'react-dom'
 
-export default function DefaultForm() {
+export default function SignupForm() {
+  const { pending, data } = useFormStatus()
+  const [provider, setProvider] = useState('CREDENTIALS')
+
   return (
-    <form className="flex max-w-md flex-col gap-4">
+    <>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="email1">Email</label>
+          <label htmlFor="email">Email</label>
         </div>
         <Input
-          id="email1"
+          id="email"
+          name="email"
           placeholder="name@flowbite.com"
           required
           type="text"
@@ -20,26 +23,43 @@ export default function DefaultForm() {
       </div>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="password1">Your password</label>
+          <label htmlFor="password">Your password</label>
         </div>
         <Input
-          id="password1"
+          id="password"
+          name="password"
           required
           type="password"
         />
       </div>
+      <div>
+        <div className="mb-2 block">
+          <label htmlFor="password2">Confirm password</label>
+        </div>
+        <Input
+          id="password2"
+          name="password2"
+          required
+          type="password"
+        />
+      </div>
+      <input
+        type="hidden"
+        id="provider"
+        name="provider"
+        value={provider}
+      />
       <div className="flex items-center gap-2">
         {/* <Checkbox id="remember" /> */}
         {/* <Label htmlFor="remember">Remember me</Label> */}
       </div>
-      <Button
+      <button
         type="submit"
-        onClick={() =>
-          signIn('keycloak', { callbackUrl: 'http://localhost:3000/dashboard' })
-        }
+        aria-disabled={pending}
+        disabled={pending}
       >
-        Submit
-      </Button>
-    </form>
+        Signup
+      </button>
+    </>
   )
 }
