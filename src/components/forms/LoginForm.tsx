@@ -4,7 +4,7 @@ import { signIn } from 'next-auth/react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 
-export default function DefaultForm() {
+export default function LoginForm() {
   return (
     <form className="flex max-w-md flex-col gap-4">
       <div>
@@ -38,6 +38,7 @@ export default function DefaultForm() {
       >
         Submit
       </Button>
+      Do not have an account yet? <Button>Sign up!</Button>
     </form>
   )
 }
