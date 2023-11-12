@@ -11,18 +11,18 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useRouter } from 'next/navigation'
 import { memo } from 'react'
 
 export function UserNav() {
-  const { data: session, status } = useSession()
   const router = useRouter()
+  const { user, loading } = useCurrentUser()
 
-  if (status === 'unauthenticated') {
-    return <Button onClick={() => signIn()}>Sign in</Button>
+  if (!user) {
+    return <Button onClick={() => router.push('/signin')}>Sign in</Button>
   }
-  if (status === 'loading') {
+  if (loading) {
     return <>Loading...</>
   }
   return (
@@ -49,10 +49,10 @@ export function UserNav() {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {session?.user?.name ?? '<Nome>'}
+              {user?.firstName ?? '<Nome>'}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {session?.user?.email ?? '<Email>'}
+              {user?.email ?? '<Email>'}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -73,7 +73,7 @@ export function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => signOut({ callbackUrl: '/' })}>
+        <DropdownMenuItem>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

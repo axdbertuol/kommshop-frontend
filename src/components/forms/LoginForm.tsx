@@ -1,18 +1,34 @@
 'use client'
 
-import { signIn } from 'next-auth/react'
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
+import { useEffect, useState } from 'react'
+import { useFormStatus } from 'react-dom'
+import Link from 'next/link'
+import { cacheSignInCred } from '@/app/lib/actions/form/signin'
 
 export default function LoginForm() {
+  const { pending, data } = useFormStatus()
+  const [provider, setProvider] = useState('CREDENTIALS')
+
+  useEffect(() => {
+    // TODO: check provider
+    if (data?.get('success') == 'true' && data.get('email') && data.get('password')) {
+      cacheSignInCred({
+        email: data.get('email')!.toString(),
+        password: data.get('password')!.toString(),
+      })
+    }
+  }, [data])
   return (
-    <form className="flex max-w-md flex-col gap-4">
+    <>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="email1">Email</label>
+          <label htmlFor="email">Email</label>
         </div>
         <Input
-          id="email1"
+          id="email"
+          name="email"
           placeholder="name@flowbite.com"
           required
           type="text"
@@ -20,10 +36,11 @@ export default function LoginForm() {
       </div>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="password1">Your password</label>
+          <label htmlFor="password">Your password</label>
         </div>
         <Input
-          id="password1"
+          id="password"
+          name="password"
           required
           type="password"
         />
@@ -32,13 +49,30 @@ export default function LoginForm() {
         {/* <Checkbox id="remember" /> */}
         {/* <Label htmlFor="remember">Remember me</Label> */}
       </div>
+      <input
+        type="hidden"
+        id="provider"
+        name="provider"
+        value={provider}
+      />
       <Button
         type="submit"
-        onClick={() => signIn('keycloak', { callbackUrl: 'http://localhost:3000/store' })}
+        variant={'default'}
+        aria-disabled={pending}
+        disabled={pending}
+        className="w-[50%] self-center"
       >
         Submit
       </Button>
-      Do not have an account yet? <Button>Sign up!</Button>
-    </form>
+      <span className="text-center">
+        Do not have an account yet?{' '}
+        <Link
+          href={'/signup'}
+          className="underline"
+        >
+          Sign up!
+        </Link>
+      </span>
+    </>
   )
 }

@@ -3,9 +3,6 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import React from 'react'
 import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
-import SessionProviderWrapper from '@/components/providers/SessionProviderWrapper'
-import { getServerSession } from 'next-auth'
-import { authOptions } from './lib/auth/firebase'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,22 +12,18 @@ export const metadata = {
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getServerSession(authOptions)
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SessionProviderWrapper session={session!}>
-          <QueryClientWrapper>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-            >
-              {children}
-            </ThemeProvider>
-          </QueryClientWrapper>
-        </SessionProviderWrapper>
+        <QueryClientWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+          >
+            {children}
+          </ThemeProvider>
+        </QueryClientWrapper>
       </body>
     </html>
   )

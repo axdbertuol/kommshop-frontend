@@ -7,15 +7,19 @@ export const initialDefaultFormValues = {
   email: '',
   password: '',
   password2: '',
-  provider: '',
-  success: false,
 }
 
 export type FormValues = Partial<typeof initialDefaultFormValues>
 
-function DefaultForm({ children }: { children: ReactNode }) {
+function DefaultForm({
+  children,
+  action,
+}: {
+  children: ReactNode
+  action: (...args: any) => Promise<Record<string, string | boolean>>
+}) {
   const [state, formAction] = useFormState<FormValues, FormData>(
-    signupAndSignIn,
+    action,
     initialDefaultFormValues
   )
   console.log(state)

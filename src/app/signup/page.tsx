@@ -1,9 +1,11 @@
+'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
 import SignupForm from '@/components/forms/SignupForm'
+import { signupAndSignIn } from '../lib/actions/form/signup-signin'
 
-export default function Page() {
+export default async function Page() {
   return (
-    <DefaultForm>
+    <DefaultForm action={signupAndSignIn}>
       <SignupForm />
     </DefaultForm>
   )
