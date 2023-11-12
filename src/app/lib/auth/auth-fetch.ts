@@ -1,7 +1,6 @@
 'use server'
 import { cookies } from 'next/headers'
 import { refreshToken } from '../actions/form/refresh-token'
-
 export default async function authFetch(
   input: RequestInfo | URL,
   init: (RequestInit & { user?: string }) | undefined

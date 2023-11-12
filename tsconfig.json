@@ -21,7 +21,9 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "auth": ["./node_modules/kommshop-types/src/auth/types.d.ts"],
+      "auth-enum": ["./node_modules/kommshop-types/src/auth/enum.ts"]
     }
   },
   "ts-node": {

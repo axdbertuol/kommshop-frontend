@@ -4,10 +4,11 @@ import React, { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import Link from 'next/link'
+import { AuthProvidersEnum } from 'kommshop-types/src/auth/enum'
 
 export default function SignupForm() {
   const { pending, data } = useFormStatus()
-  const [provider, setProvider] = useState('CREDENTIALS')
+  const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
 
   return (
     <>

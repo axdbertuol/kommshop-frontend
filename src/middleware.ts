@@ -13,13 +13,13 @@ export function middleware(request: NextRequest) {
     (!currentUser || Date.now() > JSON.parse(currentUser).expiredAt)
   ) {
     request.cookies.delete('user')
-    const response = NextResponse.redirect(new URL('/login', request.url))
+    const response = NextResponse.redirect(new URL('/auth/signin', request.url))
     response.cookies.delete('user')
 
     return response
   }
 
   if (authRoutes.includes(request.nextUrl.pathname) && currentUser) {
-    return NextResponse.redirect(new URL('/profile', request.url))
+    return NextResponse.redirect(new URL('/store', request.url))
   }
 }
