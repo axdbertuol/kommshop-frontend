@@ -1,22 +1,15 @@
 'use server'
+import type { LoginResponseType } from 'auth'
+import { AuthProvidersEnum } from 'auth-enum'
 import { cache } from 'react'
 import { FormValues } from '@/components/forms/DefaultForm'
 import { cookies } from 'next/headers'
-
-import { User } from 'auth'
-
-export type LoginResponseType = Readonly<{
-  token: string
-  refreshToken: string
-  tokenExpires: number
-  user: User
-}>
 
 export const validateSignIn = async (prevState: FormValues, formData: FormData) => {
   console.log('cheguei')
   if (!formData) return prevState
   const authProvider = formData.get('provider')
-  if (authProvider === 'CREDENTIALS') {
+  if (authProvider === AuthProvidersEnum.credentials) {
     const email = formData.get('email')
     const password = formData.get('password')
     if (!email || !password) {
