@@ -1,3 +1,5 @@
+'use server'
+
 import { signupCred } from './signup'
 import { FormValues } from '@/components/forms/DefaultForm'
 
@@ -13,9 +15,7 @@ export const signupAndSignIn = async (prevState: FormValues, formData: FormData)
     }
     // TODO: zod validate
     try {
-      const signupResult:
-        | ({ success: boolean } & { message: string; statusCode: string })
-        | { errors: string; success: boolean } = await signupCred({
+      const signupResult: { success: boolean } | undefined = await signupCred({
         email: email.toString(),
         password: password.toString(),
       })

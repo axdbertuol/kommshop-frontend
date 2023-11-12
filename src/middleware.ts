@@ -1,31 +1,25 @@
-import { getToken } from 'next-auth/jwt'
-import { withAuth } from 'next-auth/middleware'
-import { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { authRoutes, protectedRoutes } from './app/lib/routes'
+import { cookies } from 'next/headers'
 
-export default withAuth(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async function middleware(req: NextRequest) {
-    const requestHeaders = new Headers(req.headers)
-    try {
-      console.log('middleware1', requestHeaders)
-      const token = await getToken({ req })
-      console.log('middleware2', token)
-      if (token) {
-        requestHeaders.set('Authorization', 'Bearer ' + token)
-      }
-    } catch (err) {
-      console.error('getToken middleware error: ', err)
-    }
-  },
-  {
-    // jwt: {decode: authOptions.jwt?.decode},
+export function middleware(request: NextRequest) {
+  // const currentUser = request.cookies.get('user')?.value
+  const cookiesList = cookies()
+  const currentUser = cookiesList.get('user')?.value
+  console.log('cookies middleware', currentUser, cookiesList)
+  if (
+    protectedRoutes.includes(request.nextUrl.pathname) &&
+    (!currentUser || Date.now() > JSON.parse(currentUser).expiredAt)
+  ) {
+    request.cookies.delete('user')
+    const response = NextResponse.redirect(new URL('/login', request.url))
+    response.cookies.delete('user')
 
-    callbacks: {
-      authorized: (obj) => {
-        console.log('qeee', obj)
-        return true
-      },
-    },
+    return response
   }
-)
-export const config = { matcher: ['/dashboard/:path'] }
+
+  if (authRoutes.includes(request.nextUrl.pathname) && currentUser) {
+    return NextResponse.redirect(new URL('/profile', request.url))
+  }
+}

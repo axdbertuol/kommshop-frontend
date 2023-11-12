@@ -1,7 +1,6 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from './lib/auth/firebase'
+import { cookies } from 'next/headers'
 
 export default async function Page() {
-  const session = await getServerSession(authOptions)
-  return <pre>{JSON.stringify(session, null, 2)}</pre>
+  const cookiesList = cookies()
+  return <pre>{JSON.stringify(cookiesList.get('user'), null, 2)}</pre>
 }

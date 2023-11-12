@@ -2,6 +2,8 @@
 import { Input } from '../ui/input'
 import React, { useState } from 'react'
 import { useFormStatus } from 'react-dom'
+import { Button } from '../ui/button'
+import Link from 'next/link'
 
 export default function SignupForm() {
   const { pending, data } = useFormStatus()
@@ -53,13 +55,23 @@ export default function SignupForm() {
         {/* <Checkbox id="remember" /> */}
         {/* <Label htmlFor="remember">Remember me</Label> */}
       </div>
-      <button
+      <Button
         type="submit"
         aria-disabled={pending}
         disabled={pending}
+        className="w-[50%] self-center"
       >
         Signup
-      </button>
+      </Button>
+      <span className="text-center">
+        Already have an account?{' '}
+        <Link
+          href="/signin"
+          className="underline"
+        >
+          Sign in!
+        </Link>
+      </span>
     </>
   )
 }
