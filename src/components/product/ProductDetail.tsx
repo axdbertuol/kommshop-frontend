@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react'
 import Image from 'next/image'
-import { Entity } from 'kommshop-types'
+import { Product } from '@/types/common'
 
-type ProductDetailProps = Entity.Product & { image?: string }
+type ProductDetailProps = Product & { image?: string }
 
 const ProductDetail = ({
   name,
@@ -35,7 +35,7 @@ const ProductDetail = ({
           <p className="text-primary mt-2">${price}</p>
           <div className="text-sm mt-4">
             <span className="text-primary-100">Favorited by:</span>
-            {favouritedBy?.map((user, index) => (
+            {favouritedBy?.map((user: any, index: React.Key | null | undefined) => (
               <span
                 key={index}
                 className="text-accent ml-2"

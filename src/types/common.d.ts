@@ -1,4 +1,4 @@
-import type { Entity } from 'kommshop-types'
+import type { Category, Product } from 'kommshop-types'
 
 export type LabelValue = {
   label: string
@@ -7,7 +7,7 @@ export type LabelValue = {
 
 export type SearchParams = { cat?: string; search?: string }
 
-export type Product = Entity.Product
-export type Category = Entity.Category
+export type Product = Product
+export type Category = Category
 
 export type Suggestion = LabelValue & { type: string; _id?: string }

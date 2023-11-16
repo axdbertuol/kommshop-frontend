@@ -1,11 +1,8 @@
 import React from 'react'
 import ProfileDetail from '../user/ProfileDetail'
+import { CreateUserDto, User } from 'shared-kommshop-types'
 
-type Props = {
-  name: string
-  avatar: string
-  email: string
-}
+type Props = CreateUserDto
 
 async function ProfileDetailSegment(props: Props) {
   return (

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
-import { User } from 'auth'
+import { User } from 'shared-kommshop-types'
 import { getMe } from '@/app/lib/actions/form/get-me'
 
 export const useCurrentUser = () => {

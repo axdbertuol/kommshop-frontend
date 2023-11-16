@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
+  transpilePackages: ['kommshop-types'],
   images: {
     remotePatterns: [
       {
