@@ -1,6 +1,5 @@
 import { Channel, Connection, ConsumeMessage, Replies, connect } from 'amqplib'
 import { randomUUID } from 'crypto'
-import { Message } from 'kommshop-types'
 
 export class RabbitService {
   private amqpConnection: Connection | undefined
@@ -43,7 +42,7 @@ export class RabbitService {
     exchangeName: string,
     exchangeType: string,
     exchangeRoutingKey: string,
-    requestData: Omit<Message.ProductContent, 'data'>
+    requestData: Omit<any, 'data'>
   ) {
     try {
       // Connect to the AMQP broker

@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { cacheSignInCred } from '@/app/lib/actions/form/signin'
-import { AuthProvidersEnum } from 'kommshop-types/src/auth/enum'
+import { AuthProvidersEnum } from '@/enum'
 
 export default function LoginForm() {
   const { pending, data } = useFormStatus()

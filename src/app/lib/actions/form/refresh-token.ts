@@ -1,10 +1,18 @@
 'use server'
-import { LoginResponseType } from 'auth'
+import { LoginResponseType } from 'shared-kommshop-types'
 import authFetch from '../../auth/auth-fetch'
 import { cookies } from 'next/headers'
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
 
-export const refreshToken = async ({ headers }: { headers?: Headers }) => {
-  const cookiesList = cookies()
+export const refreshToken = async ({
+  headers,
+  _cookies,
+}: {
+  headers?: Headers
+  _cookies?: ReadonlyRequestCookies
+}) => {
+  const cookiesList = _cookies ?? cookies()
+
   const token = cookiesList.get('token')?.value
   const user = cookiesList.get('user')?.value
   const expires = Number(cookiesList.get('tokenExpires')?.value)

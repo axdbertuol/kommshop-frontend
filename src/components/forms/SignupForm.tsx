@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import Link from 'next/link'
-import { AuthProvidersEnum } from 'kommshop-types/src/auth/enum'
+import { AuthProvidersEnum } from '@/enum'
 
 export default function SignupForm() {
   const { pending, data } = useFormStatus()

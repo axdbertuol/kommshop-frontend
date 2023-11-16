@@ -1,6 +1,6 @@
 'use server'
-import type { LoginResponseType } from 'auth'
-import { AuthProvidersEnum } from 'auth-enum'
+import type { LoginResponseType } from 'shared-kommshop-types'
+import { AuthProvidersEnum } from '@/enum'
 import { cache } from 'react'
 import { FormValues } from '@/components/forms/DefaultForm'
 import { cookies } from 'next/headers'
@@ -32,10 +32,11 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
           success: boolean
         }
         const cookiesList = cookies()
+
         Object.entries(result).forEach(([key, value]) => {
           cookiesList.set(key, JSON.stringify(value))
         })
-        cookiesList.set('provider', authProvider.toLowerCase())
+        cookiesList.set('provider', authProvider)
         console.log(cookiesList.getAll())
         return { success: true }
       }

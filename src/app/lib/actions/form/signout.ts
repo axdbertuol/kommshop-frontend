@@ -1,6 +1,6 @@
 'use server'
 
-import { User } from 'auth'
+import { User } from 'shared-kommshop-types'
 import authFetch from '../../auth/auth-fetch'
 
 export const signOut = async () => {

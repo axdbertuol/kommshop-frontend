@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,8 +22,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "auth": ["./node_modules/kommshop-types/src/auth/types.d.ts"],
-      "auth-enum": ["./node_modules/kommshop-types/src/auth/enum.ts"]
+      "shared-kommshop-types": ["./node_modules/kommshop-types"]
     }
   },
   "ts-node": {

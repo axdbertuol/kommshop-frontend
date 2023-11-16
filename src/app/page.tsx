@@ -1,6 +1,6 @@
-import { cookies } from 'next/headers'
+import { getCookiesList } from './lib/get-cookies-list'
 
 export default async function Page() {
-  const cookiesList = cookies()
-  return <pre>{JSON.stringify(cookiesList.get('user'), null, 2)}</pre>
+  const cookiesList = await getCookiesList()
+  return <pre>{JSON.stringify(cookiesList, null, 2)}</pre>
 }

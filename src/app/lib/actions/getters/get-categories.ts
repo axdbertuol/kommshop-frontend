@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { Entity } from 'kommshop-types'
+import { Category } from 'shared-kommshop-types'
 import * as z from 'zod'
 import 'server-only'
 import { Suggestion } from '@/types/common'
@@ -19,13 +19,13 @@ export const fetchCategories = async (search?: string | null) => {
     const myRequest = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
     })
-    return (await myRequest.json()) as Entity.Category[] | null | undefined
+    return (await myRequest.json()) as Category[] | null | undefined
   } catch (err) {
     console.error(err, 'errro!')
   }
 }
 
-export const parseResults = async (json: Entity.Category[] | null | undefined) => {
+export const parseResults = async (json: Category[] | null | undefined) => {
   if (!json) return null
   let data
   try {
