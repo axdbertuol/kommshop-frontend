@@ -7,7 +7,6 @@ export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
   const cookiesList = cookies()
   const currentUser = cookiesList.get('user')?.value
-  console.log('cookies middleware', currentUser, cookiesList)
   if (
     protectedRoutes.includes(request.nextUrl.pathname) &&
     (!currentUser || Date.now() > JSON.parse(currentUser).expiredAt)

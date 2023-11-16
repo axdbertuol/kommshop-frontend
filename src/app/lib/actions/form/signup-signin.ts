@@ -5,7 +5,6 @@ import { signupCred } from './signup'
 import { FormValues } from '@/components/forms/DefaultForm'
 
 export const signupAndSignIn = async (prevState: FormValues, formData: FormData) => {
-  console.log('cheguei')
   if (!formData) return prevState
   const authProvider = formData.get('provider')
   if (authProvider === AuthProvidersEnum.credentials) {
