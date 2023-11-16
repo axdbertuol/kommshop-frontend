@@ -15,7 +15,6 @@ function useSearchContext(props: Props = {}) {
   const { state, actions } = useContext(SearchContext)
   useEffect(() => {
     if (props?.filters) {
-      console.log('só uma')
       actions.setFilters(props.filters)
     }
     if (props?.categories) {

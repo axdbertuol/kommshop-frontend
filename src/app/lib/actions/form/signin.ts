@@ -6,7 +6,6 @@ import { FormValues } from '@/components/forms/DefaultForm'
 import { cookies } from 'next/headers'
 
 export const validateSignIn = async (prevState: FormValues, formData: FormData) => {
-  console.log('cheguei')
   if (!formData) return prevState
   const authProvider = formData.get('provider')
   if (authProvider === AuthProvidersEnum.credentials) {
@@ -37,7 +36,6 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
           cookiesList.set(key, JSON.stringify(value))
         })
         cookiesList.set('provider', authProvider)
-        console.log(cookiesList.getAll())
         return { success: true }
       }
     } catch (e) {
@@ -66,7 +64,6 @@ const signInCred = async (credentials: { email: string; password: string }) => {
       // cache: 'no-store',
     })
     if (response) {
-      console.log('oi')
       const json = await response.json()
       return { ...json, success: response.status === 200 }
     }

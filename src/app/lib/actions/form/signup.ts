@@ -17,7 +17,6 @@ export const signupCred = async (credentials: { email: string; password: string 
       headers: { 'Content-Type': 'application/json' },
       // cache: 'no-store',
     })
-    console.log(myRequest)
 
     return { success: myRequest.status === 201 || myRequest.status === 204 }
   } catch (err) {

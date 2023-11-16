@@ -1,5 +1,4 @@
 'use client'
-import { signupAndSignIn } from '@/app/lib/actions/form/signup-signin'
 import React, { ReactNode } from 'react'
 import { useFormState } from 'react-dom'
 
@@ -22,7 +21,6 @@ function DefaultForm({
     action,
     initialDefaultFormValues
   )
-  console.log(state)
   return (
     <form
       action={formAction}
