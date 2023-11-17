@@ -23,6 +23,7 @@ export const signupCred = async (credentials: { email: string; password: string 
     console.log(myRequest.status)
     const success = myRequest.status === 201 || myRequest.status === 204
     if (!success) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { status, ...rest }: ErrorResponse = await myRequest.json()
       return { success, ...rest }
     }

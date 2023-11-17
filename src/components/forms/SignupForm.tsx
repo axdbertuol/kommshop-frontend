@@ -5,34 +5,35 @@ import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
-import { useRouter } from 'next/router'
-import { FormValues } from './DefaultForm'
+import { TslSignupText } from '@/app/[locale]/(auth)/signup/page'
 
 export default function SignupForm({
   success,
   errors,
+  text,
 }: {
   success?: boolean
   errors?: Record<string, string>
+  text: TslSignupText
 }) {
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
   console.log(data, success, errors)
   if (success) {
-    return <>Check your email!</>
+    return <>{text.success}</>
   }
   return (
     <>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{text.email}</label>
         </div>
         <Input
           id="email"
           name="email"
           disabled={pending}
           aria-disabled={pending}
-          placeholder="name@flowbite.com"
+          placeholder="name@example.com"
           required
           type="text"
         />
@@ -44,7 +45,7 @@ export default function SignupForm({
       </div>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="password">Your password</label>
+          <label htmlFor="password">{text.password}</label>
         </div>
         <Input
           id="password"
@@ -62,7 +63,7 @@ export default function SignupForm({
       </div>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="password2">Confirm password</label>
+          <label htmlFor="password2">{text.password2}</label>
         </div>
         <Input
           id="password2"
@@ -94,15 +95,15 @@ export default function SignupForm({
         disabled={pending}
         className="w-[50%] self-center"
       >
-        Signup
+        {text.submit}
       </Button>
       <span className="text-center">
-        Already have an account?{' '}
+        {text['bottom.already']}{' '}
         <Link
           href="/signin"
           className="underline"
         >
-          Sign in!
+          {text['bottom.signin']}
         </Link>
       </span>
     </>

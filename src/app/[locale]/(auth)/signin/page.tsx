@@ -1,7 +1,7 @@
 'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
 import LoginForm from '@/components/forms/LoginForm'
-import { validateSignIn } from '../../lib/actions/form/signin'
+import { validateSignIn } from '@/app/lib/actions/form/signin'
 
 export default async function Page() {
   return (
