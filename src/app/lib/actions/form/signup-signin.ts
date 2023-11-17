@@ -19,10 +19,8 @@ export const signupAndSignIn = async (prevState: FormValues, formData: FormData)
         email: email.toString(),
         password: password.toString(),
       })
-      if (signupResult?.success) {
-        return { success: true }
-      }
-      console.log(signupResult)
+
+      return signupResult
     } catch (e) {
       console.log('signupAndSignIn: Error')
     }

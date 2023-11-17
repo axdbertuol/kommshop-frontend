@@ -39,7 +39,7 @@ function CommandSearchList({
     () =>
       data
         ? Object.entries(data as Record<string, Suggestion[]>)
-            .filter((entry) => entry?.[1].length !== 0)
+            .filter((entry) => entry?.[1]?.length !== 0)
             .filter(Boolean)
         : [],
     [data]

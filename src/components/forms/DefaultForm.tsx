@@ -1,33 +1,54 @@
 'use client'
-import React, { ReactNode } from 'react'
+import React, { ReactElement } from 'react'
 import { useFormState } from 'react-dom'
+
+export type FormValues = Partial<{
+  email: string
+  password: string
+  password2: string
+  success: boolean
+  errors: Record<string, string>
+  error: string
+}>
 
 export const initialDefaultFormValues = {
   email: '',
   password: '',
   password2: '',
+  success: false,
 }
-
-export type FormValues = Partial<typeof initialDefaultFormValues>
 
 function DefaultForm({
   children,
   action,
 }: {
-  children: ReactNode
-  action: (...args: any) => Promise<Record<string, string | boolean>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: ReactElement<any, string>
+  action: (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...args: any
+  ) => Promise<FormValues>
 }) {
   const [state, formAction] = useFormState<FormValues, FormData>(
     action,
     initialDefaultFormValues
   )
+  const childrenWithProps = React.Children.map(
+    children,
+    (child: ReactElement<FormValues>) =>
+      React.cloneElement(child, { success: state.success, errors: state.errors })
+  )
+  console.log(state)
   return (
-    <form
-      action={formAction}
-      className="flex max-w-md flex-col gap-4"
-    >
-      {children}
-    </form>
+    <>
+      <form
+        action={formAction}
+        className="flex max-w-md flex-col gap-4"
+      >
+        {childrenWithProps}
+      </form>
+      {state.success === false && state.error && <>{state.error}</>}
+    </>
   )
 }
 

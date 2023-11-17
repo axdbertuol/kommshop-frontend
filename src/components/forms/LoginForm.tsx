@@ -7,20 +7,17 @@ import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { cacheSignInCred } from '@/app/lib/actions/form/signin'
 import { AuthProvidersEnum } from '@/enum'
+import { FormValues } from './DefaultForm'
+import Redirect from '../Redirect'
+import { useRouter } from 'next/navigation'
 
-export default function LoginForm() {
+export default function LoginForm({ formState }: { formState?: FormValues }) {
+  const router = useRouter()
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
-
-  useEffect(() => {
-    // TODO: check provider
-    if (data?.get('success') == 'true' && data.get('email') && data.get('password')) {
-      cacheSignInCred({
-        email: data.get('email')!.toString(),
-        password: data.get('password')!.toString(),
-      })
-    }
-  }, [data])
+  if (formState?.success) {
+    router.push('/dashboard')
+  }
   return (
     <>
       <div>
