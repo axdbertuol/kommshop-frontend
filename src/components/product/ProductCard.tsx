@@ -11,7 +11,7 @@ import { Button } from '../ui/button'
 import LikeButton from '../buttons/LikeButton'
 import HoverableImage from '../HoverableImage'
 import { Product } from '@/types/common'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
 import { slug } from '@/utils/slug'
 
 export type ProductProps = {

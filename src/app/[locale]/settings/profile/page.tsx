@@ -1,6 +1,6 @@
 import { getMe } from '@/app/lib/actions/form/get-me'
 import ProfileDetailSegment from '@/components/section-segments/profile-detail-segment'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 
 export default async function Page() {
   // TODO: fetch from user microservice the whole information

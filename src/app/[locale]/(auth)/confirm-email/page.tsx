@@ -1,13 +1,14 @@
 'use server'
 import React, { Suspense } from 'react'
 import { cachedConfirmEmail } from '@/app/lib/actions/form/confirm-email'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 
-async function Page({ searchParams }: { searchParams: { hash?: string } }) {
-  if (!searchParams?.hash) {
+async function Page({ searchParams: { hash } }: { searchParams: { hash?: string } }) {
+  if (!hash) {
     redirect('/not-found')
+    return
   }
-  await cachedConfirmEmail(searchParams.hash).then(() => redirect('/signin'))
+  await cachedConfirmEmail(hash).then(() => redirect('/signin'))
   return (
     <Suspense fallback={<>Confirming email..</>}>
       <p>Success!</p>

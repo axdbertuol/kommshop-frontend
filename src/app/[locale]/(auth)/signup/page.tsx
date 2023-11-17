@@ -1,6 +1,6 @@
 'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
-import SignupForm from '@/components/forms/SignupForm'
+import SignupForm from '@/components/forms/CredentialsSignupForm'
 import { signupAndSignIn } from '@/app/lib/actions/form/signup-signin'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types/common'

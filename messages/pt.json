@@ -14,6 +14,14 @@
       "submit": "Registre-me",
       "already": "Já tem uma conta?",
       "signin": "Entrar!"
+    },
+    "signin": {
+      "success": "",
+      "email": "Seu e-mail",
+      "password": "Sua senha",
+      "submit": "Entrar",
+      "notyet": "Ainda não tem uma conta?",
+      "signup": "Cadastrar-se"
     }
   }
 }

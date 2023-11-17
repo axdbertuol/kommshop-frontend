@@ -7,13 +7,18 @@ import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
 import { FormValues } from './DefaultForm'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
 import { cn } from '@/app/lib/utils'
+import { IntlMessages } from '@/types/common'
 
-export default function LoginForm({
+export default function CredentialsLoginForm({
   formState,
   className,
-}: { formState?: FormValues } & React.HTMLAttributes<HTMLElement>) {
+  intl,
+}: {
+  formState?: FormValues
+  intl: IntlMessages['Auth']['signin']
+} & React.HTMLAttributes<HTMLElement>) {
   const router = useRouter()
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
@@ -24,7 +29,7 @@ export default function LoginForm({
     <div className={cn(className)}>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{intl.email}</label>
         </div>
         <Input
           id="email"
@@ -36,7 +41,7 @@ export default function LoginForm({
       </div>
       <div>
         <div className="mb-2 block">
-          <label htmlFor="password">Your password</label>
+          <label htmlFor="password">{intl.password}</label>
         </div>
         <Input
           id="password"
@@ -62,15 +67,15 @@ export default function LoginForm({
         disabled={pending}
         className="w-[50%] self-center"
       >
-        Submit
+        {intl.submit}
       </Button>
       <span className="text-center">
-        Do not have an account yet?{' '}
+        {intl.notyet}{' '}
         <Link
           href={'/signup'}
           className="underline"
         >
-          Sign up!
+          {intl.signup}
         </Link>
       </span>
     </div>

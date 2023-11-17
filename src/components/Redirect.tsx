@@ -1,5 +1,5 @@
 'use server'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 import React, { Suspense } from 'react'
 
 async function Redirect({ fallbackText, to }: { fallbackText: string; to: string }) {

@@ -11,9 +11,17 @@
       "email": "Your email",
       "password": "Your password",
       "password2": "Confirm your password",
-      "submit": "Signup",
+      "submit": "Sign up",
       "already": "Already have an account?",
       "signin": "Sign in!"
+    },
+    "signin": {
+      "success": "",
+      "email": "Your email",
+      "password": "Your password",
+      "submit": "Sign in",
+      "notyet": "Don't have an account?",
+      "signup": "Sign up!"
     }
   }
 }
