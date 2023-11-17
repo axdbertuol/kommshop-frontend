@@ -30,5 +30,6 @@ export const signupCred = async (credentials: { email: string; password: string 
     return { success }
   } catch (err) {
     console.error(err, 'errro!')
+    return { success: false }
   }
 }
