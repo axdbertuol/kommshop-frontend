@@ -1,6 +1,6 @@
 'use client'
 import { Input } from '../ui/input'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import Link from 'next/link'
