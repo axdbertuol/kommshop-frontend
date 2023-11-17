@@ -11,3 +11,8 @@ export type Product = Product
 export type Category = Category
 
 export type Suggestion = LabelValue & { type: string; _id?: string }
+export type ErrorResponse = {
+  status: number | string
+  errors?: Record<string, string>
+  error?: string
+}
