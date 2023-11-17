@@ -9,15 +9,17 @@ import { AuthProvidersEnum } from '@/enum'
 import { FormValues } from './DefaultForm'
 import { useRouter } from '@/navigation'
 import { cn } from '@/app/lib/utils'
-import { IntlMessages } from '@/types/common'
+import { ErrorResponse, IntlMessages } from '@/types/common'
 
 export default function CredentialsLoginForm({
   formState,
   className,
   intl,
+  errors,
 }: {
   formState?: FormValues
   intl: IntlMessages['Auth']['signin']
+  errors?: ErrorResponse['errors']
 } & React.HTMLAttributes<HTMLElement>) {
   const router = useRouter()
   const { pending, data } = useFormStatus()
@@ -38,6 +40,11 @@ export default function CredentialsLoginForm({
           required
           type="text"
         />
+        {errors?.['email'] && (
+          <>
+            <span>{errors['email']}</span>
+          </>
+        )}
       </div>
       <div>
         <div className="mb-2 block">
@@ -49,6 +56,11 @@ export default function CredentialsLoginForm({
           required
           type="password"
         />
+        {errors?.['password'] && (
+          <>
+            <span>{errors['password']}</span>
+          </>
+        )}
       </div>
       <div className="flex items-center gap-2">
         {/* <Checkbox id="remember" /> */}
