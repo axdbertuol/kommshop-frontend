@@ -1,6 +1,6 @@
 'use server'
 import React, { Suspense } from 'react'
-import { cachedConfirmEmail } from '../../lib/actions/form/confirm-email'
+import { cachedConfirmEmail } from '@/app/lib/actions/form/confirm-email'
 import { redirect } from 'next/navigation'
 
 async function Page({ searchParams }: { searchParams: { hash?: string } }) {

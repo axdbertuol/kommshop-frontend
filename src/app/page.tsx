@@ -1,6 +1,6 @@
-import { getCookiesList } from './lib/get-cookies-list'
+import { redirect } from 'next/navigation'
 
-export default async function Page() {
-  const cookiesList = await getCookiesList()
-  return <pre>{JSON.stringify(cookiesList, null, 2)}</pre>
+// This page only renders when the app is built statically (output: 'export')
+export default function RootPage() {
+  redirect('/en')
 }
