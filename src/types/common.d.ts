@@ -16,3 +16,6 @@ export type ErrorResponse = {
   errors?: Record<string, string>
   error?: string
 }
+
+type Messages = typeof import('../../messages/en.json')
+declare interface IntlMessages extends Messages {}

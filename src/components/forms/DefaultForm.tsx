@@ -1,5 +1,6 @@
 'use client'
-import React, { ReactElement } from 'react'
+import { cn } from '@/app/lib/utils'
+import React, { ReactElement, ReactHTMLElement } from 'react'
 import { useFormState } from 'react-dom'
 
 export type FormValues = Partial<{
@@ -21,6 +22,7 @@ export const initialDefaultFormValues = {
 function DefaultForm({
   children,
   action,
+  className,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: ReactElement<any, string>
@@ -28,7 +30,7 @@ function DefaultForm({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...args: any
   ) => Promise<FormValues>
-}) {
+} & React.HTMLAttributes<HTMLElement>) {
   const [state, formAction] = useFormState<FormValues, FormData>(
     action,
     initialDefaultFormValues
@@ -40,15 +42,10 @@ function DefaultForm({
   )
   console.log(state)
   return (
-    <>
-      <form
-        action={formAction}
-        className="flex max-w-md flex-col gap-4"
-      >
-        {childrenWithProps}
-      </form>
+    <div className={cn(className)}>
+      <form action={formAction}>{childrenWithProps}</form>
       {state.success === false && state.error && <>{state.error}</>}
-    </>
+    </div>
   )
 }
 

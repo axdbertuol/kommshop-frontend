@@ -8,8 +8,12 @@ import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
 import { FormValues } from './DefaultForm'
 import { useRouter } from 'next/navigation'
+import { cn } from '@/app/lib/utils'
 
-export default function LoginForm({ formState }: { formState?: FormValues }) {
+export default function LoginForm({
+  formState,
+  className,
+}: { formState?: FormValues } & React.HTMLAttributes<HTMLElement>) {
   const router = useRouter()
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
@@ -17,7 +21,7 @@ export default function LoginForm({ formState }: { formState?: FormValues }) {
     router.push('/dashboard')
   }
   return (
-    <>
+    <div className={cn(className)}>
       <div>
         <div className="mb-2 block">
           <label htmlFor="email">Email</label>
@@ -69,6 +73,6 @@ export default function LoginForm({ formState }: { formState?: FormValues }) {
           Sign up!
         </Link>
       </span>
-    </>
+    </div>
   )
 }

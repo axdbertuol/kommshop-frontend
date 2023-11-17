@@ -12,10 +12,8 @@
       "password": "Your password",
       "password2": "Confirm your password",
       "submit": "Signup",
-      "bottom": {
-        "already": "Already have an account?",
-        "signin": "Sign in!"
-      }
+      "already": "Already have an account?",
+      "signin": "Sign in!"
     }
   }
 }
