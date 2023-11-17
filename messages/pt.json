@@ -12,10 +12,8 @@
       "password": "Sua senha",
       "password2": "Confirme sua senha",
       "submit": "Registre-me",
-      "bottom": {
-        "already": "Já tem uma conta?",
-        "signin": "Entrar!"
-      }
+      "already": "Já tem uma conta?",
+      "signin": "Entrar!"
     }
   }
 }

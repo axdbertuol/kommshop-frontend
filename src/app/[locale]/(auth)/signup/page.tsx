@@ -3,15 +3,8 @@ import DefaultForm from '@/components/forms/DefaultForm'
 import SignupForm from '@/components/forms/SignupForm'
 import { signupAndSignIn } from '@/app/lib/actions/form/signup-signin'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
-export type TslSignupText = {
-  email: string
-  password: string
-  password2: string
-  submit: string
-  success: string
-  'bottom.already': string
-  'bottom.signin': string
-}
+import { IntlMessages } from '@/types/common'
+
 export default async function Page({
   params: { locale },
 }: {
@@ -26,14 +19,22 @@ export default async function Page({
     'password2',
     'submit',
     'success',
-    'bottom.already',
-    'bottom.signin',
+    'already',
+    'signin',
   ]
-  const text = Object.fromEntries(keys.map((key) => [key, t(key)])) as TslSignupText
+  const text = Object.fromEntries(
+    keys.map((key) => [key, t(key)])
+  ) as IntlMessages['Auth']['signup']
 
   return (
-    <DefaultForm action={signupAndSignIn}>
-      <SignupForm text={text} />
+    <DefaultForm
+      action={signupAndSignIn}
+      className={'w-full md:flex md:place-content-center'}
+    >
+      <SignupForm
+        text={text}
+        className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
+      />
     </DefaultForm>
   )
 }

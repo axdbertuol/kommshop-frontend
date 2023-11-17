@@ -5,17 +5,19 @@ import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
-import { TslSignupText } from '@/app/[locale]/(auth)/signup/page'
+import { cn } from '@/app/lib/utils'
+import { IntlMessages } from '@/types/common'
 
 export default function SignupForm({
   success,
   errors,
   text,
+  className,
 }: {
   success?: boolean
   errors?: Record<string, string>
-  text: TslSignupText
-}) {
+  text: IntlMessages['Auth']['signup']
+} & React.HTMLAttributes<HTMLElement>) {
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
   console.log(data, success, errors)
@@ -23,7 +25,7 @@ export default function SignupForm({
     return <>{text.success}</>
   }
   return (
-    <>
+    <div className={cn(className)}>
       <div>
         <div className="mb-2 block">
           <label htmlFor="email">{text.email}</label>
@@ -98,14 +100,14 @@ export default function SignupForm({
         {text.submit}
       </Button>
       <span className="text-center">
-        {text['bottom.already']}{' '}
+        {text.already}{' '}
         <Link
           href="/signin"
           className="underline"
         >
-          {text['bottom.signin']}
+          {text.signin}
         </Link>
       </span>
-    </>
+    </div>
   )
 }

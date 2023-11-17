@@ -7,6 +7,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
 import { defaultLocale, locales } from '../lib/get-locale'
+import { cn } from '../lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -34,7 +35,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>
+      <body className={cn(inter.className, 'h-screen w-full')}>
         <QueryClientWrapper>
           <ThemeProvider
             attribute="class"
