@@ -1,0 +1,21 @@
+{
+  "Index": {
+    "title": "Olá mundo"
+  },
+  "Metadata": {
+    "title": "KOMMSHOP"
+  },
+  "Auth": {
+    "signup": {
+      "success": "Enviamos um e-mail com instruções para participar da nossa comunidade. Por favor, dê uma olhada!",
+      "email": "Seu e-mail",
+      "password": "Sua senha",
+      "password2": "Confirme sua senha",
+      "submit": "Registre-me",
+      "bottom": {
+        "already": "Já tem uma conta?",
+        "signin": "Entrar!"
+      }
+    }
+  }
+}
