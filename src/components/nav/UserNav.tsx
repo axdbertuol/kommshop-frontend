@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useCurrentUser } from '@/hooks/useCurrentUser'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
 import { memo } from 'react'
 
 export function UserNav() {

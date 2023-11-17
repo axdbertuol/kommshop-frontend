@@ -8,7 +8,7 @@ import { AuthProvidersEnum } from '@/enum'
 import { cn } from '@/app/lib/utils'
 import { IntlMessages } from '@/types/common'
 
-export default function SignupForm({
+export default function CredentialsSignupForm({
   success,
   errors,
   text,

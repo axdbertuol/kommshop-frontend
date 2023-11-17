@@ -2,7 +2,7 @@ import getProduct from '@/app/lib/actions/getters/get-product'
 import getProducts from '@/app/lib/actions/getters/get-products'
 import ProductDetailSegment from '@/components/section-segments/product-detail-segment'
 import { slug } from '@/utils/slug'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 
 export async function generateStaticParams() {
   const products = await getProducts()
