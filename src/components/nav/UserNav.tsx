@@ -1,4 +1,5 @@
 'use client'
+import { signOut } from '@/app/lib/actions/form/signout'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import {
@@ -11,20 +12,21 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useCurrentUser } from '@/hooks/useCurrentUser'
 import { useRouter } from '@/navigation'
+import { LoginResponseUserDto } from 'kommshop-types'
 import { memo } from 'react'
 
-export function UserNav() {
+export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
   const router = useRouter()
-  const { user, loading } = useCurrentUser()
 
   if (!user) {
     return <Button onClick={() => router.push('/signin')}>Sign in</Button>
   }
-  if (loading) {
-    return <>Loading...</>
+
+  const handleSignout = () => {
+    signOut()
   }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -73,7 +75,7 @@ export function UserNav() {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignout}>
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

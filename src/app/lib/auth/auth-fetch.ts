@@ -1,28 +1,29 @@
 'use server'
-import { cookies } from 'next/headers'
-import { refreshToken } from '../actions/form/refresh-token'
-import { getCookiesList } from '../get-cookies-list'
+import {
+  getAuthTokens,
+  // cachedGetAuthTokens,
+  getEncryptedAuthCookie,
+} from '../get-cookies-list'
 export default async function authFetch(
   input: RequestInfo | URL,
   init: (RequestInit & { user?: string }) | undefined
 ) {
   const headers = new Headers(init?.headers)
-  const cookiesList = await getCookiesList()
-  const token = cookiesList.find(({ name }) => name === 'token')?.value
-  const user = cookiesList.find(({ name }) => name === 'user')?.value
-  const expires = Number(cookiesList.find(({ name }) => name === 'tokenExpires')?.value)
-
-  headers.set('Authorization', 'Bearer ' + token)
-
-  // if (Date.now() - expires > 0) {
-  //   console.log('Refreshing token')
-  //   try {
-  //     const data = await refreshToken({ headers, _cookies: cookiesList })
-  //     headers.set('Authorization', 'Bearer ' + data?.token)
-  //   } catch (err) {
-  //     console.log('Error refreshing token')
-  //   }
-  // }
-
-  return await fetch(input, { ...init, user, headers } as RequestInit & { user?: string })
+  let user: string
+  const encryptedAuthCookie = await getEncryptedAuthCookie()
+  if (!encryptedAuthCookie) return Promise.reject()
+  try {
+    const authTokens = await getAuthTokens(encryptedAuthCookie)
+    headers.set('Authorization', 'Bearer ' + authTokens.token)
+    user = JSON.stringify(authTokens.user)
+    console.log('user', user)
+  } catch (err) {
+    console.error('ParseError authFetch', err)
+    return Promise.reject(err)
+  }
+  return fetch(input, {
+    ...init,
+    user,
+    headers,
+  } as RequestInit & { user?: string })
 }

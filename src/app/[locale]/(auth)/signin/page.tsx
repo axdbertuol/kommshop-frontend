@@ -7,7 +7,7 @@ import { IntlMessages } from '@/types/common'
 
 export default async function Page() {
   const t = await getTranslations('Auth.signin')
-  const keys = ['email', 'password', 'password2', 'submit', 'success', 'notyet', 'signup']
+  const keys = ['email', 'password', 'submit', 'success', 'notyet', 'signup']
   const text = Object.fromEntries(
     keys.map((key) => [key, t(key)])
   ) as IntlMessages['Auth']['signin']

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie'
 import { User } from 'shared-kommshop-types'
 import { getMe } from '@/app/lib/actions/form/get-me'
+import { decryptSymmetric } from '@/app/lib/encryption'
 
 export const useCurrentUser = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -10,11 +11,22 @@ export const useCurrentUser = () => {
 
   useEffect(() => {
     setLoading(true)
-    const currentUser = Cookies.get('user')
-    if (currentUser) {
-      setUser(JSON.parse(currentUser))
+    const authCookie = Cookies.get(process.env.AUTH_COOKIE_KEY!)
+    const iv = Cookies.get('iv')
+    console.log('sdacds', authCookie, iv)
+    if (!authCookie || !iv) {
+      setLoading(false)
+      return
     }
-    setLoading(false)
+    const decrypt = async () => {
+      const decodedToken = await decryptSymmetric(authCookie, iv)
+      if (decodedToken) {
+        setUser(JSON.parse(decodedToken))
+      }
+    }
+    decrypt().then(() => {
+      setLoading(false)
+    })
   }, [])
 
   const refetchUser = async () => {

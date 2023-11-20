@@ -1,17 +1,28 @@
-import { getMe } from '@/app/lib/actions/form/get-me'
+import { getEncryptedAuthCookie, getAuthTokens } from '@/app/lib/get-cookies-list'
 import ProfileDetailSegment from '@/components/section-segments/profile-detail-segment'
 import { redirect } from '@/navigation'
+import { Suspense } from 'react'
 
 export default async function Page() {
   // TODO: fetch from user microservice the whole information
-  const session = await getMe().catch(() => redirect('/403'))
-  if (!session?.firstName || !session?.email) return redirect('/403')
+  const encryptedAuthCookie = await getEncryptedAuthCookie()
+  let user = null
+  if (encryptedAuthCookie) {
+    const authTokens = await getAuthTokens(encryptedAuthCookie)
+    user = authTokens.user
+  }
+  if (!user) {
+    redirect('/signin')
+    return
+  }
   return (
-    <ProfileDetailSegment
-      firstName={session.firstName}
-      lastName={session.lastName}
-      email={session.email}
-      photo={session?.photo}
-    />
+    <Suspense fallback={<>...Loading</>}>
+      <ProfileDetailSegment
+        firstName={user.firstName}
+        lastName={user.lastName}
+        email={user.email}
+        photo={user?.photo}
+      />
+    </Suspense>
   )
 }
