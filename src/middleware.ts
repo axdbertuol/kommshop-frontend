@@ -2,30 +2,38 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
-import { authRoutes, protectedRoutes } from './app/lib/routes'
-import { cookies } from 'next/headers'
+import { authRoutes, getRoutesWithLocale, protectedRoutes } from './app/lib/routes'
 import { defaultLocale, getLocale, locales } from './app/lib/get-locale'
+import { getAuthTokens, getEncryptedAuthCookie } from './app/lib/get-cookies-list'
 
 export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
 
   const resultLocale = getLocale(request.headers)
-  const cookiesList = cookies()
-  const currentUser = cookiesList.get('user')?.value
+  const authKeyToken = process.env.AUTH_COOKIE_KEY!
+
+  const encryptedAuthCookie = request.cookies.get(authKeyToken)?.value
+  const authTokens = encryptedAuthCookie ? await getAuthTokens(encryptedAuthCookie) : null
 
   if (
-    protectedRoutes.includes(request.nextUrl.pathname) &&
-    (!currentUser || Date.now() > JSON.parse(currentUser).expiredAt)
+    getRoutesWithLocale(request.headers, protectedRoutes).includes(
+      request.nextUrl.pathname
+    ) &&
+    (!authTokens || Date.now() > authTokens.tokenExpires)
   ) {
-    request.cookies.delete('user')
-    const response = NextResponse.redirect(new URL(`${resultLocale}/signin`, request.url))
-    response.cookies.delete('user')
+    request.cookies.delete(authKeyToken)
+    const response = NextResponse.redirect(new URL(`signin`, request.url))
+    response.cookies.delete(authKeyToken)
 
     return response
   }
 
-  if (authRoutes.includes(request.nextUrl.pathname) && currentUser) {
-    return NextResponse.redirect(new URL(`${resultLocale}/store`, request.url))
+  if (
+    getRoutesWithLocale(request.headers, authRoutes).includes(request.nextUrl.pathname) &&
+    authTokens?.user
+  ) {
+    console.log('resultLocale', resultLocale, request.url)
+    return NextResponse.redirect(new URL(`store`, request.url))
   }
 
   const handleI18nRouting = createIntlMiddleware({

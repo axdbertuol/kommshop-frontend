@@ -20,7 +20,7 @@ function ProfileDetail({
       <div className="bg-card rounded-lg p-4 shadow-lg md:w-8/12 lg:w-9/12">
         <div className="flex">
           <Image
-            src={photo?.path ?? '#'}
+            src={photo?.path ?? ''}
             alt={firstName ?? 'pic'}
             width={300}
             height={300}

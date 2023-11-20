@@ -24,6 +24,7 @@ export default function CredentialsLoginForm({
   const router = useRouter()
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
+  console.log('data', data)
   if (formState?.success) {
     router.push('/dashboard')
   }

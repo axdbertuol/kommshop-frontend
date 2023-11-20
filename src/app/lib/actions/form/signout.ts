@@ -1,7 +1,8 @@
 'use server'
 
-import { User } from 'shared-kommshop-types'
+import { cookies } from 'next/headers'
 import authFetch from '../../auth/auth-fetch'
+import { HTTP_CODES_ENUM } from '@/enum'
 
 export const signOut = async () => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
@@ -11,13 +12,19 @@ export const signOut = async () => {
     const url = process.env.SIGNOUT_ENDPOINT!
     const myRequest = await authFetch(url, {
       headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
       // cache: 'no-store',
     })
-    const json = (await myRequest.json()) as User
-    if (myRequest.status === 204) {
-      return { ...json, success: true }
+    console.log('signOut', myRequest)
+    const json = await myRequest.json()
+    console.log('signOut', json)
+    if (myRequest.status === HTTP_CODES_ENUM.NO_CONTENT) {
+      const cookiesList = cookies()
+      const authCookieKey = process.env.AUTH_COOKIE_KEY!
+      cookiesList.delete(authCookieKey)
+      return { success: true }
     }
-    return { ...json, success: false }
+    return { success: false }
   } catch (err) {
     console.error(err, 'errro!')
   }

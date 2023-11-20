@@ -4,6 +4,8 @@ import { AuthProvidersEnum } from '@/enum'
 import { cache } from 'react'
 import { FormValues } from '@/components/forms/DefaultForm'
 import { cookies } from 'next/headers'
+import { ErrorResponse } from '@/types/common'
+import { encryptSymmetric } from '../../encryption'
 
 export const validateSignIn = async (prevState: FormValues, formData: FormData) => {
   if (!formData) return prevState
@@ -16,14 +18,11 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
     }
     // TODO: zod validate
     try {
-      const signInResult: (
-        | { message: string; statusCode: string }
-        | { errors: string }
-        | LoginResponseType
-      ) & { success: boolean } = await cacheSignInCred({
-        email: email.toString(),
-        password: password.toString(),
-      })
+      const signInResult: (ErrorResponse & LoginResponseType) & { success: boolean } =
+        await cacheSignInCred({
+          email: email.toString(),
+          password: password.toString(),
+        })
       console.log(signInResult)
       if (signInResult.success) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -31,18 +30,25 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
           success: boolean
         }
         const cookiesList = cookies()
-
-        Object.entries(result).forEach(([key, value]) => {
-          cookiesList.set(key, JSON.stringify(value))
-        })
-        cookiesList.set('provider', authProvider)
-        return { success: true }
+        const authTokenKey = process.env.AUTH_COOKIE_KEY
+        if (authTokenKey && success) {
+          cookiesList.delete(authTokenKey)
+          const encrypted = await encryptSymmetric(JSON.stringify(result))
+          cookiesList.set(authTokenKey, JSON.stringify(encrypted))
+          cookiesList.set('auth-provider', authProvider)
+        }
+        return { success }
+      } else {
+        return {
+          success: signInResult.success,
+          ...(signInResult.error && { error: signInResult.error }),
+          ...(signInResult.errors && { errors: signInResult.errors }),
+        }
       }
     } catch (e) {
       console.log('signupAndSignIn: Error', e)
     }
     return { success: false }
-    // signIn(authProvider.toLowerCase(), { password, email })
   }
   return prevState
 }

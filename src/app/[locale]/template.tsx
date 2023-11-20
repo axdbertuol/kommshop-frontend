@@ -1,11 +1,18 @@
 import Nav from '@/components/nav/Nav'
 import React from 'react'
 import { ReactNode } from 'react'
+import { getAuthTokens, getEncryptedAuthCookie } from '../lib/get-cookies-list'
 
-export default function Template({ children }: { children: ReactNode }) {
+export default async function Template({ children }: { children: ReactNode }) {
+  const encryptedAuthCookie = await getEncryptedAuthCookie()
+  let user = null
+  if (encryptedAuthCookie) {
+    const authTokens = await getAuthTokens(encryptedAuthCookie)
+    user = authTokens.user
+  }
   return (
     <>
-      <Nav />
+      <Nav user={user} />
       {children}
     </>
   )
