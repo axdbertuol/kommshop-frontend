@@ -3,7 +3,7 @@ const withNextIntl = require('next-intl/plugin')()
 
 /** @type {import('next').NextConfig} */
 const nextConfig = withNextIntl({
-  transpilePackages: ['kommshop-types'],
+  // transpilePackages: ['kommshop-types'],
   images: {
     remotePatterns: [
       {
