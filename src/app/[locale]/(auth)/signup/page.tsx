@@ -1,7 +1,7 @@
 'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
 import SignupForm from '@/components/forms/CredentialsSignupForm'
-import { signupAndSignIn } from '@/app/lib/actions/form/signup-signin'
+import { validateAndSignup } from '@/app/lib/actions/form/validate-signup'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types/common'
 
@@ -28,7 +28,7 @@ export default async function Page({
 
   return (
     <DefaultForm
-      action={signupAndSignIn}
+      action={validateAndSignup}
       className={'w-full md:flex md:place-content-center'}
     >
       <SignupForm

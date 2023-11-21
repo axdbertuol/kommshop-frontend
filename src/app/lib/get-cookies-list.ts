@@ -16,7 +16,10 @@ export async function setAuthCookies(data: Tokens & { user: LoginResponseUserDto
   const cookiesList = cookies()
   cookiesList.delete(authKey)
   const encrypted = await encryptSymmetric(JSON.stringify(data))
-  cookiesList.set(authKey, JSON.stringify(encrypted))
+  cookiesList.set(authKey, JSON.stringify(encrypted), {
+    maxAge: 60 * 60 * 24 * 7, // one week,
+    secure: process.env.NODE_ENV === 'production',
+  })
 }
 
 export async function getEncryptedAuthCookie(): Promise<string | null> {

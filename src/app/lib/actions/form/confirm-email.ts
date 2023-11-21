@@ -1,13 +1,14 @@
 'use server'
 
 import { cache } from 'react'
+import { getApiPath } from '../../config'
 
 export const confirmEmail = async (hash: string) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const url = process.env.CONFIRM_EMAIL_ENDPOINT!
 
   try {
+    const url = getApiPath('confirmEmail', 'auth')
     const myRequest = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({ hash }),
@@ -20,7 +21,7 @@ export const confirmEmail = async (hash: string) => {
     const json = await myRequest.json()
     return { ...json, success: false }
   } catch (err) {
-    console.error(err, 'errro!')
+    console.error(err, 'confirmEmail!')
   }
 }
 

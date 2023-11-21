@@ -3,14 +3,13 @@ import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
 import { authRoutes, protectedRoutes } from './app/lib/routes'
-import { defaultLocale, getLocale, locales } from './app/lib/get-locale'
+import { defaultLocale, locales } from './app/lib/get-locale'
 import { getAuthTokens } from './app/lib/get-cookies-list'
+import { isTokenExpired } from './app/lib/utils'
 
 export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
   const [, locale, pathname] = request.nextUrl.pathname.split('/')
-  console.log(locale, pathname)
-  const resultLocale = getLocale(request.headers)
   const authKeyToken = process.env.AUTH_COOKIE_KEY!
 
   const encryptedAuthCookie = request.cookies.get(authKeyToken)?.value
@@ -18,7 +17,7 @@ export async function middleware(request: NextRequest) {
 
   if (
     protectedRoutes.find((route) => route.test(pathname)) &&
-    (!authTokens || Date.now() > authTokens.tokenExpires)
+    (!authTokens?.tokenExpires || isTokenExpired(authTokens.tokenExpires))
   ) {
     request.cookies.delete(authKeyToken)
     const response = NextResponse.redirect(new URL(`signin`, request.url))
@@ -30,9 +29,8 @@ export async function middleware(request: NextRequest) {
   if (
     authRoutes.find((route) => route.test(pathname)) &&
     authTokens?.tokenExpires &&
-    authTokens.tokenExpires > Date.now()
+    !isTokenExpired(authTokens.tokenExpires)
   ) {
-    console.log('resultLocale', resultLocale, request.url)
     return NextResponse.redirect(new URL(`store`, request.url))
   }
   const handleI18nRouting = createIntlMiddleware({

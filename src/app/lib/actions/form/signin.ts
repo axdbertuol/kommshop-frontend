@@ -6,6 +6,8 @@ import { FormValues } from '@/components/forms/DefaultForm'
 import { ErrorResponse } from '@/types/common'
 import { setAuthCookies } from '../../get-cookies-list'
 import { redirect } from '@/navigation'
+import { revalidatePath } from 'next/cache'
+import { getApiPath } from '../../config'
 
 export const validateSignIn = async (prevState: FormValues, formData: FormData) => {
   if (!formData) return prevState
@@ -30,7 +32,7 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
         success: boolean
       }
       await setAuthCookies(result)
-
+      revalidatePath('/')
       return redirect('/')
     } else {
       return {
@@ -46,13 +48,13 @@ export const validateSignIn = async (prevState: FormValues, formData: FormData) 
 const signInCred = async (credentials: { email: string; password: string }) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const url = process.env.SIGNIN_CREDENTIAL_ENDPOINT!
 
   const newCredentials = {
     email: credentials.email,
     password: credentials.password,
   }
   try {
+    const url = getApiPath('signin', 'auth')
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(newCredentials),
@@ -63,10 +65,10 @@ const signInCred = async (credentials: { email: string; password: string }) => {
       const json = await response.json()
       return { ...json, success: response.status === 200 }
     }
-    return { success: false }
   } catch (err) {
-    console.error(err, 'errro!')
+    console.error(err, 'signInCred!')
   }
+  return { success: false }
 }
 
 export const cacheSignInCred = cache(signInCred)

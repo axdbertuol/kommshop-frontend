@@ -3,13 +3,13 @@
 import { cookies } from 'next/headers'
 import authFetch from '../../auth/auth-fetch'
 import { HTTP_CODES_ENUM } from '@/enum'
+import { revalidatePath } from 'next/cache'
+import { getApiPath } from '../../config'
 
 export const signOut = async () => {
-  // const url = new URL(`http://localhost:3334/users/${id}`)
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-
   try {
-    const url = process.env.SIGNOUT_ENDPOINT!
+    const url = getApiPath('signout', 'auth')
+
     const myRequest = await authFetch(url, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
@@ -20,10 +20,11 @@ export const signOut = async () => {
       const cookiesList = cookies()
       const authCookieKey = process.env.AUTH_COOKIE_KEY!
       cookiesList.delete(authCookieKey)
+      revalidatePath('/')
       return { success: true }
     }
   } catch (err) {
-    console.error(err, 'errro!')
+    console.error(err, 'signOut!')
   }
   return { success: false }
 }

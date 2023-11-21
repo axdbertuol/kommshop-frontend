@@ -7,6 +7,7 @@ import {
 } from '../get-cookies-list'
 import { Tokens } from '@/types/common'
 import { refreshTokenApi } from '../actions/form/refresh-token'
+import { isTokenExpired } from '../utils'
 
 export default async function authFetch(
   input: RequestInfo | URL,
@@ -27,11 +28,12 @@ export default async function authFetch(
     headers,
   }
 
-  if (refreshToken && tokenExpires && tokenExpires <= Date.now()) {
+  if (refreshToken && isTokenExpired(tokenExpires)) {
     console.log('tokenExpired')
-    const url = process.env.REFRESH_TOKEN_ENDPOINT!
+
     headers.set('Authorization', 'Bearer ' + refreshToken)
     const newTokensJson: Tokens = await refreshTokenApi({ headers })
+
     headers.set('Authorization', 'Bearer ' + newTokensJson.token)
     await setAuthCookies({ user, ...newTokensJson })
     init = {
@@ -42,6 +44,7 @@ export default async function authFetch(
     const cookiesList = cookies()
     const authKey = process.env.AUTH_COOKIE_KEY!
     cookiesList.delete(authKey)
+
     return Promise.reject('Invalid refresh token, user should log in again.')
   }
 

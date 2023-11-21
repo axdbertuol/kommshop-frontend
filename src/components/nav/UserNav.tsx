@@ -13,7 +13,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
-import Cookies from 'js-cookie'
 import { LoginResponseUserDto } from 'kommshop-types'
 import { memo } from 'react'
 
@@ -25,17 +24,12 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
   }
 
   const handleSignout = () => {
-    signOut()
-      .then(({ success }) => {
-        console.log('Sign out', success)
-        if (success) {
-          const authCoookie = process.env.AUTH_COOKIE_KEY!
-          console.log(Cookies.get(authCoookie))
-          Cookies.remove(authCoookie)
-          router.refresh()
-        }
-      })
-      .catch(() => router.push('/'))
+    signOut().then(({ success }) => {
+      console.log('Sign out', success)
+      if (success) {
+        // router.refresh()
+      }
+    })
   }
 
   return (

@@ -1,11 +1,12 @@
 'use server'
 import { Tokens } from '@/types/common'
+import { getApiPath } from '../../config'
 
 export const refreshTokenApi = async ({ headers }: { headers?: Headers }) => {
   const newHeaders = new Headers(headers || {})
   newHeaders.set('cache', 'no-store')
   try {
-    const url = process.env.REFRESH_TOKEN_ENDPOINT!
+    const url = getApiPath('refresh', 'auth')
     const response = await fetch(url, {
       method: 'POST',
       headers: newHeaders,
