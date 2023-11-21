@@ -7,7 +7,6 @@ import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
 import { FormValues } from './DefaultForm'
-import { useRouter } from '@/navigation'
 import { cn } from '@/app/lib/utils'
 import { ErrorResponse, IntlMessages } from '@/types/common'
 
@@ -21,13 +20,9 @@ export default function CredentialsLoginForm({
   intl: IntlMessages['Auth']['signin']
   errors?: ErrorResponse['errors']
 } & React.HTMLAttributes<HTMLElement>) {
-  const router = useRouter()
   const { pending, data } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
-  console.log('data', data)
-  if (formState?.success) {
-    router.push('/dashboard')
-  }
+
   return (
     <div className={cn(className)}>
       <div>

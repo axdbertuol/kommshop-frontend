@@ -1,17 +1,18 @@
 'use server'
-import { LoginResponseType } from 'shared-kommshop-types'
-import authFetch from '../../auth/auth-fetch'
+import { Tokens } from '@/types/common'
 
-export const refreshToken = async ({ headers }: { headers?: Headers }) => {
+export const refreshTokenApi = async ({ headers }: { headers?: Headers }) => {
+  const newHeaders = new Headers(headers || {})
+  newHeaders.set('cache', 'no-store')
   try {
     const url = process.env.REFRESH_TOKEN_ENDPOINT!
-    const response = await authFetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
-      headers,
+      headers: newHeaders,
     })
-    const data = (await response.json()) as LoginResponseType
+    const data = (await response.json()) as Tokens
     return data
-  } catch (err) {
-    console.log('Refresh error', err)
+  } catch (err: any) {
+    throw new Error('RefreshTokenApi error', err.message)
   }
 }

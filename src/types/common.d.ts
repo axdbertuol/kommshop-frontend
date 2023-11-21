@@ -1,4 +1,4 @@
-import type { Category, Product } from 'kommshop-types'
+import type { Category, LoginResponseType, Product } from 'kommshop-types'
 
 export type LabelValue = {
   label: string
@@ -19,3 +19,9 @@ export type ErrorResponse = {
 
 type Messages = typeof import('../../messages/en.json')
 declare interface IntlMessages extends Messages {}
+
+export type Tokens = {
+  token?: string | null
+  refreshToken?: string | null
+  tokenExpires?: number | null
+}

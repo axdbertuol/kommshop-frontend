@@ -10,7 +10,7 @@ export const confirmEmail = async (hash: string) => {
   try {
     const myRequest = await fetch(url, {
       method: 'POST',
-      body: JSON.stringify(hash),
+      body: JSON.stringify({ hash }),
       headers: { 'Content-Type': 'application/json' },
       // cache: 'no-store',
     })

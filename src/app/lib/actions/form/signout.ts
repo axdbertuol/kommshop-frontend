@@ -13,19 +13,17 @@ export const signOut = async () => {
     const myRequest = await authFetch(url, {
       headers: { 'Content-Type': 'application/json' },
       method: 'POST',
-      // cache: 'no-store',
+      cache: 'no-store',
     })
     console.log('signOut', myRequest)
-    const json = await myRequest.json()
-    console.log('signOut', json)
     if (myRequest.status === HTTP_CODES_ENUM.NO_CONTENT) {
       const cookiesList = cookies()
       const authCookieKey = process.env.AUTH_COOKIE_KEY!
       cookiesList.delete(authCookieKey)
       return { success: true }
     }
-    return { success: false }
   } catch (err) {
     console.error(err, 'errro!')
   }
+  return { success: false }
 }

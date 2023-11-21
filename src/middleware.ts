@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
 
-import { authRoutes, getRoutesWithLocale, protectedRoutes } from './app/lib/routes'
+import { authRoutes, protectedRoutes } from './app/lib/routes'
 import { defaultLocale, getLocale, locales } from './app/lib/get-locale'
-import { getAuthTokens, getEncryptedAuthCookie } from './app/lib/get-cookies-list'
+import { getAuthTokens } from './app/lib/get-cookies-list'
 
 export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
-
+  const [, locale, pathname] = request.nextUrl.pathname.split('/')
+  console.log(locale, pathname)
   const resultLocale = getLocale(request.headers)
   const authKeyToken = process.env.AUTH_COOKIE_KEY!
 
@@ -16,9 +17,7 @@ export async function middleware(request: NextRequest) {
   const authTokens = encryptedAuthCookie ? await getAuthTokens(encryptedAuthCookie) : null
 
   if (
-    getRoutesWithLocale(request.headers, protectedRoutes).includes(
-      request.nextUrl.pathname
-    ) &&
+    protectedRoutes.find((route) => route.test(pathname)) &&
     (!authTokens || Date.now() > authTokens.tokenExpires)
   ) {
     request.cookies.delete(authKeyToken)
@@ -27,24 +26,23 @@ export async function middleware(request: NextRequest) {
 
     return response
   }
-
+  console.log(authTokens?.tokenExpires)
   if (
-    getRoutesWithLocale(request.headers, authRoutes).includes(request.nextUrl.pathname) &&
-    authTokens?.user
+    authRoutes.find((route) => route.test(pathname)) &&
+    authTokens?.tokenExpires &&
+    authTokens.tokenExpires > Date.now()
   ) {
     console.log('resultLocale', resultLocale, request.url)
     return NextResponse.redirect(new URL(`store`, request.url))
   }
-
   const handleI18nRouting = createIntlMiddleware({
     locales: locales,
     defaultLocale: defaultLocale,
   })
   const response = handleI18nRouting(request)
-
   return response
 }
 
 export const config = {
-  matcher: ['/', '/(pt|en)/:path*'],
+  matcher: ['/', '/((?!.+\\.[\\w]+$|_next).*)', '/(pt|en)/:path*'],
 }

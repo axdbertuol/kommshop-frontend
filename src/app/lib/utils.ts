@@ -14,3 +14,5 @@ export const isGoodHTTPResponseStatus = (status: number | string): boolean =>
     HTTP_CODES_ENUM.CREATED,
     HTTP_CODES_ENUM.NO_CONTENT,
   ].includes(Number(status))
+
+export const isTokenExpired = (expiration: number): boolean => expiration <= Date.now()
