@@ -9,7 +9,7 @@ export const getMe = async () => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   try {
-    const url = getApiPath('getMe', 'auth')
+    const url = getApiPath('getMe')
     const myRequest = await authFetch(url, {
       headers: {
         'Content-Type': 'application/json',

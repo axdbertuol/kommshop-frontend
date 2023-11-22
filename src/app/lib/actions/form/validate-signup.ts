@@ -2,10 +2,12 @@
 
 import { AuthProvidersEnum } from 'kommshop-types'
 import { signupCred } from './signup'
-import { FormValues } from '@/components/forms/DefaultForm'
 import { ErrorResponse } from '@/types/common'
 
-export const validateAndSignup = async (prevState: FormValues, formData: FormData) => {
+export const validateAndSignup = async (
+  prevState: Record<string, any>,
+  formData: FormData
+) => {
   if (!formData) return prevState
   const authProvider = formData.get('provider')
   if (authProvider === AuthProvidersEnum.credentials) {

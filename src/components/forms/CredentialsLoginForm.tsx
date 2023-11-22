@@ -6,9 +6,8 @@ import { useState } from 'react'
 import { useFormStatus } from 'react-dom'
 import Link from 'next/link'
 import { AuthProvidersEnum } from '@/enum'
-import { FormValues } from './DefaultForm'
 import { cn } from '@/app/lib/utils'
-import { ErrorResponse, IntlMessages } from '@/types/common'
+import { ErrorResponse, IntlMessages, SigninFormValues } from '@/types/common'
 
 export default function CredentialsLoginForm({
   formState,
@@ -16,7 +15,7 @@ export default function CredentialsLoginForm({
   intl,
   errors,
 }: {
-  formState?: FormValues
+  formState?: SigninFormValues
   intl: IntlMessages['Auth']['signin']
   errors?: ErrorResponse['errors']
 } & React.HTMLAttributes<HTMLElement>) {

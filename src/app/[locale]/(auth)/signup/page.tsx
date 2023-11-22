@@ -1,9 +1,16 @@
 'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
 import SignupForm from '@/components/forms/CredentialsSignupForm'
-import { validateAndSignup } from '@/app/lib/actions/form/validate-signup'
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
-import { IntlMessages } from '@/types/common'
+import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { IntlMessages, SignupFormValues } from '@/types/common'
+import { composeValidateAuthSignup } from '@/app/lib/actions/form/signin'
+
+const initialSignupFormValues = {
+  email: '',
+  password: '',
+  password2: '',
+  success: false,
+} as SignupFormValues
 
 export default async function Page({
   params: { locale },
@@ -13,22 +20,17 @@ export default async function Page({
   unstable_setRequestLocale(locale)
 
   const t = await getTranslations('Auth.signup')
-  const keys = [
-    'email',
-    'password',
-    'password2',
-    'submit',
-    'success',
-    'already',
-    'signin',
-  ]
+  const messages = (await getMessages()) as IntlMessages
+  console.log(messages)
+  const keys = Object.keys(messages.Auth.signup)
   const text = Object.fromEntries(
     keys.map((key) => [key, t(key)])
   ) as IntlMessages['Auth']['signup']
 
   return (
     <DefaultForm
-      action={validateAndSignup}
+      submitAction={composeValidateAuthSignup}
+      initialValues={initialSignupFormValues}
       className={'w-full md:flex md:place-content-center'}
     >
       <SignupForm

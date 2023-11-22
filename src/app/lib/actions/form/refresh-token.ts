@@ -6,7 +6,7 @@ export const refreshTokenApi = async ({ headers }: { headers?: Headers }) => {
   const newHeaders = new Headers(headers || {})
   newHeaders.set('cache', 'no-store')
   try {
-    const url = getApiPath('refresh', 'auth')
+    const url = getApiPath('refresh')
     const response = await fetch(url, {
       method: 'POST',
       headers: newHeaders,

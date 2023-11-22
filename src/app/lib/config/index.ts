@@ -5,45 +5,32 @@ export type AuthPathname =
   | 'signout'
   | 'refresh'
   | 'getMe'
+  | 'google'
 export type BackendService = 'auth' | 'product' | 'cart' | 'user'
 
-export const getApiPath = (pathname: AuthPathname, service: BackendService) => {
-  let baseUrl: string | undefined
-  let endpoint: string | undefined
-
-  switch (service) {
-    case 'auth':
-      baseUrl = process.env.NEXT_AUTH_URL
-      break
-    default:
-      throw new Error('Backend service must be specified in the config file')
-  }
-  if (!baseUrl) {
-    throw new Error(`${service} not found in env`)
-  }
-
+export const getApiPathSwitch = (pathname: AuthPathname) => {
   switch (pathname) {
     case 'confirmEmail':
-      endpoint = process.env.CONFIRM_EMAIL_ENDPOINT
-      break
+      return process.env.confirmEmailUrl
     case 'signin':
-      endpoint = process.env.SIGNIN_CREDENTIAL_ENDPOINT
-      break
+      return process.env.signinUrl
     case 'signup':
-      endpoint = process.env.SIGNUP_CREDENTIAL_ENDPOINT
-      break
+      return process.env.signupUrl
+    case 'signout':
+      return process.env.signoutUrl
     case 'getMe':
-      endpoint = process.env.GET_ME_ENDPOINT
-      break
+      return process.env.getMeUrl
     case 'refresh':
-      endpoint = process.env.REFRESH_TOKEN_ENDPOINT
-      break
+      return process.env.refreshTokenUrl
+    case 'google':
+      return process.env.googleAuthUrl
     default:
       throw new Error('Path must be specified in the config file')
   }
-  if (!endpoint) {
-    throw new Error(`${pathname} not found in env`)
-  }
+}
 
-  return new URL(endpoint, baseUrl)
+export const getApiPath = (pathname: AuthPathname) => {
+  const path = getApiPathSwitch(pathname)
+  if (!path) throw new Error(`Path ${pathname} must be specified in the config file`)
+  return path
 }

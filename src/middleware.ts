@@ -28,8 +28,8 @@ export async function middleware(request: NextRequest) {
   console.log(authTokens?.tokenExpires)
   if (
     authRoutes.find((route) => route.test(pathname)) &&
-    authTokens?.tokenExpires &&
-    !isTokenExpired(authTokens.tokenExpires)
+    authTokens &&
+    Object.values(authTokens).every((token) => token)
   ) {
     return NextResponse.redirect(new URL(`store`, request.url))
   }

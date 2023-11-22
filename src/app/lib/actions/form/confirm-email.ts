@@ -8,7 +8,7 @@ export const confirmEmail = async (hash: string) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 
   try {
-    const url = getApiPath('confirmEmail', 'auth')
+    const url = getApiPath('confirmEmail')
     const myRequest = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({ hash }),

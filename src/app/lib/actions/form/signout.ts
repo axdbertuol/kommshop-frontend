@@ -8,7 +8,7 @@ import { getApiPath } from '../../config'
 
 export const signOut = async () => {
   try {
-    const url = getApiPath('signout', 'auth')
+    const url = getApiPath('signout')
 
     const myRequest = await authFetch(url, {
       headers: { 'Content-Type': 'application/json' },

@@ -1,46 +1,42 @@
 'use client'
 import { cn } from '@/app/lib/utils'
-import React, { ReactElement, ReactHTMLElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
 import { useFormState } from 'react-dom'
-
-export type FormValues = Partial<{
-  email: string
-  password: string
-  password2: string
-  success: boolean
-  errors: Record<string, string>
-  error: string
-}>
-
-export const initialDefaultFormValues = {
-  email: '',
-  password: '',
-  password2: '',
-  success: false,
-}
 
 function DefaultForm({
   children,
-  action,
+  submitAction,
   className,
+  initialValues,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: ReactElement<any, string>
-  action: (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...args: any
-  ) => Promise<FormValues>
+  initialValues: Record<string, any>
+  submitAction: (
+    prevState: typeof initialValues,
+    formData: FormData
+  ) => Promise<typeof initialValues>
 } & React.HTMLAttributes<HTMLElement>) {
+  type FormValues = typeof initialValues
+
   const [state, formAction] = useFormState<FormValues, FormData>(
-    action,
-    initialDefaultFormValues
+    submitAction,
+    initialValues
   )
+
   const childrenWithProps = React.Children.map(
     children,
     (child: ReactElement<FormValues>) =>
-      React.cloneElement(child, { success: state.success, errors: state.errors })
+      React.cloneElement(child, { success: state?.success, errors: state?.errors })
   )
-  console.log(state)
+
+  useEffect(() => {
+    if (state.success) {
+      // signup
+      console.log('signup successful')
+    }
+  }, [state?.success])
+
   return (
     <div className={cn(className)}>
       <form action={formAction}>{childrenWithProps}</form>

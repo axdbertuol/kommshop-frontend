@@ -6,7 +6,6 @@ import { getApiPath } from '../../config'
 export const signupCred = async (credentials: { email: string; password: string }) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-
   const newCredentials = {
     email: credentials.email,
     password: credentials.password,
@@ -14,7 +13,7 @@ export const signupCred = async (credentials: { email: string; password: string 
     lastName: 'asd',
   }
   try {
-    const url = getApiPath('signup', 'auth')
+    const url = getApiPath('signup')
     const myRequest = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(newCredentials),
