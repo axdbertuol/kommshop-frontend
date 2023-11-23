@@ -8,6 +8,7 @@ import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
 import { defaultLocale, locales } from '../lib/get-locale'
 import { cn } from '../lib/utils'
+import GoogleAuthProvider from '@/components/providers/GoogleAuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,13 +38,15 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html lang={locale}>
       <body className={cn(inter.className, 'h-screen w-full')}>
         <QueryClientWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            {children}
-          </ThemeProvider>
+          <GoogleAuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+            >
+              {children}
+            </ThemeProvider>
+          </GoogleAuthProvider>
         </QueryClientWrapper>
       </body>
     </html>

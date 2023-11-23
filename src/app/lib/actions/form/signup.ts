@@ -2,6 +2,7 @@
 
 import { ErrorResponse } from '@/types/common'
 import { getApiPath } from '../../config'
+import { HTTP_CODES_ENUM } from '@/enum'
 
 export const signupCred = async (credentials: { email: string; password: string }) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
@@ -21,7 +22,9 @@ export const signupCred = async (credentials: { email: string; password: string 
       // cache: 'no-store',
     })
     console.log(myRequest.status)
-    const success = myRequest.status === 201 || myRequest.status === 204
+    const success =
+      myRequest.status === HTTP_CODES_ENUM.CREATED ||
+      myRequest.status === HTTP_CODES_ENUM.NO_CONTENT
     if (!success) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { status, ...rest }: ErrorResponse = await myRequest.json()

@@ -1,9 +1,10 @@
 'use server'
 import DefaultForm from '@/components/forms/DefaultForm'
-import SignupForm from '@/components/forms/CredentialsSignupForm'
+import SignupForm from '@/components/forms/AbstractSignForm'
 import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages, SignupFormValues } from '@/types/common'
 import { composeValidateAuthSignup } from '@/app/lib/actions/form/signin'
+import { Link } from '@/navigation'
 
 const initialSignupFormValues = {
   email: '',
@@ -34,9 +35,19 @@ export default async function Page({
       className={'w-full md:flex md:place-content-center'}
     >
       <SignupForm
-        text={text}
+        intl={text}
         className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
-      />
+      >
+        <span className="text-center">
+          {text.already}{' '}
+          <Link
+            href="/signin"
+            className="underline"
+          >
+            {text.signin}
+          </Link>
+        </span>
+      </SignupForm>
     </DefaultForm>
   )
 }
