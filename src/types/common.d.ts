@@ -12,7 +12,7 @@ export type Category = Category
 
 export type Suggestion = LabelValue & { type: string; _id?: string }
 export type ErrorResponse = {
-  status: number | string
+  status: number
   errors?: Record<string, string>
   error?: string
 }
