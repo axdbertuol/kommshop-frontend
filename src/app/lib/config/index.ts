@@ -11,19 +11,19 @@ export type BackendService = 'auth' | 'product' | 'cart' | 'user'
 export const getApiPathSwitch = (pathname: AuthPathname) => {
   switch (pathname) {
     case 'confirmEmail':
-      return process.env.confirmEmailUrl
+      return new URL(process.env?.confirmEmailUrl ?? '')
     case 'signin':
-      return process.env.signinUrl
+      return new URL(process.env?.signinUrl ?? '')
     case 'signup':
-      return process.env.signupUrl
+      return new URL(process.env?.signupUrl ?? '')
     case 'signout':
-      return process.env.signoutUrl
+      return new URL(process.env?.signoutUrl ?? '')
     case 'getMe':
-      return process.env.getMeUrl
+      return new URL(process.env?.getMeUrl ?? '')
     case 'refresh':
-      return process.env.refreshTokenUrl
+      return new URL(process.env?.refreshTokenUrl ?? '')
     case 'google':
-      return process.env.googleAuthUrl
+      return new URL(process.env?.googleAuthUrl ?? '')
     default:
       throw new Error('Path must be specified in the config file')
   }

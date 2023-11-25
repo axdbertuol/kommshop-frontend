@@ -7,31 +7,13 @@ const nextConfig = {
   // transpilePackages: ['kommshop-types'],
   env: {
     authUrl: process.env.NEXT_URL_AUTH,
-    signupUrl: new URL(
-      process.env.SIGNUP_CREDENTIAL_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
-    signinUrl: new URL(
-      process.env.SIGNIN_CREDENTIAL_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
-    confirmEmailUrl: new URL(
-      process.env.CONFIRM_EMAIL_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
-    getMeUrl: new URL(process.env.GET_ME_ENDPOINT, process.env.NEXT_URL_AUTH).toString(),
-    refreshTokenUrl: new URL(
-      process.env.REFRESH_TOKEN_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
-    signoutUrl: new URL(
-      process.env.SIGNOUT_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
-    googleAuthUrl: new URL(
-      process.env.SIGNIN_GOOGLE_ENDPOINT,
-      process.env.NEXT_URL_AUTH
-    ).toString(),
+    signupUrl: process.env.SIGNUP_CREDENTIAL_ENDPOINT + process.env.NEXT_URL_AUTH,
+    signinUrl: process.env.SIGNIN_CREDENTIAL_ENDPOINT + process.env.NEXT_URL_AUTH,
+    confirmEmailUrl: process.env.CONFIRM_EMAIL_ENDPOINT + process.env.NEXT_URL_AUTH,
+    getMeUrl: process.env.GET_ME_ENDPOINT + process.env.NEXT_URL_AUTH,
+    refreshTokenUrl: process.env.REFRESH_TOKEN_ENDPOINT + process.env.NEXT_URL_AUTH,
+    signoutUrl: process.env.SIGNOUT_ENDPOINT + process.env.NEXT_URL_AUTH,
+    googleAuthUrl: process.env.SIGNIN_GOOGLE_ENDPOINT + process.env.NEXT_URL_AUTH,
   },
   images: {
     remotePatterns: [
