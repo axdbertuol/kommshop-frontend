@@ -16,7 +16,7 @@ function CommandSearchSuggestions({
   onSelectSuggestion,
 }: Props) {
   return (
-    <CommandGroup className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1">
       <span className="text-xs text-secondary-black-100">{heading}</span>
       <ul
         className="z-30"
@@ -32,7 +32,6 @@ function CommandSearchSuggestions({
           >
             <span
               className="w-full text-left transition-all rounded-md bg-inherit px-2  py-2 shadow-none group-hover:bg-primary-400"
-              role="listitem"
               tabIndex={0}
               onClick={() => {
                 onSelectSuggestion(suggestion.value)
@@ -49,7 +48,7 @@ function CommandSearchSuggestions({
           </li>
         ))}
       </ul>
-    </CommandGroup>
+    </div>
   )
 }
 

@@ -1,8 +1,8 @@
 import React from 'react'
-import CommandSearch from './CommandSearch'
+import CommandSearch from '@/app/components/CommandSearch'
 import '@/app/globals.css'
 import { Suggestion } from '@/types/common'
-import * as CommandSearchList from './CommandSearchList'
+import * as CommandSearchList from '@/app/components/CommandSearchList'
 
 const mock: Record<string, Suggestion[]> = {
   products: [
@@ -92,7 +92,7 @@ describe('<CommandSearch />', () => {
     cy.get('input')
       .click()
       .then(() => {
-        cy.get('li>span[role=listitem]').first().click()
+        cy.get('li>span').first().click()
       })
     cy.get('input').should('contain.value', 'product')
   })

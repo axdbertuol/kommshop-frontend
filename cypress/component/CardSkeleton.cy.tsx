@@ -1,10 +1,10 @@
 import React from 'react'
-import Sidebar from './Sidebar'
+import CardSkeleton from '@/app/components/CardSkeleton'
 import '@/app/globals.css'
 
-describe('<Sidebar />', () => {
+describe('<CardSkeleton />', () => {
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
-    cy.nextMount(<Sidebar />)
+    cy.mount(<CardSkeleton />)
   })
 })

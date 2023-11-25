@@ -1,10 +1,10 @@
 import React from 'react'
-import CardSkeleton from './CardSkeleton'
+import LikeButton from '@/app/components/buttons/LikeButton'
 import '@/app/globals.css'
 
-describe('<CardSkeleton />', () => {
+describe('<LikeButton />', () => {
   it('renders', () => {
     // see: https://on.cypress.io/mounting-react
-    cy.mount(<CardSkeleton />)
+    cy.mount(<LikeButton />)
   })
 })

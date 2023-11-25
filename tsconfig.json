@@ -40,5 +40,11 @@
     "jest.setup.ts",
     "jest.config.js"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "cypress",
+    "__mocks__",
+    "/email-server",
+    "cypress.config.ts"
+  ]
 }

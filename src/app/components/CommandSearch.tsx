@@ -49,6 +49,7 @@ function CommandSearch({ ...props }: Props) {
       <Command className="transition-all flex flex-row w-full border border-input rounded-md focus-within:ring-1 focus-within:ring-ring  ">
         <CommandInput
           ref={inputRef}
+          data-testid="command-input"
           className="text-primary-foreground flex-auto md:w-[25vw]"
           placeholder="Search products..."
           value={searchValue ?? undefined}

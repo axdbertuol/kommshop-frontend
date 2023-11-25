@@ -28,6 +28,8 @@ import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared
 import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
 import SearchContextProvider from '@/app/components/providers/SearchContextProvider'
 import { ThemeProvider } from '@/app/components/providers/ThemeProvider'
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -85,19 +87,21 @@ Cypress.Commands.add('nextMount', (component, options) => {
   // })
 
   return mount(
-    <HeadManagerContext.Provider value={headManager}>
-      <AppRouterContext.Provider value={router}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-        >
-          <SearchContextProvider>
-            <QueryClientWrapper>{component}</QueryClientWrapper>
-          </SearchContextProvider>
-        </ThemeProvider>
-      </AppRouterContext.Provider>
-    </HeadManagerContext.Provider>,
+    <NextIntlClientProvider locale="pt">
+      <HeadManagerContext.Provider value={headManager}>
+        <AppRouterContext.Provider value={router}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+          >
+            <SearchContextProvider>
+              <QueryClientWrapper>{component}</QueryClientWrapper>
+            </SearchContextProvider>
+          </ThemeProvider>
+        </AppRouterContext.Provider>
+      </HeadManagerContext.Provider>
+    </NextIntlClientProvider>,
     options
   )
 })

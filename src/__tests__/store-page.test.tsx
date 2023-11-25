@@ -1,8 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { render, screen } from '@testing-library/react'
-import '@testing-library/jest-dom'
+import { render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils' // Use this for async tests
 import Page from '../app/[locale]/store/page'
 

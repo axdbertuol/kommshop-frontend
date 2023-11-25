@@ -1,6 +1,6 @@
 import React from 'react'
-import { LinkURLText } from './LinkURLText'
-import * as Navigation from 'next/navigation'
+import { LinkURLText } from '@/app/components/LinkURLText'
+import * as Navigation from '@/navigation'
 import '@/app/globals.css'
 
 describe('<LinkURLText />', () => {
