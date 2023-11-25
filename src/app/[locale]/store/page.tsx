@@ -34,7 +34,7 @@ const getFilters = async () => {
   return res
 }
 
-export default async function Page({
+export default function Page({
   params,
   searchParams,
 }: {
@@ -44,8 +44,7 @@ export default async function Page({
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
 
   // const defaultCategories = await getCategories()
-  console.log('preload starting', searchParams)
-  getProducts(searchParams?.search).then(() => console.log('preload finished'))
+  getProducts(searchParams?.search)
   return (
     <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
       {/* <SuspenseList revealOrder="forwards"> */}

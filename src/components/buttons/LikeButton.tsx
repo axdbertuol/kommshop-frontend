@@ -18,6 +18,7 @@ function LikeButton() {
       stroke="red"
       className="w-6 h-6 transition-transform hover:scale-125 cursor-pointer"
       onClick={handleClick}
+      data-testid="like-button"
     >
       <path
         strokeLinecap="round"
