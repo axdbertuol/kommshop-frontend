@@ -38,6 +38,7 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
         <Button
           variant="ghost"
           className="relative h-8 w-8 rounded-full"
+          data-testid="trigger-button"
         >
           <Avatar className="h-8 w-8">
             <AvatarImage
@@ -52,8 +53,12 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
         className="w-56"
         align="end"
         forceMount
+        data-testid="dropdown-content"
       >
-        <DropdownMenuLabel className="font-normal">
+        <DropdownMenuLabel
+          data-testid={'dropdown-content-label'}
+          className="font-normal"
+        >
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
               {user?.firstName ?? '<Nome>'}
@@ -64,7 +69,7 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuGroup>
+        <DropdownMenuGroup data-testid="dropdown-group-content">
           <DropdownMenuItem onClick={() => router.push('/settings/profile')}>
             Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
@@ -80,7 +85,10 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
           <DropdownMenuItem>New Team</DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleSignout}>
+        <DropdownMenuItem
+          data-testid="logout-item"
+          onClick={handleSignout}
+        >
           Log out
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>

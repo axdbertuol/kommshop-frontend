@@ -9,21 +9,23 @@ export type AuthPathname =
 export type BackendService = 'auth' | 'product' | 'cart' | 'user'
 
 export const getApiPathSwitch = (pathname: AuthPathname) => {
+  const nextAuthUrl = process.env.NEXT_URL_AUTH!
+  const makeUrl = (path: string) => new URL(path, nextAuthUrl)
   switch (pathname) {
     case 'confirmEmail':
-      return new URL(process.env?.confirmEmailUrl ?? '')
+      return makeUrl(process.env.CONFIRM_EMAIL_ENDPOINT!)
     case 'signin':
-      return new URL(process.env?.signinUrl ?? '')
+      return makeUrl(process.env.SIGNIN_CREDENTIAL_ENDPOINT!)
     case 'signup':
-      return new URL(process.env?.signupUrl ?? '')
+      return makeUrl(process.env.SIGNUP_CREDENTIAL_ENDPOINT!)
     case 'signout':
-      return new URL(process.env?.signoutUrl ?? '')
+      return makeUrl(process.env.SIGNOUT_ENDPOINT!)
     case 'getMe':
-      return new URL(process.env?.getMeUrl ?? '')
+      return makeUrl(process.env.GET_ME_ENDPOINT!)
     case 'refresh':
-      return new URL(process.env?.refreshTokenUrl ?? '')
+      return makeUrl(process.env.REFRESH_TOKEN_ENDPOINT!)
     case 'google':
-      return new URL(process.env?.googleAuthUrl ?? '')
+      return makeUrl(process.env.SIGNIN_GOOGLE_ENDPOINT!)
     default:
       throw new Error('Path must be specified in the config file')
   }

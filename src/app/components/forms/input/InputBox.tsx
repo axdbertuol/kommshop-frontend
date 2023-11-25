@@ -30,6 +30,7 @@ function InputBox({
       </div>
       <Input
         id={id}
+        data-testid="input-box"
         className={cn(className)}
         name={name}
         disabled={disabled}
