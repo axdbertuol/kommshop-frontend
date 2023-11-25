@@ -1,5 +1,5 @@
 'use client'
-import { SearchContext } from '@/components/providers/SearchContextProvider'
+import { SearchContext } from '@/app/components/providers/SearchContextProvider'
 import { LabelValue, Product } from '@/types/common'
 import { useContext, useEffect } from 'react'
 

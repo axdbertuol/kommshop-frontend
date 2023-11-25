@@ -1,22 +1,25 @@
 import getProduct from '@/app/lib/actions/getters/get-product'
 import getProducts from '@/app/lib/actions/getters/get-products'
-import ProductDetailSegment from '@/components/section-segments/product-detail-segment'
+import ProductDetailSegment from '@/app/components/section-segments/product-detail-segment'
 import { slug } from '@/utils/slug'
-import { redirect } from '@/navigation'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
-  const products = await getProducts()
-
-  if (!products || products.length === 0) {
-    return Promise.reject()
+  try {
+    const products = await getProducts()
+    if (!products || products.length === 0) {
+      return []
+    }
+    return products.map((product) => ({
+      slug: slug(product.name, String(product._id)),
+    }))
+  } catch (err) {
+    return []
   }
-  return products.map((product) => ({
-    slug: slug(product.name, String(product._id)),
-  }))
 }
 export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug.split('-').at(-1)
-  if (!id) return redirect('/404')
+  if (!id) return notFound()
   getProduct(id)
   return <ProductDetailSegment id={id} />
 }

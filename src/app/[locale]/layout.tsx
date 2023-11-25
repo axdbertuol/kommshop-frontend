@@ -1,14 +1,14 @@
 import React from 'react'
 import '@/app/globals.css'
 import { Inter } from 'next/font/google'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { ThemeProvider } from '@/app/components/providers/ThemeProvider'
 import { notFound } from 'next/navigation'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
-import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
+import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
 import { defaultLocale, locales } from '../lib/get-locale'
 import { cn } from '../lib/utils'
-import GoogleAuthProvider from '@/components/providers/GoogleAuthProvider'
+import GoogleAuthProvider from '@/app/components/providers/GoogleAuthProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 

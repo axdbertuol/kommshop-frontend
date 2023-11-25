@@ -1,7 +1,7 @@
 import React from 'react'
 import getProduct from '@/app/lib/actions/getters/get-product'
 import ProductDetail from '../product/ProductDetail'
-import { redirect } from '@/navigation'
+import { notFound } from 'next/navigation'
 
 type Props = {
   id: string
@@ -13,7 +13,7 @@ async function ProductDetailSegment({ id }: Props) {
     return r
   })
 
-  if (!data) return redirect('/')
+  if (!data) return notFound()
 
   return (
     <div className="flex flex-col items-center gap-y-4">

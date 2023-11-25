@@ -13,15 +13,20 @@ const schema = z
   )
   .optional()
 export const fetchCategories = async (search?: string | null) => {
-  const url = new URL('http://localhost:3333/categories')
+  const url = new URL(`categories`, process.env.NEXT_URL_PRODUCTS)
+
   if (search) url.searchParams.set('name', search)
+  const myRequest = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!myRequest.ok) {
+    throw new Error(`Could not find categories`)
+  }
   try {
-    const myRequest = await fetch(url, {
-      headers: { 'Content-Type': 'application/json' },
-    })
-    return (await myRequest.json()) as Category[] | null | undefined
-  } catch (err) {
-    console.error(err, 'errro!')
+    const json = (await myRequest.json()) as Category[] | null | undefined
+    return json
+  } catch (err: any) {
+    throw new Error('JSON error: ' + err.message)
   }
 }
 

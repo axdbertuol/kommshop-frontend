@@ -1,5 +1,5 @@
 import { cn } from '@/app/lib/utils'
-import { Input, InputProps } from '@/components/ui/input'
+import { Input, InputProps } from '@/app/components/ui/input'
 import React from 'react'
 
 type Props = {

@@ -3,7 +3,7 @@
  */
 import { render, screen, act } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import LikeButton from '@/components/buttons/LikeButton'
+import LikeButton from '@/app/components/buttons/LikeButton'
 
 describe('LikeButton', () => {
   test('should toggle fill color on click', async () => {

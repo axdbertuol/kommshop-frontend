@@ -1,8 +1,10 @@
+import 'server-only'
 import React from 'react'
 import getProducts from '@/app/lib/actions/getters/get-products'
 import { SearchParams } from '@/types/common'
 import ProductListWrapper from '../product/ProductListWrapper'
 import ProductList from '../product/ProductList'
+import { notFound } from 'next/navigation'
 
 type Props = {
   searchParams?: SearchParams
@@ -13,7 +15,7 @@ async function ListingSegment({ searchParams }: Props) {
     console.log('get products finished')
     return r
   })
-
+  if (!data) return notFound()
   return (
     <div className="flex flex-col items-center gap-y-4 min-h-screen">
       <ProductListWrapper>

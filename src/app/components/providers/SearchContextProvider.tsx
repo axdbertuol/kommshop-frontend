@@ -1,5 +1,5 @@
 'use client'
-import { defaultSearchCtxValues } from '../../store/constants'
+import { defaultSearchCtxValues } from '@/store/constants'
 import React, {
   Dispatch,
   ReactNode,
@@ -8,8 +8,8 @@ import React, {
   useMemo,
   useReducer,
 } from 'react'
-import { searchReducer } from '../../store/reducers'
-import { Action, SearchActionsEnum, SearchContextActions } from '../../store/actions'
+import { searchReducer } from '@/store/reducers'
+import { Action, SearchActionsEnum, SearchContextActions } from '@/store/actions'
 import { LabelValue, Product } from '@/types/common'
 
 export type SearchContextType = {

@@ -1,6 +1,6 @@
 'use server'
-import DefaultForm from '@/components/forms/DefaultForm'
-import LoginForm from '@/components/forms/AbstractSignForm'
+import DefaultForm from '@/app/components/forms/DefaultForm'
+import LoginForm from '@/app/components/forms/AbstractSignForm'
 import { composeValidateAuthSignin } from '@/app/lib/actions/form/signin'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types/common'

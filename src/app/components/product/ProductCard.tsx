@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from '@/app/components/ui/card'
 import { Button } from '../ui/button'
 import LikeButton from '../buttons/LikeButton'
 import HoverableImage from '../HoverableImage'

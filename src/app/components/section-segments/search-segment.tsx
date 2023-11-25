@@ -1,5 +1,5 @@
 // 'use client'
-
+'use server'
 import React from 'react'
 import CommandSearch from '../CommandSearch'
 import CategoriesBar from '../CategoriesBar'
@@ -11,11 +11,11 @@ type Props = {
 }
 
 async function SearchSegment({ searchParams }: Props) {
-  const suggestions = await getSuggestions(searchParams.search)
+  // const suggestions = await getSuggestions(searchParams.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
       <CategoriesBar searchParams={searchParams} />
-      <CommandSearch suggestions={suggestions} />
+      {/* {suggestions && <CommandSearch suggestions={suggestions} />} */}
     </div>
   )
 }

@@ -27,8 +27,4 @@ export const fetchSuggestions = async (search?: string) => {
 }
 const getSuggestions = cache(fetchSuggestions)
 
-export const fetchSuggestionsClient = async (search?: string) => {
-  return await fetchSuggestions(search)
-}
-
 export default getSuggestions

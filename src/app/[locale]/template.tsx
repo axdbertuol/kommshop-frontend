@@ -1,4 +1,4 @@
-import Nav from '@/components/nav/Nav'
+import Nav from '@/app/components/nav/Nav'
 import React from 'react'
 import { ReactNode } from 'react'
 import { getAuthTokens, getEncryptedAuthCookie } from '../lib/get-cookies-list'

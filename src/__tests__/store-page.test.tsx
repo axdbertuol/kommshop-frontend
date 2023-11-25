@@ -6,8 +6,8 @@ import '@testing-library/jest-dom'
 import { act } from 'react-dom/test-utils' // Use this for async tests
 import Page from '../app/[locale]/store/page'
 
-jest.mock('../components/section-segments/listing-segment')
-jest.mock('../components/section-segments/search-segment')
+jest.mock('@/app/components/section-segments/listing-segment')
+jest.mock('@/app/components/section-segments/search-segment')
 describe('Page', () => {
   beforeAll(() => {
     global.fetch = jest.fn(() => ({
