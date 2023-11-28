@@ -20,7 +20,14 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
   const router = useRouter()
 
   if (!user) {
-    return <Button onClick={() => router.push('/signin')}>Sign in</Button>
+    return (
+      <Button
+        data-testid="signin-button"
+        onClick={() => router.push('/signin')}
+      >
+        Sign in
+      </Button>
+    )
   }
 
   const handleSignout = () => {

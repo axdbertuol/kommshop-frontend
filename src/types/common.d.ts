@@ -11,9 +11,9 @@ export type Product = Product
 export type Category = Category
 
 export type Suggestion = LabelValue & { type: string; _id?: string }
-export type ErrorResponse = {
-  status: number
-  errors?: Record<string, string>
+export type ServerErrorResponse = {
+  status?: number | string
+  errors?: Record<string, string[]>
   error?: string
 }
 
@@ -109,9 +109,10 @@ interface TypedFormData<T extends Record<string, TypedFormDataValue>> {
 
 export type StatusErrors = {
   success: boolean
-  errors: Record<string, string>
-  error: string
+  errors: Record<string, string[]>
+  error: string | Array<{ message: string }>
   status: string | number
+  serverErrors?: Record<string, string[]>
 }
 
 export type SigninFormValues = Partial<StatusErrors> & {
@@ -121,5 +122,5 @@ export type SigninFormValues = Partial<StatusErrors> & {
 export type SignupFormValues = Partial<StatusErrors> & {
   email?: string
   password?: string
-  password?: string
+  password2?: string
 }

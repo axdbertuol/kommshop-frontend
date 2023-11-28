@@ -22,6 +22,12 @@
       "submit": "Entrar",
       "notyet": "Ainda não tem uma conta?",
       "signup": "Cadastrar-se"
+    },
+    "errors": {
+      "needLoginViaProvider:google": "Parece que essa conta já está vinculada a uma conta do Google.",
+      "notFound": "Account not found.",
+      "incorrectPassword": "Your password is incorrect.",
+      "emailAlreadyExists": "That account already exists."
     }
   }
 }

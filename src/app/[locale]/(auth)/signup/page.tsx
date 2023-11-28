@@ -3,7 +3,7 @@ import DefaultForm from '@/app/components/forms/DefaultForm'
 import SignupForm from '@/app/components/forms/AbstractSignForm'
 import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages, SignupFormValues } from '@/types/common'
-import { composeValidateAuthSignup } from '@/app/lib/actions/form/signin'
+import { composeValidateAuthSignup } from '@/app/lib/auth/utils'
 import { Link } from '@/navigation'
 
 const initialSignupFormValues = {
@@ -20,23 +20,28 @@ export default async function Page({
 }) {
   unstable_setRequestLocale(locale)
 
-  const t = await getTranslations('Auth.signup')
+  const t = await getTranslations('Auth')
   const messages = (await getMessages()) as IntlMessages
-  console.log(messages)
+  const errors = Object.fromEntries(
+    Object.keys(messages.Auth.errors).map((key) => [key, t(`errors.${key}`)])
+  )
   const keys = Object.keys(messages.Auth.signup)
+
   const text = Object.fromEntries(
-    keys.map((key) => [key, t(key)])
+    keys.map((key) => [key, t(`signup.${key}`)])
   ) as IntlMessages['Auth']['signup']
 
   return (
     <DefaultForm
       submitAction={composeValidateAuthSignup}
       initialValues={initialSignupFormValues}
-      className={'w-full md:flex md:place-content-center'}
+      translatedErrors={errors}
+      className={'w-full flex flex-col items-center md:flex md:place-content-center'}
     >
       <SignupForm
         intl={text}
         className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
+        formName="signup"
       >
         <span className="text-center">
           {text.already}{' '}

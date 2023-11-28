@@ -22,6 +22,12 @@
       "submit": "Sign in",
       "notyet": "Don't have an account?",
       "signup": "Sign up!"
+    },
+    "errors": {
+      "needLoginViaProvider:google": "It seems that account is bound with a Google account.",
+      "notFound": "Account not found.",
+      "incorrectPassword": "Your password is incorrect.",
+      "emailAlreadyExists": "That account already exists."
     }
   }
 }

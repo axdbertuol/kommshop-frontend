@@ -2,6 +2,7 @@
 
 import { cache } from 'react'
 import { getApiPath } from '../../config'
+import { parseServerErrors } from '../../utils'
 
 export const confirmEmail = async (hash: string) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
@@ -15,11 +16,14 @@ export const confirmEmail = async (hash: string) => {
       headers: { 'Content-Type': 'application/json' },
       // cache: 'no-store',
     })
-    if (myRequest.status === 204) {
-      return { success: true }
+    if (!myRequest.ok) {
+      const json = await myRequest.json()
+      return {
+        serverErrors: parseServerErrors(json),
+        success: false,
+      }
     }
-    const json = await myRequest.json()
-    return { ...json, success: false }
+    return { success: myRequest.status === 204 }
   } catch (err) {
     console.error(err, 'confirmEmail!')
   }

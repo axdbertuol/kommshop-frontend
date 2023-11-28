@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
-import { defaultLocale, locales } from '../lib/get-locale'
+import { locales } from '../lib/get-locale'
 import { cn } from '../lib/utils'
 import GoogleAuthProvider from '@/app/components/providers/GoogleAuthProvider'
 
@@ -18,10 +18,9 @@ export async function generateMetadata({
   params: { locale: string }
 }) {
   const t = await getTranslations({ locale, namespace: 'Metadata' })
-  const td = await getTranslations({ locale: defaultLocale, namespace: 'Metadata' })
 
   return {
-    title: t('title') ?? td('title'),
+    title: t('title'),
   }
 }
 export function generateStaticParams() {

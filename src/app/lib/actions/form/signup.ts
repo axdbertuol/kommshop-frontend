@@ -1,10 +1,11 @@
 'use server'
 
-import { ErrorResponse } from '@/types/common'
+import { ServerErrorResponse } from '@/types/common'
 import { getApiPath } from '../../config'
-import { HTTP_CODES_ENUM } from '@/enum'
+import { TCredSignupSchema } from './schemas'
+import { parseServerErrors } from '../../utils'
 
-export const signupCred = async (credentials: { email: string; password: string }) => {
+export const signupCred = async (credentials: Omit<TCredSignupSchema, 'provider'>) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const newCredentials = {
@@ -22,16 +23,16 @@ export const signupCred = async (credentials: { email: string; password: string 
       // cache: 'no-store',
     })
     console.log(myRequest.status)
-    const success =
-      myRequest.status === HTTP_CODES_ENUM.CREATED ||
-      myRequest.status === HTTP_CODES_ENUM.NO_CONTENT
-    if (!success) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { status, ...rest }: ErrorResponse = await myRequest.json()
-      return { success, ...rest }
+    if (!myRequest.ok) {
+      const json: ServerErrorResponse = await myRequest.json()
+
+      return {
+        serverErrors: parseServerErrors(json),
+        success: false,
+      }
     }
 
-    return { success }
+    return { success: myRequest.ok }
   } catch (err) {
     console.error(err, 'errro!')
     return { success: false }

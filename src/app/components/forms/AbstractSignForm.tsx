@@ -4,7 +4,7 @@ import { useFormStatus } from 'react-dom'
 import { Button } from '../ui/button'
 import { AuthProvidersEnum } from '@/enum'
 import { cn } from '@/app/lib/utils'
-import { IntlMessages } from '@/types/common'
+import { IntlMessages, StatusErrors } from '@/types/common'
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { useRouter } from '@/navigation'
 import InputBox from './input/InputBox'
@@ -15,10 +15,14 @@ export default function AbstractSignForm({
   intl,
   className,
   children,
+  locale,
+  formName,
 }: {
   success?: boolean
-  errors?: Record<string, string>
+  errors?: StatusErrors['errors']
   intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
+  locale?: string
+  formName: string
 } & React.HTMLAttributes<HTMLElement>) {
   const { pending } = useFormStatus()
   const router = useRouter()
@@ -28,7 +32,7 @@ export default function AbstractSignForm({
   const buttonRef = useRef<HTMLButtonElement | null>(null)
 
   const handleGoogleAuthSuccess = async (credentials: CredentialResponse) => {
-    if (!credentials) return
+    if (!credentials?.credential) return
     setProvider(AuthProvidersEnum.google)
     setIdToken(credentials.credential)
   }
@@ -45,6 +49,8 @@ export default function AbstractSignForm({
     }
     router.push('/')
   }
+  console.log('errors', errors)
+
   return (
     <div className={cn(className)}>
       <InputBox
@@ -88,13 +94,16 @@ export default function AbstractSignForm({
       />
       <input
         type="hidden"
+        id="formName"
+        name="formName"
+        value={formName}
+      />
+      <input
+        type="hidden"
         id="idToken"
         name="idToken"
         value={idToken}
       />
-      <div className="flex place-content-center gap-2">
-        <GoogleLogin onSuccess={handleGoogleAuthSuccess} />
-      </div>
       <Button
         ref={buttonRef}
         type="submit"
@@ -104,6 +113,12 @@ export default function AbstractSignForm({
       >
         {intl.submit}
       </Button>
+      <div className="flex place-content-center gap-2">
+        <GoogleLogin
+          onSuccess={handleGoogleAuthSuccess}
+          locale={locale}
+        />
+      </div>
       {children}
     </div>
   )
