@@ -37,6 +37,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.js",
+    "cypress.config.ts",
     "jest.setup.ts",
     "jest.config.js"
   ],
