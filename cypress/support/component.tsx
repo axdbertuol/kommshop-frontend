@@ -30,6 +30,7 @@ import SearchContextProvider from '@/app/components/providers/SearchContextProvi
 import { ThemeProvider } from '@/app/components/providers/ThemeProvider'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
+import { getServerActionDispatcher } from 'next/dist/client/components/app-router'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
@@ -40,7 +41,7 @@ declare global {
     interface Chainable {
       mount: typeof mount
       nextMount: (
-        jsx: ReactNode,
+        jsx: any | ReactNode,
         options?: (Partial<MountOptions> & { router: any; head: Head }) | undefined,
         rerenderKey?: string | undefined
       ) => Chainable<MountReturn>
@@ -65,7 +66,7 @@ Cypress.Commands.add('nextMount', (component, options) => {
     ...params,
   })
   const router = createRouter(options?.router || {})
-
+  getServerActionDispatcher()
   const createHeadManager = (params: any) => ({
     updateHead: cy.stub().as('head:updateHead'),
     mountedInstances: new Set(),

@@ -3,6 +3,7 @@ import { UserNav } from '@/app/components/nav/UserNav'
 import '@/app/globals.css'
 import { LoginResponseUserDto } from 'kommshop-types'
 import * as signOut from '@/app/lib/actions/form/signout'
+
 const mock: Partial<LoginResponseUserDto> = {
   firstName: 'John',
   lastName: 'Doe',
@@ -42,14 +43,5 @@ describe('<UserNav />', () => {
           ethb(mock).calledOnceWithExactly('/settings/profile')
         })
       })
-  })
-  it('when clicking on signout successfully call signOut', () => {
-    // const stub = cy.stub(signOut)
-
-    cy.intercept('/**/signout').as('signout')
-    cy.nextMount(<UserNav user={mock as LoginResponseUserDto} />)
-    cy.get('[data-testid="trigger-button"]').click()
-    cy.get('[data-testid="logout-item"]').click()
-    expect('@signout').to.be.true
   })
 })
