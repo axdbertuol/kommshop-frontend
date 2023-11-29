@@ -37,7 +37,7 @@ function DefaultForm({
     handleFormDataSubmission,
     initialValues
   )
-  const { updateSearchParams, clearSearchParams } = useURLSearchParams()
+  const { updateSearchParams, clearSearchParams, searchParams } = useURLSearchParams()
 
   const { pending } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
@@ -48,7 +48,7 @@ function DefaultForm({
   const handleGoogleAuthSuccess = async (credentials: CredentialResponse) => {
     if (!credentials?.credential) return
     const formData = new FormData(formRef.current!)
-    console.log(Object.fromEntries(formData.entries()))
+    setProvider(AuthProvidersEnum.google)
     formData?.set('idToken', credentials.credential)
     formData?.set('provider', AuthProvidersEnum.google)
     handleFormDataSubmission({ ...state }, formData)
@@ -62,16 +62,23 @@ function DefaultForm({
     state.errors,
     translatedErrors
   )
-  console.log(formRef.current?.childNodes.forEach((child) => child.textContent))
   useEffect(() => {
-    if (state?.success) {
-      updateSearchParams('success', 'true')
-      updateSearchParams('provider', provider)
+    if (state?.success && state?.email && provider) {
+      const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
+      params.set('email', state?.email)
+      updateSearchParams('successAuth', provider.toString(), { replace: true })
     }
     return () => {
       clearSearchParams()
     }
-  }, [state?.success, updateSearchParams, provider, clearSearchParams])
+  }, [
+    state?.success,
+    state?.email,
+    searchParams,
+    updateSearchParams,
+    provider,
+    clearSearchParams,
+  ])
 
   return (
     <form

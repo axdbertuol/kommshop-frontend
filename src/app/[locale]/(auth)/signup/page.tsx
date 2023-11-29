@@ -20,7 +20,7 @@ export default async function Page({
   searchParams,
 }: {
   params: { locale: string }
-  searchParams: { success?: 'true' | 'false'; provider?: string }
+  searchParams: { successAuth?: AuthProvidersEnum; email?: string }
 }) {
   unstable_setRequestLocale(locale)
   const messages = (await getMessages({ locale })) as IntlMessages
@@ -34,17 +34,11 @@ export default async function Page({
     Object.keys(messages.Auth.errors),
     { method: 'rich' }
   )
-  if (searchParams.success) {
-    if (searchParams.provider === AuthProvidersEnum.credentials) {
-      return (
-        <div
-          className={
-            'w-full flex flex-col items-center md:flex md:place-content-center pt-12 px-16 md:px-0 md:w-[33vw] lg:w-[20vw]'
-          }
-        >
-          {text.success}
-        </div>
-      )
+  if (searchParams.successAuth) {
+    console.log(searchParams, 'asdfggsd')
+    if (searchParams.successAuth === AuthProvidersEnum.credentials) {
+      console.log('xsxs')
+      return redirect('/check-email?email=' + searchParams.email)
     } else {
       return redirect('/')
     }

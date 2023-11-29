@@ -22,7 +22,7 @@ export default async function Page({
     locale: string
     messages: IntlMessages
   }
-  searchParams: { success?: 'true' | 'false' }
+  searchParams: { successAuth?: AuthProvidersEnum }
 }) {
   unstable_setRequestLocale(locale)
   const name = 'signin'
@@ -38,7 +38,7 @@ export default async function Page({
     { method: 'rich' }
   )
 
-  if (searchParams.success) {
+  if (searchParams.successAuth) {
     return redirect('/')
   }
   return (
