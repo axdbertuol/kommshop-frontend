@@ -45,7 +45,7 @@ export default function Page({
   // TODO: pegar de props.searchParams os filters, pegar os resultados e passar os resultados para ProductList
 
   // const defaultCategories = await getCategories()
-  getProducts(searchParams?.search)
+  getProducts(searchParams?.search).catch((err) => console.log(err))
   return (
     <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
       {/* <SuspenseList revealOrder="forwards"> */}

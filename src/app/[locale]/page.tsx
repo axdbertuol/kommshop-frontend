@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import {
   getAuthTokens,
   getCookiesList,
@@ -18,5 +18,5 @@ export default async function LocalePage({ params: { locale } }: Props) {
 
   // Enable static rendering
   unstable_setRequestLocale(locale)
-  return <pre>{JSON.stringify(cookiesList, null, 2)}</pre>
+  redirect('/store')
 }

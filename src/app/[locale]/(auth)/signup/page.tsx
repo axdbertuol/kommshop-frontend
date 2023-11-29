@@ -1,10 +1,11 @@
 'use server'
 import DefaultForm from '@/app/components/forms/DefaultForm'
 import SignupForm from '@/app/components/forms/AbstractSignForm'
-import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server'
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages, SignupFormValues } from '@/types/common'
 import { composeValidateAuthSignup } from '@/app/lib/auth/utils'
 import { Link } from '@/navigation'
+import { generateTranslationObject } from '@/app/lib/intl-utils'
 
 const initialSignupFormValues = {
   email: '',
@@ -19,17 +20,17 @@ export default async function Page({
   params: { locale: string }
 }) {
   unstable_setRequestLocale(locale)
+  const messages = (await getMessages({ locale })) as IntlMessages
 
-  const t = await getTranslations('Auth')
-  const messages = (await getMessages()) as IntlMessages
-  const errors = Object.fromEntries(
-    Object.keys(messages.Auth.errors).map((key) => [key, t(`errors.${key}`)])
+  const text = await generateTranslationObject(
+    'Auth.signup',
+    Object.keys(messages.Auth.signup)
   )
-  const keys = Object.keys(messages.Auth.signup)
-
-  const text = Object.fromEntries(
-    keys.map((key) => [key, t(`signup.${key}`)])
-  ) as IntlMessages['Auth']['signup']
+  const errors = await generateTranslationObject(
+    'Auth.errors',
+    Object.keys(messages.Auth.errors),
+    { method: 'rich' }
+  )
 
   return (
     <DefaultForm

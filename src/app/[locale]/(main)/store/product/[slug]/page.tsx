@@ -6,11 +6,12 @@ import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   try {
-    const products = await getProducts()
-    if (!products || products.length === 0) {
+    const { data, success } = await getProducts()
+
+    if (!success || !data || data.length === 0) {
       return []
     }
-    return products.map((product) => ({
+    return data.map((product) => ({
       slug: slug(product.name, String(product._id)),
     }))
   } catch (err) {

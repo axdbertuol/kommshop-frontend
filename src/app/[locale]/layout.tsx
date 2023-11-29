@@ -34,13 +34,16 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   unstable_setRequestLocale(locale)
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+    >
       <body className={cn(inter.className, 'h-screen w-full')}>
         <QueryClientWrapper>
           <GoogleAuthProvider>
             <ThemeProvider
               attribute="class"
-              defaultTheme="system"
+              defaultTheme="dark"
               enableSystem
             >
               {children}

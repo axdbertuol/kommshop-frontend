@@ -5,6 +5,7 @@ import { composeValidateAuthSignin } from '@/app/lib/auth/utils'
 import { getMessages, getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types/common'
 import { Link } from '@/navigation'
+import { generateTranslationObject } from '@/app/lib/intl-utils'
 
 const initialSigninFormValues = {
   email: '',
@@ -21,30 +22,33 @@ export default async function Page({
   }
 }) {
   unstable_setRequestLocale(locale)
+  const name = 'signin'
+  const messages = (await getMessages({ locale })) as IntlMessages
 
-  const t = await getTranslations('Auth')
-  const messages = (await getMessages()) as IntlMessages
-  const errors = Object.fromEntries(
-    Object.keys(messages.Auth.errors).map((key) => [key, t(`errors.${key}`)])
+  const text = await generateTranslationObject(
+    'Auth.' + name,
+    Object.keys(messages.Auth[name])
   )
-  const keys = Object.keys(messages.Auth.signin)
-
-  const text = Object.fromEntries(
-    keys.map((key) => [key, t(`signin.${key}`)])
-  ) as IntlMessages['Auth']['signin']
+  const errors = await generateTranslationObject(
+    'Auth.errors',
+    Object.keys(messages.Auth.errors),
+    { method: 'rich' }
+  )
 
   return (
     <DefaultForm
       submitAction={composeValidateAuthSignin}
       initialValues={initialSigninFormValues}
       translatedErrors={errors}
-      className={'w-full flex flex-col items-center md:flex md:place-content-center'}
+      className={
+        'flex flex-col  items-center justify-center md:flex md:place-content-center'
+      }
     >
       <LoginForm
         intl={text}
-        className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
+        className="p-12 md:w-[33vw] lg:w-[30vw] w-full flex flex-col flex-auto gap-4"
         locale={locale}
-        formName="signin"
+        formName={name}
       >
         <span className="text-center">
           {text.notyet}{' '}
