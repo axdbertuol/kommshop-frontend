@@ -18,19 +18,21 @@ import WarningBox from '../text/Error'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
 import { handleFormDataSubmission } from '@/app/lib/auth/utils'
 
+type Props = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: ReactElement<any, string>
+  initialValues: Partial<StatusErrors> & (SignupFormValues | SigninFormValues)
+  translatedErrors: Record<string, string | ReactElement<any, string>>
+  intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
+} & React.HTMLAttributes<HTMLElement>
+
 function DefaultForm({
   className,
   initialValues,
   translatedErrors,
   intl,
   children,
-}: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: ReactElement<any, string>
-  initialValues: Partial<StatusErrors> & (SignupFormValues | SigninFormValues)
-  translatedErrors: Record<string, string | ReactElement<any, string>>
-  intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
-} & React.HTMLAttributes<HTMLElement>) {
+}: Props) {
   type FormValues = typeof initialValues
 
   const [state, formAction] = useFormState<FormValues, FormData>(

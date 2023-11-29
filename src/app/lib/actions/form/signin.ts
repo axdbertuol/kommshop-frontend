@@ -11,7 +11,7 @@ import { parseServerErrors } from '../../utils'
 export const signInCred = async ({
   email,
   password,
-}: Omit<TCredSigninSchema, 'provider'>): Promise<SigninFormValues> => {
+}: Omit<TCredSigninSchema, 'provider'>) => {
   try {
     const url = getApiPath('signin')
     console.log('url: ' + url, email, password)

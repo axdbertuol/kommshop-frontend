@@ -1,16 +1,15 @@
+'use server'
 import { generateTranslationObject } from '@/app/lib/intl-utils'
 import { Link } from '@/navigation'
 import { IntlMessages } from '@/types/common'
-import { getMessages } from 'next-intl/server'
-import React from 'react'
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 
-async function Page({
-  locale,
-  searchParams,
-}: {
-  locale: string
-  searchParams: { email: string }
-}) {
+type Props = {
+  params: { locale: string }
+  searchParams: { email?: string }
+}
+export default async function Page({ params: { locale }, searchParams }: Props) {
+  unstable_setRequestLocale(locale)
   const messages = (await getMessages({ locale })) as IntlMessages
 
   const text = await generateTranslationObject(
@@ -31,10 +30,8 @@ async function Page({
         }
       >
         <span className="font-extralight">{text.success}</span>
-        <a href={`mailto:${searchParams.email}`}>{searchParams.email}</a>
+        <a href={`mailto:${searchParams?.email}`}>{searchParams?.email}</a>
       </div>
     </div>
   )
 }
-
-export default Page
