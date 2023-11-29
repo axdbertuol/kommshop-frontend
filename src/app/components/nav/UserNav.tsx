@@ -2,6 +2,7 @@
 import { signOut } from '@/app/lib/actions/form/signout'
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/avatar'
 import { Button } from '@/app/components/ui/button'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +14,9 @@ import {
   DropdownMenuTrigger,
 } from '@/app/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
-import { LoginResponseUserDto } from 'kommshop-types'
+import { AuthProvidersEnum, LoginResponseUserDto } from 'kommshop-types'
 import { memo } from 'react'
+import { googleLogout } from '@react-oauth/google'
 
 export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
   const router = useRouter()
@@ -34,7 +36,8 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
     signOut().then(({ success }) => {
       console.log('Sign out', success)
       if (success) {
-        // router.refresh()
+        if (user.provider === AuthProvidersEnum.google) googleLogout()
+        router.refresh()
       }
     })
   }

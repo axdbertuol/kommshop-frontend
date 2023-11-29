@@ -1,10 +1,12 @@
 import { cn } from '@/app/lib/utils'
 import { Input, InputProps } from '@/app/components/ui/input'
-import React from 'react'
+import React, { ReactElement, useCallback, useEffect, useId, useState } from 'react'
+import WarningBox from '../../text/Error'
+import { Tooltip } from 'react-tooltip'
 
 type Props = {
   labelText?: string
-  errors?: string[] | string
+  errors?: (string | ReactElement<unknown, string>)[]
 } & React.HTMLAttributes<HTMLInputElement> &
   InputProps
 
@@ -18,56 +20,97 @@ function InputBox({
   name,
   className,
   type,
+  autoComplete,
 }: Props) {
-  if (typeof errors === 'string') {
-    errors = [errors]
-  }
-  const hasErrors = errors && errors.length > 0
+  const hasErrors = useCallback(() => errors && errors.length > 0, [errors])
+  const [showWarning, setShowWarning] = useState(false)
+  const _id = useId()
+  const timeout = 7000
+
+  useEffect(() => {
+    if (hasErrors()) {
+      setShowWarning(true)
+      setTimeout(() => setShowWarning(false), timeout)
+    }
+  }, [hasErrors])
+
   return (
-    <div>
-      <div className="mb-2 block">
-        <label htmlFor={id}>{labelText}</label>
-      </div>
-      <Input
-        id={id}
-        data-testid="input-box"
-        className={cn(className)}
-        name={name}
-        disabled={disabled}
-        aria-disabled={disabled}
-        placeholder={placeholder}
-        required={required}
-        type={type}
-      />
-      {hasErrors &&
-        errors?.map((error, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-2 mt-2 transition-all before:opacity-0 opacity-1 ease-in-out text-yellow-500 text-center "
+    <>
+      <div className="flex flex-col ">
+        <div className="block mb-1">
+          <label
+            htmlFor={id}
+            className="font-extralight"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth="1.5"
-              stroke="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-              />
-            </svg>
+            {labelText}
+          </label>
+        </div>
+        <div className="flex relative">
+          <Input
+            id={id}
+            data-testid="input-box"
+            className={cn(
+              'dark:border-secondary-black-400 transition-all focus-within:border-transparent',
+              className,
+              showWarning && 'outline outline-yellow-300 '
+            )}
+            name={name}
+            disabled={disabled}
+            aria-disabled={disabled}
+            placeholder={placeholder}
+            required={required}
+            type={type}
+            autoComplete={autoComplete}
+          />
+          {showWarning && (
             <span
-              data-testid="error-message"
-              className="text-center align-middle text-xs  font-extralight"
+              data-tooltip-id={_id}
+              className={cn('transition-all hidden', 'block absolute top-2 right-2')}
             >
-              {error}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-5 h-5 text-yellow-300"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+                />
+              </svg>
             </span>
-          </div>
-        ))}
-    </div>
+          )}
+        </div>
+      </div>
+      {showWarning && (
+        <Tooltip
+          id={_id}
+          isOpen={showWarning}
+          place="right"
+        >
+          {hasErrors() &&
+            errors?.map((error, index) => (
+              <WarningBox
+                key={index}
+                role="status"
+              >
+                <span
+                  className={cn(
+                    'text-left align-middle text-[0.66rem] font-extralight',
+                    className
+                  )}
+                  data-testid={`error-message-${id ?? name ?? 'x'}-${index}`}
+                >
+                  {error}
+                </span>
+              </WarningBox>
+            ))}
+        </Tooltip>
+      )}
+    </>
   )
 }
 

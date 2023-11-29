@@ -11,11 +11,11 @@ type Props = {
 }
 
 async function SearchSegment({ searchParams }: Props) {
-  // const suggestions = await getSuggestions(searchParams.search)
+  const suggestions = await getSuggestions(searchParams.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
       <CategoriesBar searchParams={searchParams} />
-      {/* {suggestions && <CommandSearch suggestions={suggestions} />} */}
+      {suggestions && <CommandSearch suggestions={suggestions} />}
     </div>
   )
 }

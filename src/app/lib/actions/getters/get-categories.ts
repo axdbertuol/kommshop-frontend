@@ -2,7 +2,8 @@ import { cache } from 'react'
 import { Category } from 'shared-kommshop-types'
 import * as z from 'zod'
 import 'server-only'
-import { Suggestion } from '@/types/common'
+import { FetchResponse, ServerErrorResponse, Suggestion } from '@/types/common'
+import { parseServerErrors } from '../../utils'
 
 const schema = z
   .array(
@@ -12,21 +13,33 @@ const schema = z
     })
   )
   .optional()
-export const fetchCategories = async (search?: string | null) => {
+export const fetchCategories = async (
+  search?: string | null
+): Promise<FetchResponse<Category[] | null | undefined>> => {
   const url = new URL(`categories`, process.env.NEXT_URL_PRODUCTS)
 
   if (search) url.searchParams.set('name', search)
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
   })
-  if (!myRequest.ok) {
-    throw new Error(`Could not find categories`)
+
+  const response = {
+    data: null,
+    success: false,
+    serverErrors: null,
   }
+
   try {
-    const json = (await myRequest.json()) as Category[] | null | undefined
-    return json
+    const json = await myRequest.json()
+    if (!myRequest.ok) {
+      return {
+        ...response,
+        serverErrors: parseServerErrors(json),
+      }
+    }
+    return { ...response, data: json, success: true }
   } catch (err: any) {
-    throw new Error('JSON error: ' + err.message)
+    return response
   }
 }
 
@@ -50,6 +63,8 @@ export const parseResults = async (json: Category[] | null | undefined) => {
   return result as Suggestion[]
 }
 
-const getCategories = cache((name?: string) => fetchCategories(name).then(parseResults))
+const getCategories = cache((name?: string) =>
+  fetchCategories(name).then(({ data }) => parseResults(data))
+)
 
 export default getCategories

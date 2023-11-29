@@ -11,7 +11,8 @@ import {
 } from '../actions/form/schemas'
 import { signInCred, signinGoogle } from '../actions/form/signin'
 import { signupCred } from '../actions/form/signup'
-import { formDataErrorResponse } from '../utils'
+import { parseZodErrors } from '../utils'
+import { SigninFormValues, SignupFormValues, StatusErrors } from '@/types/common'
 
 export const getAuthMap = () => {
   const authMap = {
@@ -40,11 +41,11 @@ export const getAuthMap = () => {
   return authMap
 }
 
-const handleFormDataSubmission = async (
-  prevState: Record<string, any>,
-  formData: FormData,
-  validate: typeof validateAuth
-) => {
+export const handleFormDataSubmission = async (
+  prevState: Partial<StatusErrors> & (SignupFormValues | SigninFormValues),
+  formData: FormData
+): Promise<Partial<StatusErrors> & (SignupFormValues | SigninFormValues)> => {
+  console.log('formData', Object.fromEntries(formData.entries()), prevState)
   if (!formData) return prevState
   const authMap = getAuthMap()
   const data = Object.fromEntries(
@@ -55,32 +56,34 @@ const handleFormDataSubmission = async (
   const { provider, formName, ...actionData } = data
 
   if (!provider || !authMap?.[provider] || !formName || !authMap[provider]?.[formName]) {
-    return { success: false, error: 'Invalid authentication provider and/or formName' }
+    return {
+      formName,
+      provider,
+      success: false,
+      error: 'Invalid authentication provider and/or formName',
+    }
   }
   const { action, schema } = authMap[provider][formName]
 
-  const validateResult = await validate<z.infer<typeof schema>>(data, schema)
+  const validateResult = await validateAuth<z.infer<typeof schema>>(data, schema)
   if (!validateResult?.success) {
-    console.log(validateResult)
-    return { ...validateResult, ...prevState }
+    console.log('aqui', validateResult)
+    return { provider, formName, ...validateResult }
   }
   const actionResult = await action({ ...actionData })
   if (!actionResult.success) {
-    // treat server errors
-    return { success: false, serverErrors: actionResult?.serverErrors }
+    console.log('actionResulterror ', actionResult)
+
+    return { provider, formName, success: false, serverErrors: actionResult.serverErrors }
   }
-  return { ...actionResult, serverErrors: actionResult }
+  console.log('actionResult ', actionResult)
+  return { provider, formName, success: true }
 }
 
 export async function validateAuth<T>(data: Record<string, any>, schema: ZodSchema<T>) {
   const actionValidation = await schema.spa(data)
   if (!actionValidation.success) {
-    return formDataErrorResponse<T>(actionValidation.error)
+    return parseZodErrors<T>(actionValidation.error)
   }
   return actionValidation
 }
-
-export const composeValidateAuthSignin = (...args: any[]) =>
-  handleFormDataSubmission(args[0], args[1], validateAuth)
-export const composeValidateAuthSignup = (...args: any[]) =>
-  handleFormDataSubmission(args[0], args[1], validateAuth)

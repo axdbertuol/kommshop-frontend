@@ -1,4 +1,5 @@
 import type { Category, LoginResponseType, Product } from 'kommshop-types'
+import { ReactElement } from 'react'
 
 export type LabelValue = {
   label: string
@@ -115,12 +116,29 @@ export type StatusErrors = {
   serverErrors?: Record<string, string[]>
 }
 
+export type StatusErrorsWithJSX =
+  | StatusErrors
+  | {
+      errors: Record<string, (string | ReactElement<any, string>)[]>
+      serverErrors?: Record<string, (string | ReactElement<any, string>)[]>
+    }
+
 export type SigninFormValues = Partial<StatusErrors> & {
   email?: string
   password?: string
+  formName: string
+  provider: string
 }
 export type SignupFormValues = Partial<StatusErrors> & {
   email?: string
   password?: string
   password2?: string
+  formName: string
+  provider: string
+}
+
+export type FetchResponse<T> = {
+  data?: T | null
+  success: boolean
+  serverErrors?: StatusErrors['serverErrors'] | null
 }

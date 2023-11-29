@@ -8,17 +8,17 @@ import { Suggestion } from '@/types/common'
 export const fetchSuggestions = async (search?: string) => {
   const [products, categories] = await Promise.all([
     fetchProducts(search).then(
-      (products) =>
-        products?.map(
-          (products) =>
+      ({ data }) =>
+        data?.map(
+          (prod) =>
             ({
-              label: products.name,
-              value: products.name,
+              label: prod.name,
+              value: prod.name,
               type: 'product',
             } as Suggestion)
         ) ?? null
     ),
-    fetchCategories(search).then(parseResults),
+    fetchCategories(search).then(({ data }) => parseResults(data)),
   ])
   if ((!products || products.length === 0) && (!categories || categories?.length === 0))
     return null

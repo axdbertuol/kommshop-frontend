@@ -39,7 +39,7 @@ export function parseServerErrors(
   return allErrors
 }
 
-export function formDataErrorResponse<T>(validationError: ZodError<T>) {
+export function parseZodErrors<T>(validationError: ZodError<T>) {
   const errorsMap = new Map<string, string[]>()
   validationError.errors.forEach(({ path, message }) => {
     const key = path[0].toString()

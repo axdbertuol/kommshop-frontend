@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import './globals.css'
+import 'react-tooltip/dist/react-tooltip.css'
 
 type Props = {
   children: ReactNode

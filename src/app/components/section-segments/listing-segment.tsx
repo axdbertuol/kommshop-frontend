@@ -11,7 +11,7 @@ type Props = {
 }
 
 async function ListingSegment({ searchParams }: Props) {
-  const data = await getProducts(searchParams?.search).then((r) => {
+  const { data } = await getProducts(searchParams?.search).then((r) => {
     console.log('get products finished')
     return r
   })

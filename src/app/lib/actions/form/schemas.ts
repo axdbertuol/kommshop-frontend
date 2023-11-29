@@ -1,5 +1,6 @@
 import { AuthProvidersEnum } from '@/enum'
 import { z } from 'zod'
+const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
 
 export const schemaAuthBasic = z.object({
   provider: z.enum([AuthProvidersEnum.credentials, AuthProvidersEnum.google]),
@@ -21,13 +22,16 @@ export const credSigninSchema = z
 export const credSignupSchema = credSigninSchema
   .merge(
     z.object({
+      password: z
+        .string()
+        .regex(strongPasswordRegex, { message: 'passwordRegexInvalid' }),
       password2: z.string(),
     })
   )
   .merge(schemaAuthBasic)
   .refine(
     (values) => values.password === values.password2,
-    () => ({ message: `Passwords must match.`, path: ['password2'] })
+    () => ({ message: `passwordsMustMatch`, path: ['password2'] })
   )
 
 export type TCredSignupSchema = z.infer<typeof credSignupSchema>

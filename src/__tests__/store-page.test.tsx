@@ -3,7 +3,7 @@
  */
 import { render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils' // Use this for async tests
-import Page from '../app/[locale]/store/page'
+import Page from '../app/[locale]/(main)/store/page'
 
 jest.mock('@/app/components/section-segments/listing-segment')
 jest.mock('@/app/components/section-segments/search-segment')

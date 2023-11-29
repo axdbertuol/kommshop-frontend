@@ -1,23 +1,26 @@
 'use server'
-import DefaultForm from '@/app/components/forms/DefaultForm'
-import SignupForm from '@/app/components/forms/AbstractSignForm'
+import SignupForm from '@/app/components/forms/SignupForm'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages, SignupFormValues } from '@/types/common'
-import { composeValidateAuthSignup } from '@/app/lib/auth/utils'
-import { Link } from '@/navigation'
+import { Link, redirect } from '@/navigation'
 import { generateTranslationObject } from '@/app/lib/intl-utils'
+import { AuthProvidersEnum } from 'kommshop-types'
 
 const initialSignupFormValues = {
   email: '',
   password: '',
   password2: '',
   success: false,
+  provider: AuthProvidersEnum.credentials,
+  formName: 'signup',
 } as SignupFormValues
 
 export default async function Page({
   params: { locale },
+  searchParams,
 }: {
   params: { locale: string }
+  searchParams: { success?: 'true' | 'false'; provider?: string }
 }) {
   unstable_setRequestLocale(locale)
   const messages = (await getMessages({ locale })) as IntlMessages
@@ -31,18 +34,28 @@ export default async function Page({
     Object.keys(messages.Auth.errors),
     { method: 'rich' }
   )
-
+  if (searchParams.success) {
+    if (searchParams.provider === AuthProvidersEnum.credentials) {
+      return (
+        <div
+          className={
+            'w-full flex flex-col items-center md:flex md:place-content-center pt-12 px-16 md:px-0 md:w-[33vw] lg:w-[20vw]'
+          }
+        >
+          {text.success}
+        </div>
+      )
+    } else {
+      return redirect('/')
+    }
+  }
   return (
-    <DefaultForm
-      submitAction={composeValidateAuthSignup}
-      initialValues={initialSignupFormValues}
-      translatedErrors={errors}
-      className={'w-full flex flex-col items-center md:flex md:place-content-center'}
-    >
+    <div className={'w-full flex flex-col items-center md:flex md:place-content-center'}>
       <SignupForm
+        initialValues={initialSignupFormValues}
+        translatedErrors={errors}
         intl={text}
         className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
-        formName="signup"
       >
         <span className="text-center">
           {text.already}{' '}
@@ -54,6 +67,6 @@ export default async function Page({
           </Link>
         </span>
       </SignupForm>
-    </DefaultForm>
+    </div>
   )
 }
