@@ -25,7 +25,7 @@ function InputBox({
   const hasErrors = useCallback(() => errors && errors.length > 0, [errors])
   const [showWarning, setShowWarning] = useState(false)
   const _id = useId()
-  const timeout = 7000
+  const timeout = 10000
 
   useEffect(() => {
     if (hasErrors()) {
@@ -47,6 +47,7 @@ function InputBox({
         </div>
         <div className="flex relative">
           <Input
+            key={id}
             id={id}
             data-testid="input-box"
             className={cn(
@@ -54,6 +55,7 @@ function InputBox({
               className,
               showWarning && 'outline outline-yellow-300 '
             )}
+            onInput={() => setShowWarning(false)}
             name={name}
             disabled={disabled}
             aria-disabled={disabled}

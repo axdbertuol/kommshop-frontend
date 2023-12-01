@@ -47,7 +47,6 @@ function DefaultForm({
     formData?.set('provider', AuthProvidersEnum.google)
     const names = ['email', 'password', 'password2']
     names.forEach((value: string) => formData?.delete(value))
-
     await handleFormDataSubmission({ ...state }, formData).then(
       (resp) => resp.success && router.push('/store')
     )
@@ -61,28 +60,26 @@ function DefaultForm({
   const formRef = useRef<HTMLFormElement>(null)
 
   const memoizedIntlServerErrors = useMemoizedIntlErrors<typeof state.serverErrors>(
-    state.serverErrors,
+    state?.serverErrors,
     translatedErrors
   )
 
   const memoizedIntlErrors = useMemoizedIntlErrors<typeof state.errors>(
-    state.errors,
+    state?.errors,
     translatedErrors
   )
   useEffect(() => {
-    if (state.success) {
-      console.log('xsxs', state)
+    if (state?.success) {
       if (
         state.formName === 'signup' &&
         state.provider === AuthProvidersEnum.credentials
       ) {
-        console.log('xsxcsadf', state)
         router.push('/check-email?email=' + state.email)
       } else {
         router.push('/store')
       }
     }
-  }, [handleFormDataSubmission, state.success])
+  }, [handleFormDataSubmission, state?.success])
 
   return (
     <form
@@ -189,10 +186,7 @@ function DefaultForm({
         </div>
       </div>
       <span className="text-center font-thin text-sm">{intl.providersText}</span>
-      <button
-        type="submit"
-        className="flex w-full h-[5rem] items-center dark:bg-white bg-neutral-600 place-content-center gap-2 rounded-lg"
-      >
+      <div className="flex w-full h-[5rem] items-center dark:bg-white bg-neutral-600 place-content-center gap-2 rounded-lg">
         <GoogleLogin
           onSuccess={handleGoogleAuthSuccess}
           // locale={getLocaleWebPattern(locale ?? defaultLocale)}
@@ -202,7 +196,7 @@ function DefaultForm({
           shape="circle"
           text={intl.googleText as 'signin_with' | 'signup_with'}
         />
-      </button>
+      </div>
       <Separator className="dark:bg-slate-200 " />
       {children}
     </form>
