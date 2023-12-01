@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 /// <reference types="cypress" />
 // ***********************************************
 // This example commands.ts shows you how to
@@ -35,3 +36,20 @@
 //     }
 //   }
 // }
+Cypress.Commands.add(
+  'getBySelLike',
+  (
+    selector: string,
+    options:
+      | Partial<
+          Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow
+        >
+      | undefined
+  ) => {
+    return cy.get(`[data-testid=${selector}]`, options)
+  }
+)
+Cypress.Commands.add('hasAuthCookie', () => {
+  const cookie = Cookies.get('auth-key')
+  return Boolean(cookie)
+})

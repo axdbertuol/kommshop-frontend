@@ -36,18 +36,6 @@ import { getServerActionDispatcher } from 'next/dist/client/components/app-route
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-      nextMount: (
-        jsx: any | ReactNode,
-        options?: (Partial<MountOptions> & { router: any; head: Head }) | undefined,
-        rerenderKey?: string | undefined
-      ) => Chainable<MountReturn>
-    }
-  }
-}
 
 Cypress.Commands.add('mount', mount)
 Cypress.Commands.add('nextMount', (component, options) => {

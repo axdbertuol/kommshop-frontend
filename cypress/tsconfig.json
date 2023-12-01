@@ -1,7 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "types": ["cypress"]
+    "types": ["cypress", "kommshop-types", "../src/types/common.d.ts", "./global.d.ts"]
   },
   "include": [
     "../node_modules/cypress",
