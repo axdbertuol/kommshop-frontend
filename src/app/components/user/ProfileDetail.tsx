@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { CreateUserDto, User } from 'shared-kommshop-types'
+import { CreateUserDto } from 'shared-kommshop-types'
 
 type ProfileDetailProps = CreateUserDto & {
   followers?: number

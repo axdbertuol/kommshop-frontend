@@ -1,6 +1,6 @@
 // 'use client'
 'use server'
-import React from 'react'
+import React, { Suspense } from 'react'
 import CommandSearch from '../CommandSearch'
 import CategoriesBar from '../CategoriesBar'
 import { SearchParams } from '@/types/common'
@@ -15,7 +15,9 @@ async function SearchSegment({ searchParams }: Props) {
   return (
     <div className="flex flex-col items-center gap-y-4 ">
       <CategoriesBar searchParams={searchParams} />
-      {suggestions && <CommandSearch suggestions={suggestions} />}
+      <Suspense fallback={<>Loading...</>}>
+        {suggestions && <CommandSearch suggestions={suggestions} />}
+      </Suspense>
     </div>
   )
 }

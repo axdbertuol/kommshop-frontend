@@ -77,7 +77,8 @@ export const handleFormDataSubmission = async (
     return { provider, formName, success: false, serverErrors: actionResult.serverErrors }
   }
   console.log('actionResult ', actionResult)
-  return { provider, formName, success: true }
+
+  return { ...actionData, provider, formName, success: true }
 }
 
 export async function validateAuth<T>(data: Record<string, any>, schema: ZodSchema<T>) {

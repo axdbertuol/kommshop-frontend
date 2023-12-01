@@ -34,15 +34,7 @@ export default async function Page({
     Object.keys(messages.Auth.errors),
     { method: 'rich' }
   )
-  if (searchParams.successAuth) {
-    console.log(searchParams, 'asdfggsd')
-    if (searchParams.successAuth === AuthProvidersEnum.credentials) {
-      console.log('xsxs')
-      return redirect('/check-email?email=' + searchParams.email)
-    } else {
-      return redirect('/')
-    }
-  }
+
   return (
     <div className={'w-full flex flex-col items-center md:flex md:place-content-center'}>
       <SignupForm
@@ -56,6 +48,7 @@ export default async function Page({
           <Link
             href="/signin"
             className="underline"
+            data-testid="already"
           >
             {text.signin}
           </Link>

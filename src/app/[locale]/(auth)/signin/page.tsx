@@ -1,4 +1,3 @@
-'use server'
 import SigninForm from '@/app/components/forms/SignupForm'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types/common'
@@ -13,16 +12,12 @@ const initialSigninFormValues = {
   formName: 'signin',
   provider: AuthProvidersEnum.credentials,
 }
-
 export default async function Page({
   params: { locale },
-  searchParams,
 }: {
   params: {
     locale: string
-    messages: IntlMessages
   }
-  searchParams: { successAuth?: AuthProvidersEnum }
 }) {
   unstable_setRequestLocale(locale)
   const name = 'signin'
@@ -38,9 +33,6 @@ export default async function Page({
     { method: 'rich' }
   )
 
-  if (searchParams.successAuth) {
-    return redirect('/')
-  }
   return (
     <div className={'w-full flex flex-col items-center md:flex md:place-content-center'}>
       <SigninForm

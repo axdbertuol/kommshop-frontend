@@ -10,14 +10,13 @@ import {
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import InputBox from './input/InputBox'
-import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { AuthProvidersEnum } from 'kommshop-types'
 import { Button } from '../ui/button'
 import { Separator } from '@radix-ui/react-separator'
 import WarningBox from '../text/Error'
-import useURLSearchParams from '@/hooks/useURLSearchParams'
 import { handleFormDataSubmission } from '@/app/lib/auth/utils'
-
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
+import { useRouter } from '@/navigation'
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: ReactElement<any, string>
@@ -39,7 +38,20 @@ function DefaultForm({
     handleFormDataSubmission,
     initialValues
   )
-  const { updateSearchParams, clearSearchParams, searchParams } = useURLSearchParams()
+  const router = useRouter()
+  const handleGoogleAuthSuccess = async (credentials: CredentialResponse) => {
+    if (!credentials?.credential) return
+    const formData = new FormData(formRef.current!)
+    setProvider(AuthProvidersEnum.google)
+    formData?.set('idToken', credentials.credential)
+    formData?.set('provider', AuthProvidersEnum.google)
+    const names = ['email', 'password', 'password2']
+    names.forEach((value: string) => formData?.delete(value))
+
+    await handleFormDataSubmission({ ...state }, formData).then(
+      (resp) => resp.success && router.push('/store')
+    )
+  }
 
   const { pending } = useFormStatus()
   const [provider, setProvider] = useState(AuthProvidersEnum.credentials)
@@ -47,14 +59,7 @@ function DefaultForm({
   const required = initialValues.provider === AuthProvidersEnum.credentials
 
   const formRef = useRef<HTMLFormElement>(null)
-  const handleGoogleAuthSuccess = async (credentials: CredentialResponse) => {
-    if (!credentials?.credential) return
-    const formData = new FormData(formRef.current!)
-    setProvider(AuthProvidersEnum.google)
-    formData?.set('idToken', credentials.credential)
-    formData?.set('provider', AuthProvidersEnum.google)
-    handleFormDataSubmission({ ...state }, formData)
-  }
+
   const memoizedIntlServerErrors = useMemoizedIntlErrors<typeof state.serverErrors>(
     state.serverErrors,
     translatedErrors
@@ -65,22 +70,19 @@ function DefaultForm({
     translatedErrors
   )
   useEffect(() => {
-    if (state?.success && state?.email && provider) {
-      const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
-      params.set('email', state?.email)
-      updateSearchParams('successAuth', provider.toString(), { replace: true })
+    if (state.success) {
+      console.log('xsxs', state)
+      if (
+        state.formName === 'signup' &&
+        state.provider === AuthProvidersEnum.credentials
+      ) {
+        console.log('xsxcsadf', state)
+        router.push('/check-email?email=' + state.email)
+      } else {
+        router.push('/store')
+      }
     }
-    return () => {
-      clearSearchParams()
-    }
-  }, [
-    state?.success,
-    state?.email,
-    searchParams,
-    updateSearchParams,
-    provider,
-    clearSearchParams,
-  ])
+  }, [handleFormDataSubmission, state.success])
 
   return (
     <form

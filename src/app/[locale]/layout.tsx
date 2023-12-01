@@ -9,6 +9,7 @@ import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
 import { locales } from '../lib/get-locale'
 import { cn } from '../lib/utils'
 import GoogleAuthProvider from '@/app/components/providers/GoogleAuthProvider'
+import SearchContextProvider from '../components/providers/SearchContextProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -46,7 +47,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
               defaultTheme="dark"
               enableSystem
             >
-              {children}
+              <SearchContextProvider>{children}</SearchContextProvider>
             </ThemeProvider>
           </GoogleAuthProvider>
         </QueryClientWrapper>

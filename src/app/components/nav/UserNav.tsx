@@ -15,7 +15,6 @@ import {
 } from '@/app/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
 import { AuthProvidersEnum, LoginResponseUserDto } from 'kommshop-types'
-import { memo } from 'react'
 import { googleLogout } from '@react-oauth/google'
 
 export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
@@ -107,4 +106,4 @@ export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
   )
 }
 
-export const MemoizedUserNav = memo(UserNav)
+export const MemoizedUserNav = UserNav
