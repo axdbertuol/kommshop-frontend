@@ -7,12 +7,12 @@ export const fetchProducts = async (
   search?: string | null,
   category?: string | null
 ): Promise<FetchResponse<Product[] | null | undefined>> => {
-  const url = new URL(`product`, process.env.NEXT_URL_PRODUCTS)
+  const url = new URL(`products`, process.env.NEXT_URL_PRODUCTS)
   if (search) url.searchParams.set('search', search)
   if (category) url.searchParams.set('cat', category)
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
-    // cache: 'no-store',
+    cache: 'no-store',
   })
   const response = {
     data: null,

@@ -1,4 +1,4 @@
-import type { Category, LoginResponseType, Product } from 'kommshop-types'
+import type { LoginResponseType } from 'kommshop-types'
 import { ReactElement } from 'react'
 
 export type LabelValue = {
@@ -8,10 +8,19 @@ export type LabelValue = {
 declare module 'server-only'
 export type SearchParams = { cat?: string; search?: string }
 
-export type Product = Product
-export type Category = Category
+export type Product = {
+  id: number
+  name: string
+  description?: string
+  price: number
+  category: Category
+}
+export type Category = {
+  id: number
+  name: string
+}
 
-export type Suggestion<T> = LabelValue & { type: T; _id?: string }
+export type Suggestion<T> = LabelValue & { type: T; id?: string | number }
 export type ServerErrorResponse = {
   status?: number | string
   errors?: Record<string, string[]>

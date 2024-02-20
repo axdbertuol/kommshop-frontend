@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { Category } from 'shared-kommshop-types'
+import { Category } from '@/types'
 import * as z from 'zod'
 import 'server-only'
 import { FetchResponse, ServerErrorResponse, Suggestion } from '@/types'
@@ -8,7 +8,7 @@ import { parseServerErrors } from '../../utils'
 const schema = z
   .array(
     z.object({
-      _id: z.coerce.string(),
+      id: z.number(),
       name: z.string(),
     })
   )
@@ -54,13 +54,13 @@ export const parseResults = async (json: Category[] | null | undefined) => {
     console.warn(err)
   }
   if (!data) return null
-  const result = data.map((category: { _id: string; name: string }) => ({
+  const result = data.map((category) => ({
     value:
       category.name.at(0)?.toLowerCase() +
       category.name.substring(1, category.name.length),
     label: category.name,
     type: 'category',
-    _id: category._id,
+    id: category.id,
   }))
   return result as Suggestion<'category'>[]
 }
