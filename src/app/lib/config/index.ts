@@ -9,7 +9,7 @@ export type AuthPathname =
 export type BackendService = 'auth' | 'product' | 'cart' | 'user'
 
 export const getApiPathSwitch = (pathname: AuthPathname) => {
-  const nextAuthUrl = process.env.ROUTER_URL!
+  const nextAuthUrl = process.env.AUTH_URL!
   const makeUrl = (path: string) => new URL(path, nextAuthUrl)
   switch (pathname) {
     case 'confirmEmail':

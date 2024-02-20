@@ -74,14 +74,11 @@ export const handleFormDataSubmission = async (
 
   const validateResult = await validateAuth<z.infer<typeof schema>>(data, schema)
   if (!validateResult?.success) {
-    console.log('aqui', validateResult)
     return { provider, formName, ...validateResult } as StatusUnsuccessful &
       (SignupFormValues | SigninFormValues)
   }
   const actionResult = await action({ ...actionData })
   if (!actionResult.success) {
-    console.log('actionResulterror ', actionResult)
-
     return { provider, formName, success: false, serverErrors: actionResult.serverErrors }
   }
   console.log('actionResult ', actionResult)

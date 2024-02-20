@@ -15,7 +15,7 @@ async function ListingSegment({ searchParams }: Props) {
     console.log('get products finished')
     return r
   })
-  if (!data) return notFound()
+  if (!data) return null
   return (
     <div className="flex flex-col items-center gap-y-4 min-h-screen">
       <ProductListWrapper>

@@ -7,6 +7,10 @@ import { defaultLocale, locales } from './app/lib/get-locale'
 import { getAuthTokens } from './app/lib/get-cookies-list'
 import { isTokenExpired } from './app/lib/utils'
 
+const handleI18nRouting = createIntlMiddleware({
+  locales: locales,
+  defaultLocale: defaultLocale,
+})
 export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
   const [, locale, pathname] = request.nextUrl.pathname.split('/')
@@ -32,14 +36,22 @@ export async function middleware(request: NextRequest) {
   ) {
     return NextResponse.redirect(new URL(`store`, request.url))
   }
-  const handleI18nRouting = createIntlMiddleware({
-    locales: locales,
-    defaultLocale: defaultLocale,
-  })
+
   const response = handleI18nRouting(request)
   return response
 }
 
 export const config = {
-  matcher: ['/', '/((?!.+\\.[\\w]+$|_next).*)', '/(pt|en)/:path*'],
+  matcher: [
+    // Enable a redirect to a matching locale at the root
+    '/',
+
+    // Set a cookie to remember the previous locale for
+    // all requests that have a locale prefix
+    '/(pt|en)/:path*',
+
+    // Enable redirects that add missing locales
+    // (e.g. `/pathnames` -> `/en/pathnames`)
+    '/((?!_next|_vercel|.*\\..*).*)',
+  ],
 }
