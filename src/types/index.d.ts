@@ -14,6 +14,7 @@ export type Product = {
   description?: string
   price: number
   category: Category
+  slug: string
 }
 export type Category = {
   id: number
