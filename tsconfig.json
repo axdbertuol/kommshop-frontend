@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext", "es2017"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,7 +23,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "shared-kommshop-types": ["./node_modules/kommshop-types"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./src/types", "./node_modules/kommshop-types"]
   },
   "ts-node": {
     "compilerOptions": {
@@ -31,6 +32,21 @@
       "moduleResolution": "Node"
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "next.config.js",
+    "cypress.config.ts",
+    "jest.setup.ts",
+    "jest.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "cypress",
+    "__mocks__",
+    "/email-server",
+    "cypress.config.ts"
+  ]
 }

@@ -1,25 +1,57 @@
-'use server'
-import DefaultForm from '@/components/forms/DefaultForm'
-import LoginForm from '@/components/forms/CredentialsLoginForm'
-import { validateSignIn } from '@/app/lib/actions/form/signin'
-import { getTranslations } from 'next-intl/server'
-import { IntlMessages } from '@/types/common'
+import SigninForm from '@/app/components/forms/SignupForm'
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
+import { IntlMessages } from '@/types'
+import { Link, redirect } from '@/navigation'
+import { generateTranslationObject } from '@/app/lib/intl-utils'
+import { AuthProvidersEnum } from 'kommshop-types'
 
-export default async function Page() {
-  const t = await getTranslations('Auth.signin')
-  const keys = ['email', 'password', 'submit', 'success', 'notyet', 'signup']
-  const text = Object.fromEntries(
-    keys.map((key) => [key, t(key)])
-  ) as IntlMessages['Auth']['signin']
+const initialSigninFormValues = {
+  email: '',
+  password: '',
+  success: false,
+  formName: 'signin',
+  provider: AuthProvidersEnum.credentials,
+}
+export default async function Page({
+  params: { locale },
+}: {
+  params: {
+    locale: string
+  }
+}) {
+  unstable_setRequestLocale(locale)
+  const name = 'signin'
+  const messages = (await getMessages({ locale })) as IntlMessages
+
+  const text = await generateTranslationObject(
+    'Auth.' + name,
+    Object.keys(messages.Auth[name])
+  )
+  const errors = await generateTranslationObject(
+    'Auth.errors',
+    Object.keys(messages.Auth.errors),
+    { method: 'rich' }
+  )
+
   return (
-    <DefaultForm
-      action={validateSignIn}
-      className={'w-full md:flex md:place-content-center'}
-    >
-      <LoginForm
+    <div className={'w-full flex flex-col items-center md:flex md:place-content-center'}>
+      <SigninForm
+        initialValues={initialSigninFormValues}
+        translatedErrors={errors}
         intl={text}
         className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
-      />
-    </DefaultForm>
+      >
+        <span className="text-center">
+          {text.notyet}{' '}
+          <Link
+            href={'/signup'}
+            className="underline"
+            data-testid="notyet"
+          >
+            {text.signup}
+          </Link>
+        </span>
+      </SigninForm>
+    </div>
   )
 }

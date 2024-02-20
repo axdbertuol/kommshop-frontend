@@ -1,36 +1,38 @@
 'use server'
 
-import { ErrorResponse } from '@/types/common'
+import { CausedServerErrorResponse } from '@/types'
+import { getApiPath } from '../../config'
+import { TCredSignupSchema } from './schemas'
+import { parseServerErrors } from '../../utils'
 
-export const signupCred = async (credentials: { email: string; password: string }) => {
+export const signupCred = async (credentials: Omit<TCredSignupSchema, 'provider'>) => {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const signupUrl = process.env.SIGNUP_CREDENTIAL_ENDPOINT!
-
   const newCredentials = {
     email: credentials.email,
     password: credentials.password,
-    firstName: 'asd',
-    lastName: 'asd',
   }
   try {
-    const myRequest = await fetch(signupUrl, {
+    const url = getApiPath('signup')
+    const myRequest = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(newCredentials),
       headers: { 'Content-Type': 'application/json' },
-      // cache: 'no-store',
+      cache: 'no-store',
     })
-    console.log(myRequest.status)
-    const success = myRequest.status === 201 || myRequest.status === 204
-    if (!success) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { status, ...rest }: ErrorResponse = await myRequest.json()
-      return { success, ...rest }
+    console.log('x', myRequest.status)
+    if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
+      const json: CausedServerErrorResponse = await myRequest.json()
+      console.log('signupcred', myRequest, json)
+      return {
+        serverErrors: parseServerErrors(json.cause),
+        success: false,
+      }
     }
 
-    return { success }
+    return { success: myRequest.ok }
   } catch (err) {
     console.error(err, 'errro!')
-    return { success: false }
   }
+  return { success: false }
 }

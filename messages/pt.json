@@ -13,7 +13,10 @@
       "password2": "Confirme sua senha",
       "submit": "Registre-me",
       "already": "Já tem uma conta?",
-      "signin": "Entrar!"
+      "signin": "Entrar!",
+      "heading": "Junte-se a nós com seu endereço de e-mail",
+      "providersText": "Ou use um dos nossos provedores:",
+      "googleText": "signup_with"
     },
     "signin": {
       "success": "",
@@ -21,7 +24,19 @@
       "password": "Sua senha",
       "submit": "Entrar",
       "notyet": "Ainda não tem uma conta?",
-      "signup": "Cadastrar-se"
+      "signup": "Cadastrar-se",
+      "heading": "Entre com seu endereço de e-mail",
+      "providersText": "Ou entre com um dos nossos provedores:",
+      "googleText": "signin_with"
+    },
+    "errors": {
+      "needLoginViaProvider:google": "Parece que este e-mail já está vinculado a uma conta do Google.",
+      "notFound": "Usuário não foi encontrado.",
+      "incorrectPassword": "A senha está incorreta.",
+      "emailAlreadyExists": "Essa conta já existe.",
+      "emailNotExists": "Não encontramos nenhuma conta associada às credenciais fornecidas. Por favor, tente novamente.",
+      "passwordsMustMatch": "As senhas precisam ser iguais.",
+      "passwordRegexInvalid": "<span>A senha deve conter:</span> <ol><li>Pelo menos 8 caracteres.</li><li>Pelo menos uma letra minúscula.</li><li>Pelo menos uma letra maiúscula.</li><li>Pelo menos um dígito.</li><li>Pelo menos um caractere especial (por exemplo, !@#$%^&*).</li></ol>"
     }
   }
 }

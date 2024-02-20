@@ -1,0 +1,15 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["cypress", "kommshop-types", "../src/types/common.d.ts", "./global.d.ts"]
+  },
+  "include": [
+    "../node_modules/cypress",
+    "../node_modules/js-cookie",
+    "**/*.ts",
+    "**/*.tsx",
+    "../cypress.config.ts"
+  ],
+
+  "exclude": []
+}

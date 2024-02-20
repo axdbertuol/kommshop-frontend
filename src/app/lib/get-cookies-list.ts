@@ -1,12 +1,25 @@
 'use server'
 import { cookies } from 'next/headers'
-import { LoginResponseType } from 'kommshop-types'
+import { LoginResponseType, LoginResponseUserDto } from 'kommshop-types'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
-import { decryptSymmetric } from './encryption'
+import { decryptSymmetric, encryptSymmetric } from './encryption'
+import { Tokens } from '@/types'
 
 export async function getCookiesList(): Promise<RequestCookie[]> {
   const cookieData = cookies().getAll()
   return new Promise((resolve) => resolve(cookieData))
+}
+
+export async function setAuthCookies(data: Tokens & { user: LoginResponseUserDto }) {
+  const authKey = process.env.AUTH_COOKIE_KEY
+  if (!authKey) return Promise.reject('No auth key provided')
+  const cookiesList = cookies()
+  cookiesList.delete(authKey)
+  const encrypted = await encryptSymmetric(JSON.stringify(data))
+  cookiesList.set(authKey, JSON.stringify(encrypted), {
+    maxAge: 60 * 60 * 24 * 7, // one week,
+    secure: process.env.NODE_ENV === 'production',
+  })
 }
 
 export async function getEncryptedAuthCookie(): Promise<string | null> {

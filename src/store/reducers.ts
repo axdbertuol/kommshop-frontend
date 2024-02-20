@@ -1,4 +1,4 @@
-import { SearchContextType } from '../components/providers/SearchContextProvider'
+import { SearchContextType } from '@/app/components/providers/SearchContextProvider'
 import { defaultSearchCtxValues } from './constants'
 import { Action } from './actions'
 

@@ -8,7 +8,7 @@ async function Page({ searchParams: { hash } }: { searchParams: { hash?: string 
     redirect('/not-found')
     return
   }
-  await cachedConfirmEmail(hash).then(() => redirect('/signin'))
+  await cachedConfirmEmail(hash)
   return (
     <Suspense fallback={<>Confirming email..</>}>
       <p>Success!</p>

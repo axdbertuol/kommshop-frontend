@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withNextIntl = require('next-intl/plugin')()
 
 /** @type {import('next').NextConfig} */
-const nextConfig = withNextIntl({
+const nextConfig = {
   // transpilePackages: ['kommshop-types'],
+
   images: {
     remotePatterns: [
       {
@@ -20,6 +22,6 @@ const nextConfig = withNextIntl({
       },
     ],
   },
-})
+}
 
-module.exports = nextConfig
+module.exports = withNextIntl(nextConfig)

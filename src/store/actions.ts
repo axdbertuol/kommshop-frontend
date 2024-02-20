@@ -1,4 +1,4 @@
-import type { LabelValue } from '@/types/common'
+import type { LabelValue } from '@/types'
 export type Action =
   | {
       type: SearchActionsEnum.INIT

@@ -1,13 +1,15 @@
 import React from 'react'
 import '@/app/globals.css'
 import { Inter } from 'next/font/google'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import { ThemeProvider } from '@/app/components/providers/ThemeProvider'
 import { notFound } from 'next/navigation'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
-import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
-import { defaultLocale, locales } from '../lib/get-locale'
+import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
+import { locales } from '../lib/get-locale'
 import { cn } from '../lib/utils'
+import GoogleAuthProvider from '@/app/components/providers/GoogleAuthProvider'
+import SearchContextProvider from '../components/providers/SearchContextProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,10 +19,9 @@ export async function generateMetadata({
   params: { locale: string }
 }) {
   const t = await getTranslations({ locale, namespace: 'Metadata' })
-  const td = await getTranslations({ locale: defaultLocale, namespace: 'Metadata' })
 
   return {
-    title: t('title') ?? td('title'),
+    title: t('title'),
   }
 }
 export function generateStaticParams() {
@@ -34,16 +35,21 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   unstable_setRequestLocale(locale)
 
   return (
-    <html lang={locale}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+    >
       <body className={cn(inter.className, 'h-screen w-full')}>
         <QueryClientWrapper>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-          >
-            {children}
-          </ThemeProvider>
+          <GoogleAuthProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+            >
+              <SearchContextProvider>{children}</SearchContextProvider>
+            </ThemeProvider>
+          </GoogleAuthProvider>
         </QueryClientWrapper>
       </body>
     </html>

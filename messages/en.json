@@ -13,7 +13,10 @@
       "password2": "Confirm your password",
       "submit": "Sign up",
       "already": "Already have an account?",
-      "signin": "Sign in!"
+      "signin": "Sign in!",
+      "heading": "Join us with youy email address",
+      "providersText": "Or use one of our providers:",
+      "googleText": "signup_with"
     },
     "signin": {
       "success": "",
@@ -21,7 +24,19 @@
       "password": "Your password",
       "submit": "Sign in",
       "notyet": "Don't have an account?",
-      "signup": "Sign up!"
+      "signup": "Sign up!",
+      "heading": "Log in with your email address",
+      "providersText": "Or use one of our providers:",
+      "googleText": "signin_with"
+    },
+    "errors": {
+      "needLoginViaProvider:google": "It seems that account is bound with a Google account.",
+      "notFound": "Account not found.",
+      "incorrectPassword": "Your password is incorrect.",
+      "emailAlreadyExists": "That account already exists.",
+      "emailNotExists": "We did not find any account associated with given credentials. Please try again.",
+      "passwordsMustMatch": "Passwords must match.",
+      "passwordRegexInvalid": "<span>Password must have:</span> <ol><li>At least 8 characters long.</li><li>Contains at least one lowercase letter.</li><li>Contains at least one uppercase letter.</li><li>Contains at least one digit.</li><li>Contains at least one special character (e.g., !@#$%^&*).</li></ol>"
     }
   }
 }

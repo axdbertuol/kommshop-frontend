@@ -1,20 +1,35 @@
-import { Product } from '@/types/common'
+import { FetchResponse, Product, ServerErrorResponse } from '@/types'
 import { cache } from 'react'
+import { parseServerErrors } from '../../utils'
 import 'server-only'
 
-export const fetchProducts = async (search?: string | null, category?: string | null) => {
-  const url = new URL(`http://localhost:3333/products`)
+export const fetchProducts = async (
+  search?: string | null,
+  category?: string | null
+): Promise<FetchResponse<Product[] | null | undefined>> => {
+  const url = new URL(`product`, process.env.NEXT_URL_PRODUCTS)
   if (search) url.searchParams.set('search', search)
   if (category) url.searchParams.set('cat', category)
+  const myRequest = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    // cache: 'no-store',
+  })
+  const response = {
+    data: null,
+    success: false,
+    serverErrors: null,
+  }
   try {
-    const myRequest = await fetch(url, {
-      headers: { 'Content-Type': 'application/json' },
-      // cache: 'no-store',
-    })
     const json = await myRequest.json()
-    return json as Product[] | null | undefined
+    if (!myRequest.ok) {
+      return {
+        ...response,
+        serverErrors: parseServerErrors(json as ServerErrorResponse),
+      }
+    }
+    return { ...response, data: json as Product[] | null | undefined, success: true }
   } catch (err) {
-    console.error(err, 'errro!')
+    return response
   }
 }
 const getProducts = cache(fetchProducts)

@@ -25,26 +25,17 @@ import { HeadManagerContext } from 'next/dist/shared/lib/head-manager-context.sh
 import { Head } from 'next/document'
 import { ReactNode } from 'react'
 import { AppRouterContext } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import QueryClientWrapper from '@/components/providers/QueryClientWrapper'
-import SearchContextProvider from '@/components/providers/SearchContextProvider'
-import { ThemeProvider } from '@/components/providers/ThemeProvider'
+import QueryClientWrapper from '@/app/components/providers/QueryClientWrapper'
+import SearchContextProvider from '@/app/components/providers/SearchContextProvider'
+import { ThemeProvider } from '@/app/components/providers/ThemeProvider'
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getServerActionDispatcher } from 'next/dist/client/components/app-router'
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
 // Alternatively, can be defined in cypress/support/component.d.ts
 // with a <reference path="./component" /> at the top of your spec.
-declare global {
-  namespace Cypress {
-    interface Chainable {
-      mount: typeof mount
-      nextMount: (
-        jsx: ReactNode,
-        options?: (Partial<MountOptions> & { router: any; head: Head }) | undefined,
-        rerenderKey?: string | undefined
-      ) => Chainable<MountReturn>
-    }
-  }
-}
 
 Cypress.Commands.add('mount', mount)
 Cypress.Commands.add('nextMount', (component, options) => {
@@ -63,7 +54,7 @@ Cypress.Commands.add('nextMount', (component, options) => {
     ...params,
   })
   const router = createRouter(options?.router || {})
-
+  getServerActionDispatcher()
   const createHeadManager = (params: any) => ({
     updateHead: cy.stub().as('head:updateHead'),
     mountedInstances: new Set(),
@@ -85,19 +76,21 @@ Cypress.Commands.add('nextMount', (component, options) => {
   // })
 
   return mount(
-    <HeadManagerContext.Provider value={headManager}>
-      <AppRouterContext.Provider value={router}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-        >
-          <SearchContextProvider>
-            <QueryClientWrapper>{component}</QueryClientWrapper>
-          </SearchContextProvider>
-        </ThemeProvider>
-      </AppRouterContext.Provider>
-    </HeadManagerContext.Provider>,
+    <NextIntlClientProvider locale="pt">
+      <HeadManagerContext.Provider value={headManager}>
+        <AppRouterContext.Provider value={router}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+          >
+            <SearchContextProvider>
+              <QueryClientWrapper>{component}</QueryClientWrapper>
+            </SearchContextProvider>
+          </ThemeProvider>
+        </AppRouterContext.Provider>
+      </HeadManagerContext.Provider>
+    </NextIntlClientProvider>,
     options
   )
 })
