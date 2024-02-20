@@ -23,8 +23,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "shared-kommshop-types": ["./node_modules/kommshop-types"]
-    },
-    "typeRoots": ["./node_modules/@types", "./src/types", "./node_modules/kommshop-types"]
+    }
   },
   "ts-node": {
     "compilerOptions": {
@@ -38,15 +37,15 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "next.config.js",
-    "cypress.config.ts",
-    "jest.setup.ts",
-    "jest.config.js"
+    "cypress.config.ts"
   ],
   "exclude": [
     "node_modules",
     "cypress",
     "__mocks__",
     "/email-server",
-    "cypress.config.ts"
+    "cypress.config.ts",
+    "jest.setup.ts",
+    "jest.config.js"
   ]
 }
