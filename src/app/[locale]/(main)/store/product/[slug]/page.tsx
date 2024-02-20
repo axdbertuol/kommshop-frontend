@@ -1,7 +1,6 @@
 import getProduct from '@/app/lib/actions/getters/get-product'
 import getProducts from '@/app/lib/actions/getters/get-products'
 import ProductDetailSegment from '@/app/components/section-segments/product-detail-segment'
-import { slug } from '@/utils/slug'
 import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
@@ -12,7 +11,7 @@ export async function generateStaticParams() {
       return []
     }
     return data.map((product) => ({
-      slug: slug(product.name, String(product._id)),
+      slug: product.slug,
     }))
   } catch (err) {
     return []
