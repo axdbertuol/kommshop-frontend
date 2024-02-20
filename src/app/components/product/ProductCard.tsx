@@ -1,5 +1,4 @@
 'use client'
-import Image from 'next/image'
 import {
   Card,
   CardContent,
@@ -7,27 +6,29 @@ import {
   CardHeader,
   CardTitle,
 } from '@/app/components/ui/card'
-import { Button } from '../ui/button'
-import LikeButton from '../buttons/LikeButton'
+import { useRouter, usePathname } from '@/navigation'
+import { Product } from '@/types'
+import Image from 'next/image'
 import HoverableImage from '../HoverableImage'
-import { useRouter } from '@/navigation'
-import { slug } from '@/utils/slug'
-import { Product } from 'kommshop-types'
+import LikeButton from '../buttons/LikeButton'
+import { Button } from '../ui/button'
 
 export type ProductProps = {
   imgSrc?: string
 } & Omit<Product, 'category'>
 export default function ProductCard(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { name, price, description, _id, favouritedBy }: ProductProps
+  { name, price, description, id, slug }: ProductProps
 ) {
   const router = useRouter()
-  const slugUrl = slug(name, String(_id))
+  const pathname = usePathname()
+
+  const urlPath = pathname + '/product/' + slug
   return (
     <Card className="w-[300px]">
       <CardHeader
         className="p-0 m-0 overflow-hidden"
-        onClick={() => router.push(slugUrl)}
+        onClick={() => router.push(urlPath)}
       >
         <HoverableImage imageRatio={1}>
           <Image
@@ -47,7 +48,7 @@ export default function ProductCard(
       </CardHeader>
       <CardContent
         className="flex flex-1 flex-col justify-between pt-2 m-0 overflow-hidden"
-        onClick={() => router.push(slugUrl)}
+        onClick={() => router.push(urlPath)}
       >
         <span className="w-full  ">
           <CardTitle className="text-sm font-thin truncate">{name}</CardTitle>

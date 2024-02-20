@@ -18,11 +18,12 @@ function ProductList({ data }: Props) {
             fallback={<CardSkeleton />}
           >
             <ProductCard
-              _id={product._id}
+              id={product.id}
               imgSrc={''}
               name={product.name}
               price={product.price}
               description={product?.description ?? ''}
+              slug={product.slug}
             />
           </Suspense>
         )

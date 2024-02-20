@@ -4,14 +4,7 @@ import { Product } from '@/types'
 
 type ProductDetailProps = Product & { image?: string }
 
-const ProductDetail = ({
-  name,
-  description,
-  image,
-  price,
-  favouritedBy,
-  category,
-}: ProductDetailProps) => {
+const ProductDetail = ({ name, description, image, price }: ProductDetailProps) => {
   return (
     <div className="flex flex-col  md:justify-start bg-background md:w-8/12">
       <div className="flex flex-col lg:flex-row md:gap-2 rounded-lg p-4 w-full max-h-[calc(100vh-72px)]">
@@ -35,14 +28,6 @@ const ProductDetail = ({
           <p className="text-primary mt-2">${price}</p>
           <div className="text-sm mt-4">
             <span className="text-primary-100">Favorited by:</span>
-            {favouritedBy?.map((user: any, index: React.Key | null | undefined) => (
-              <span
-                key={index}
-                className="text-accent ml-2"
-              >
-                {String(user)}
-              </span>
-            ))}
           </div>
         </div>
       </div>
