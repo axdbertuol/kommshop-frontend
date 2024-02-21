@@ -1,8 +1,8 @@
 // 'use client'
 'use server'
 import React, { Suspense } from 'react'
-import CommandSearch from '../CommandSearch'
-import CategoriesBar from '../CategoriesBar'
+import CommandSearch from '../../../../components/CommandSearch'
+import CategoriesBar from '../../../../components/CategoriesBar'
 import { SearchParams } from '@/types'
 import getSuggestions from '@/app/lib/actions/getters/get-suggestions'
 
@@ -10,7 +10,7 @@ type Props = {
   searchParams: SearchParams
 }
 
-async function SearchSegment({ searchParams }: Props) {
+async function SearchPage({ searchParams }: Props) {
   const suggestions = await getSuggestions(searchParams.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
@@ -22,4 +22,4 @@ async function SearchSegment({ searchParams }: Props) {
   )
 }
 
-export default SearchSegment
+export default SearchPage

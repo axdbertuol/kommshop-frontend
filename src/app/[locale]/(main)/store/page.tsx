@@ -1,5 +1,5 @@
-import SearchSegment from '@/app/components/section-segments/search-segment'
-import ListingSegment from '@/app/components/section-segments/listing-segment'
+import SearchSegment from '@/app/[locale]/(main)/store/@search/page'
+import ListingSegment from '@/app/[locale]/(main)/store/@listing/page'
 import { SearchParams } from '@/types'
 import getProducts from '@/app/lib/actions/getters/get-products'
 import 'server-only'
@@ -35,7 +35,7 @@ const getFilters = async () => {
   return res
 }
 
-export default function Page({
+export default function StorePage({
   params,
   searchParams,
 }: {
