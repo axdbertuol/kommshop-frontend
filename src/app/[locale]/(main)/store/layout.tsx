@@ -1,20 +1,30 @@
+import getProducts from '@/app/lib/actions/getters/get-products'
+import { SearchParams } from '@/types'
 import 'server-only'
 
 export default function StoreLayout({
   children, // will be a page or nested layout
-  searchPage,
-  listingPage,
+  search,
+  listing,
+  searchParams,
 }: {
+  searchParams: SearchParams
   children: React.ReactNode
-  searchPage: React.ReactNode
-  listingPage: React.ReactNode
+  search: React.ReactNode
+  listing: React.ReactNode
 }) {
+  getProducts(searchParams?.search).catch((err) => console.log(err))
+  console.log(search)
   return (
     <div className="flex">
       {/* <Sidebar /> */}
       <div className="w-full">
-        {listingPage}
-        {searchPage}
+        <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
+          {/* <SuspenseList revealOrder="forwards"> */}
+          {search}
+          {listing}
+          {/* </SuspenseList> */}
+        </div>
         {children}
       </div>
     </div>
