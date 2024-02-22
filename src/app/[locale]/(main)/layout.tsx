@@ -1,8 +1,8 @@
-import Nav from '@/app/components/nav/Nav'
+import Nav from '@/components/nav/Nav'
 import React from 'react'
 import { ReactNode } from 'react'
 import { getAuthTokens, getEncryptedAuthCookie } from '../../lib/get-cookies-list'
-import Sidebar from '@/app/components/Sidebar'
+import Sidebar from '@/components/Sidebar'
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const encryptedAuthCookie = await getEncryptedAuthCookie()

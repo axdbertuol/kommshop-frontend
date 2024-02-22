@@ -6,7 +6,7 @@ import { parseServerErrors } from '../../utils'
 export const fetchProduct = async (
   id: string
 ): Promise<FetchResponse<Product | null | undefined>> => {
-  const url = new URL(`products/${id}`, process.env.NEXT_URL_PRODUCTS)
+  const url = new URL(`/${id}`, process.env.NEXT_URL_PRODUCTS)
 
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },

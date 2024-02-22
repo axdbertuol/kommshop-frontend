@@ -1,4 +1,4 @@
-import SigninForm from '@/app/components/forms/SignupForm'
+import SigninForm from '@/components/forms/SignupForm'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages } from '@/types'
 import { Link, redirect } from '@/navigation'

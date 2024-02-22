@@ -1,6 +1,6 @@
-import AddProduct from '@/app/components/forms/product/AddProduct'
-import { Modal } from '@/app/components/modals/Modal'
-import { Button } from '@/app/components/ui/button'
+import AddProduct from '@/components/forms/product/AddProduct'
+import { Modal } from '@/components/modals/Modal'
+import { Button } from '@/components/ui/button'
 
 type Props = {
   children: React.ReactNode

@@ -1,5 +1,5 @@
 import { getEncryptedAuthCookie, getAuthTokens } from '@/app/lib/get-cookies-list'
-import ProfileDetailSegment from '@/app/components/section-segments/profile-detail-segment'
+import ProfileDetailSegment from '@/components/section-segments/profile-detail-segment'
 import { redirect } from '@/navigation'
 import { Suspense } from 'react'
 

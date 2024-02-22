@@ -1,5 +1,5 @@
 import React from 'react'
-import { LinkURLText } from '@/app/components/LinkURLText'
+import { LinkURLText } from '@/components/LinkURLText'
 import * as Navigation from '@/navigation'
 import '@/app/globals.css'
 

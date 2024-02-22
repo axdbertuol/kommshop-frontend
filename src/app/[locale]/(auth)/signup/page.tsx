@@ -1,5 +1,5 @@
 'use server'
-import SignupForm from '@/app/components/forms/SignupForm'
+import SignupForm from '@/components/forms/SignupForm'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
 import { IntlMessages, SignupFormValues } from '@/types'
 import { Link, redirect } from '@/navigation'

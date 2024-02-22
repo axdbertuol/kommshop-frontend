@@ -94,3 +94,21 @@ export async function validateAuth<T>(data: Record<string, any>, schema: ZodSche
   }
   return actionValidation
 }
+
+// export async function handleFormDataSubmissionGeneric(){
+//   const { action, schema } = authMap[provider][formName]
+
+//   const validateResult = await validateAuth<z.infer<typeof schema>>(data, schema)
+//   if (!validateResult?.success) {
+//     return { provider, formName, ...validateResult } as StatusUnsuccessful &
+//       (SignupFormValues | SigninFormValues)
+//   }
+//   const actionResult = await action({ ...actionData })
+//   if (!actionResult.success) {
+//     return { provider, formName, success: false, serverErrors: actionResult.serverErrors }
+//   }
+//   console.log('actionResult ', actionResult)
+
+//   return { ...actionData, provider, formName, success: true } as StatusSuccessful &
+//     (SignupFormValues | SigninFormValues)
+// }

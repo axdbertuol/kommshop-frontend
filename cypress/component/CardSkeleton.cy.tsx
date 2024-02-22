@@ -1,5 +1,5 @@
 import React from 'react'
-import CardSkeleton from '@/app/components/CardSkeleton'
+import CardSkeleton from '@/components/CardSkeleton'
 import '@/app/globals.css'
 
 describe('<CardSkeleton />', () => {

@@ -1,5 +1,5 @@
 import { cn } from '@/app/lib/utils'
-import { Input, InputProps } from '@/app/components/ui/input'
+import { Input, InputProps } from '@/components/ui/input'
 import React, { ReactElement, useCallback, useEffect, useId, useState } from 'react'
 import WarningBox from '../../text/Error'
 import { Tooltip } from 'react-tooltip'

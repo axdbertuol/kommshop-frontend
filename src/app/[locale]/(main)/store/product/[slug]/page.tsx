@@ -1,6 +1,6 @@
 import getProduct from '@/app/lib/actions/getters/get-product'
 import getProducts from '@/app/lib/actions/getters/get-products'
-import ProductDetailSegment from '@/app/components/section-segments/product-detail-segment'
+import ProductDetailSegment from '@/components/section-segments/product-detail-segment'
 import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {

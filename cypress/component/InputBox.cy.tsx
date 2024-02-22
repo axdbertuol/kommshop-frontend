@@ -1,5 +1,5 @@
 import React from 'react'
-import InputBox from '@/app/components/forms/input/InputBox'
+import InputBox from '@/components/forms/input/InputBox'
 import '@/app/globals.css'
 
 describe('<InputBox />', () => {

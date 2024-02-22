@@ -1,5 +1,5 @@
 import React from 'react'
-import LikeButton from '@/app/components/buttons/LikeButton'
+import LikeButton from '@/components/buttons/LikeButton'
 import '@/app/globals.css'
 
 describe('<LikeButton />', () => {

@@ -1,8 +1,8 @@
 import React from 'react'
-import CommandSearch from '@/app/components/CommandSearch'
+import CommandSearch from '@/components/CommandSearch'
 import '@/app/globals.css'
 import { Suggestion } from '@/types/common'
-import * as CommandSearchList from '@/app/components/CommandSearchList'
+import * as CommandSearchList from '@/components/CommandSearchList'
 
 const mock: Record<string, Suggestion[]> = {
   products: [

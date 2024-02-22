@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/app/components/ui/card'
+} from '@/components/ui/card'
 import { useRouter, usePathname } from '@/navigation'
 import { Product } from '@/types'
 import Image from 'next/image'

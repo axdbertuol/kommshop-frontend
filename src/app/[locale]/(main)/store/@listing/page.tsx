@@ -2,8 +2,8 @@ import 'server-only'
 import React from 'react'
 import getProducts from '@/app/lib/actions/getters/get-products'
 import { SearchParams } from '@/types'
-import ProductListWrapper from '../../../../components/product/ProductListWrapper'
-import ProductList from '../../../../components/product/ProductList'
+import ProductListWrapper from '@/components/product/ProductListWrapper'
+import ProductList from '@/components/product/ProductList'
 
 type Props = {
   searchParams?: SearchParams

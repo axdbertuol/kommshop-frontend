@@ -1,4 +1,4 @@
-import Sidebar from '@/app/components/Sidebar'
+import Sidebar from '@/components/Sidebar'
 import Link from 'next/link'
 import React from 'react'
 

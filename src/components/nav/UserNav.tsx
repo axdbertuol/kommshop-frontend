@@ -1,7 +1,7 @@
 'use client'
 import { signOut } from '@/app/lib/actions/form/signout'
-import { Avatar, AvatarFallback, AvatarImage } from '@/app/components/ui/avatar'
-import { Button } from '@/app/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 
 import {
   DropdownMenu,
@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from '@/app/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
 import { AuthProvidersEnum, LoginResponseUserDto } from 'kommshop-types'
 import { googleLogout } from '@react-oauth/google'

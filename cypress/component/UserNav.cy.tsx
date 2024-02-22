@@ -1,5 +1,5 @@
 import React from 'react'
-import { UserNav } from '@/app/components/nav/UserNav'
+import { UserNav } from '@/components/nav/UserNav'
 import '@/app/globals.css'
 import { LoginResponseUserDto } from 'kommshop-types'
 import * as signOut from '@/app/lib/actions/form/signout'

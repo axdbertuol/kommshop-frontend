@@ -1,8 +1,8 @@
 // 'use client'
 'use server'
 import React, { Suspense } from 'react'
-import CommandSearch from '../../../../components/CommandSearch'
-import CategoriesBar from '../../../../components/CategoriesBar'
+import CommandSearch from '@/components/CommandSearch'
+import CategoriesBar from '@/components/CategoriesBar'
 import { SearchParams } from '@/types'
 import getSuggestions from '@/app/lib/actions/getters/get-suggestions'
 
