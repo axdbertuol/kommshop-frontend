@@ -75,6 +75,8 @@ export type SigninFormValues = {
 }
 export type SignupFormValues = {
   email?: string
+  firstName?: string
+  lastName?: string
   password?: string
   password2?: string
   idToken?: string
@@ -86,4 +88,14 @@ export type FetchResponse<T> = {
   data?: T | null
   success: boolean
   serverErrors?: StatusErrors['serverErrors'] | null
+}
+
+export type User = {
+  email: string | null
+  firstName: string | null
+  lastName: string | null
+  username: string
+  id: numer
+  role?: Role | null
+  status?: Status
 }
