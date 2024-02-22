@@ -21,6 +21,7 @@ function InputBox({
   className,
   type,
   autoComplete,
+  children,
 }: Props) {
   const hasErrors = useCallback(() => errors && errors.length > 0, [errors])
   const [showWarning, setShowWarning] = useState(false)
@@ -46,24 +47,26 @@ function InputBox({
           </label>
         </div>
         <div className="flex relative">
-          <Input
-            key={id}
-            id={id}
-            data-testid="input-box"
-            className={cn(
-              'dark:border-secondary-black-400 transition-all focus-within:border-transparent',
-              className,
-              showWarning && 'outline outline-yellow-300 '
-            )}
-            onInput={() => setShowWarning(false)}
-            name={name}
-            disabled={disabled}
-            aria-disabled={disabled}
-            placeholder={placeholder}
-            required={required}
-            type={type}
-            autoComplete={autoComplete}
-          />
+          {children || (
+            <Input
+              key={id}
+              id={id}
+              data-testid="input-box"
+              className={cn(
+                'dark:border-secondary-black-400 transition-all focus-within:border-transparent placeholder:font-extralight',
+                className,
+                showWarning && 'outline outline-yellow-300 '
+              )}
+              onInput={() => setShowWarning(false)}
+              name={name}
+              disabled={disabled}
+              aria-disabled={disabled}
+              placeholder={placeholder}
+              required={required}
+              type={type}
+              autoComplete={autoComplete}
+            />
+          )}
           {showWarning && (
             <span
               data-tooltip-id={_id}
