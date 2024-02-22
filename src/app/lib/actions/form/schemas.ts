@@ -1,7 +1,7 @@
 import { AuthProvidersEnum } from '@/enum'
 import { z } from 'zod'
 const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
-
+const alphaRegex = /^[A-Za-z\s]+$/
 export const schemaAuthBasic = z.object({
   provider: z.enum([AuthProvidersEnum.credentials, AuthProvidersEnum.google]),
 })
@@ -22,6 +22,8 @@ export const credSigninSchema = z
 export const credSignupSchema = credSigninSchema
   .merge(
     z.object({
+      firstName: z.string().regex(alphaRegex).min(2),
+      lastName: z.string().regex(alphaRegex).min(2),
       password: z
         .string()
         .regex(strongPasswordRegex, { message: 'passwordRegexInvalid' }),

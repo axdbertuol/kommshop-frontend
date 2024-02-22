@@ -22,7 +22,7 @@ type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: ReactElement<any, string>
   initialValues: StatusErrors & (SignupFormValues | SigninFormValues)
-  translatedErrors: Record<string, string | ReactElement<any, string>>
+  translatedErrors: Record<string, string | ReactElement<unknown, string>>
   intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
 } & React.HTMLAttributes<HTMLElement>
 
@@ -42,6 +42,7 @@ function DefaultForm({
   const router = useRouter()
   const handleGoogleAuthSuccess = async (credentials: CredentialResponse) => {
     if (!credentials?.credential) return
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const formData = new FormData(formRef.current!)
     setProvider(AuthProvidersEnum.google)
     formData?.set('idToken', credentials.credential)
@@ -82,7 +83,7 @@ function DefaultForm({
         router.push('/store')
       }
     }
-  }, [handleFormDataSubmission, state?.success])
+  }, [router, state])
 
   return (
     <form
@@ -103,6 +104,34 @@ function DefaultForm({
         name="formName"
         value={initialValues.formName}
       />
+      {state.formName === 'signup' && (
+        <>
+          <InputBox
+            autoComplete="firstName"
+            id="firstName"
+            name="firstName"
+            disabled={pending}
+            aria-disabled={pending}
+            placeholder="John"
+            required={required}
+            type="text"
+            labelText={intl.firstname}
+            errors={memoizedIntlErrors?.['firstName']}
+          />
+          <InputBox
+            autoComplete="lastName"
+            id="lastName"
+            name="lastName"
+            disabled={pending}
+            aria-disabled={pending}
+            placeholder="Jones"
+            required={required}
+            type="text"
+            labelText={intl.lastname}
+            errors={memoizedIntlErrors?.['lastName']}
+          />
+        </>
+      )}
       <InputBox
         autoComplete="email"
         id="email"
