@@ -8,6 +8,8 @@
   "Auth": {
     "signup": {
       "success": "We've sent you an email with instructions to join our community. Please do have a look!",
+      "firstname": "First Name",
+      "lastname": "Last Name",
       "email": "Your email",
       "password": "Your password",
       "password2": "Confirm your password",
