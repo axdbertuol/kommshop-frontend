@@ -9,16 +9,6 @@ import AnimatedArrow from './icons/AnimatedArrow'
 
 const links = [
   {
-    label: 'Home',
-    href: '/',
-    icon: <ShopBag />,
-  },
-  {
-    label: 'Home',
-    href: '/',
-    icon: <ShopBag />,
-  },
-  {
     label: 'Dashboard',
     href: '/dashboard',
     icon: (
@@ -37,6 +27,16 @@ const links = [
         />
       </svg>
     ),
+  },
+  {
+    label: 'Store',
+    href: '/store',
+    icon: <ShopBag />,
+  },
+  {
+    label: 'Home',
+    href: '/',
+    icon: <ShopBag />,
   },
 ]
 
