@@ -17,7 +17,6 @@ export default function StoreLayout({
   console.log(search)
   return (
     <div className="flex">
-      {/* <Sidebar /> */}
       <div className="w-full">
         <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
           {/* <SuspenseList revealOrder="forwards"> */}

@@ -2,8 +2,9 @@ import Nav from '@/app/components/nav/Nav'
 import React from 'react'
 import { ReactNode } from 'react'
 import { getAuthTokens, getEncryptedAuthCookie } from '../../lib/get-cookies-list'
+import Sidebar from '@/app/components/Sidebar'
 
-export default async function Template({ children }: { children: ReactNode }) {
+export default async function Layout({ children }: { children: ReactNode }) {
   const encryptedAuthCookie = await getEncryptedAuthCookie()
   let user = null
   if (encryptedAuthCookie) {
@@ -13,6 +14,7 @@ export default async function Template({ children }: { children: ReactNode }) {
   return (
     <>
       <Nav user={user} />
+      <Sidebar />
       {children}
     </>
   )

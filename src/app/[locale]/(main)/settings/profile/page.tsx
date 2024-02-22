@@ -12,7 +12,7 @@ export default async function Page() {
     user = authTokens.user
   }
   if (!user) {
-    redirect('/signin')
+    // redirect('/signin')
     return
   }
   return (
