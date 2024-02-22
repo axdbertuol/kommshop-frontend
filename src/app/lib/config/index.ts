@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 export type AuthPathname =
   | 'signup'
   | 'signin'
@@ -6,10 +7,13 @@ export type AuthPathname =
   | 'refresh'
   | 'getMe'
   | 'google'
+
+export type ProductPathname = 'post' | 'get' | 'delete' | 'put' | 'uploadimg' | 'getimg'
+
 export type BackendService = 'auth' | 'product' | 'cart' | 'user'
 
-export const getApiPathSwitch = (pathname: AuthPathname) => {
-  const nextAuthUrl = process.env.AUTH_URL!
+export const getAuthPathSwitch = (pathname: AuthPathname) => {
+  const nextAuthUrl = process.env.NEXT_URL_AUTH
   const makeUrl = (path: string) => new URL(path, nextAuthUrl)
   switch (pathname) {
     case 'confirmEmail':
@@ -31,8 +35,49 @@ export const getApiPathSwitch = (pathname: AuthPathname) => {
   }
 }
 
+export const getProductPathSwitch = (pathname: ProductPathname) => {
+  const productUrl = process.env.NEXT_URL_PRODUCTS
+  const makeUrl = (path: string) => new URL(path, productUrl)
+  switch (pathname) {
+    case 'get':
+      return makeUrl(process.env.CONFIRM_EMAIL_ENDPOINT!)
+    case 'delete':
+      return makeUrl(process.env.SIGNIN_CREDENTIAL_ENDPOINT!)
+    case 'getimg':
+      return makeUrl(process.env.SIGNUP_CREDENTIAL_ENDPOINT!)
+    case 'post':
+      return makeUrl('')
+    case 'put':
+      return makeUrl(process.env.SIGNOUT_ENDPOINT!)
+    case 'uploadimg':
+      return makeUrl(process.env.SIGNOUT_ENDPOINT!)
+    default:
+      throw new Error('Path must be specified in the config file')
+  }
+}
+
 export const getApiPath = (pathname: AuthPathname) => {
-  const path = getApiPathSwitch(pathname)
+  const path = getAuthPathSwitch(pathname)
   if (!path) throw new Error(`Path ${pathname} must be specified in the config file`)
+  return path
+}
+
+export const getApiPathByService = (
+  pathname: AuthPathname & ProductPathname,
+  service: BackendService
+) => {
+  let path: URL | null = null
+  try {
+    switch (service) {
+      case 'auth': {
+        path = getAuthPathSwitch(pathname)
+      }
+      case 'product': {
+        path = getProductPathSwitch(pathname)
+      }
+    }
+  } catch (err) {
+    throw new Error(`Path ${pathname} must be specified in the config file`)
+  }
   return path
 }
