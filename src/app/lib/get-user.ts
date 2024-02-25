@@ -1,3 +1,4 @@
+'use server'
 import { getEncryptedAuthCookie, getAuthTokens } from './get-cookies-list'
 
 export async function getUser() {

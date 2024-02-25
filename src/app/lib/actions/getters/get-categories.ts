@@ -2,7 +2,7 @@ import { cache } from 'react'
 import { Category } from '@/types'
 import * as z from 'zod'
 import 'server-only'
-import { FetchResponse, ServerErrorResponse, Suggestion } from '@/types'
+import { FetchResponse, Suggestion } from '@/types'
 import { parseServerErrors } from '../../utils'
 
 const schema = z
@@ -21,7 +21,8 @@ export const fetchCategories = async (
   if (search) url.searchParams.set('name', search)
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
-    cache: 'no-store',
+    // cache: 'no-store',
+    next: { revalidate: 60 },
   })
 
   const response = {

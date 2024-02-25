@@ -1,16 +1,17 @@
 import { FetchResponse, Product } from '@/types'
-import { cache } from 'react'
 import 'server-only'
 import { parseServerErrors } from '../../utils'
+import { unstable_cache as cache } from 'next/cache'
 
 export const fetchProduct = async (
   id: string
 ): Promise<FetchResponse<Product | null | undefined>> => {
-  const url = new URL(`/${id}`, process.env.NEXT_URL_PRODUCTS)
+  const url = new URL(`products/${id}`, process.env.NEXT_URL_PRODUCTS)
 
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     // cache: 'no-store',
+    next: { tags: ['get-products'] },
   })
 
   const response = {
@@ -27,7 +28,7 @@ export const fetchProduct = async (
         serverErrors: parseServerErrors(json),
       }
     }
-    return { ...response, data: json, success: true }
+    return { ...response, data: json as Product, success: true }
   } catch (err: any) {
     return { ...response }
   }
