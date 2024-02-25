@@ -24,7 +24,7 @@ export async function middleware(request: NextRequest) {
     (!authTokens?.tokenExpires || isTokenExpired(authTokens.tokenExpires))
   ) {
     request.cookies.delete(authKeyToken)
-    const response = NextResponse.redirect(new URL('signin', 'http://localhost:3000/'))
+    const response = NextResponse.redirect(new URL('signin', request.url))
     response.cookies.delete(authKeyToken)
 
     return response
@@ -34,7 +34,7 @@ export async function middleware(request: NextRequest) {
     authTokens &&
     Object.values(authTokens).every(Boolean)
   ) {
-    return NextResponse.redirect(new URL(`store`, 'http://localhost:3000/'))
+    return NextResponse.redirect(new URL(`dashboard`, request.url))
   }
 
   const response = handleI18nRouting(request)
