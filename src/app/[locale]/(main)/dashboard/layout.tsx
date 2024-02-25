@@ -1,14 +1,13 @@
-import Sidebar from '@/components/Sidebar'
 import Link from 'next/link'
 import React from 'react'
 
 type Props = {
   children: React.ReactNode
   product: React.ReactNode
-  add: React.ReactNode
+  list: React.ReactNode
 }
 
-export default function Layout({ children, product, add }: Props) {
+export default function Layout({ children, product, list, ...rest }: Props) {
   console.log(product)
   return (
     <>
@@ -16,6 +15,7 @@ export default function Layout({ children, product, add }: Props) {
         <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
           <Link href="/dashboard/add">Open modal</Link>
           {product}
+          {list}
           {children}
         </div>
       </div>
