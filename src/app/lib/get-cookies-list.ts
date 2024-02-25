@@ -1,16 +1,15 @@
 'use server'
 import { cookies } from 'next/headers'
-import { LoginResponseType, LoginResponseUserDto } from 'kommshop-types'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { decryptSymmetric, encryptSymmetric } from './encryption'
-import { Tokens } from '@/types'
+import { LoginResponse, Tokens } from '@/types'
 
 export async function getCookiesList(): Promise<RequestCookie[]> {
   const cookieData = cookies().getAll()
   return new Promise((resolve) => resolve(cookieData))
 }
 
-export async function setAuthCookies(data: Tokens & { user: LoginResponseUserDto }) {
+export async function setAuthCookies(data: Tokens & { user: LoginResponse['user'] }) {
   const authKey = process.env.AUTH_COOKIE_KEY
   if (!authKey) return Promise.reject('No auth key provided')
   const cookiesList = cookies()
@@ -30,9 +29,7 @@ export async function getEncryptedAuthCookie(): Promise<string | null> {
   return Promise.resolve(authCookie)
 }
 
-export async function getAuthTokens(
-  encryptedAuthCookie: string
-): Promise<LoginResponseType> {
+export async function getAuthTokens(encryptedAuthCookie: string): Promise<LoginResponse> {
   let decryptedAuthTokenKey
   try {
     const { cyphertext, iv } = JSON.parse(encryptedAuthCookie)
@@ -40,9 +37,9 @@ export async function getAuthTokens(
   } catch (err) {
     return Promise.reject(err)
   }
-  let parsedAuthTokens: LoginResponseType | undefined = undefined
+  let parsedAuthTokens: LoginResponse | undefined = undefined
   try {
-    parsedAuthTokens = JSON.parse(decryptedAuthTokenKey) as LoginResponseType
+    parsedAuthTokens = JSON.parse(decryptedAuthTokenKey) as LoginResponse
   } catch (err) {
     console.error('Unable to parse auth token')
     return Promise.reject(err)

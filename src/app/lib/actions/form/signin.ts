@@ -1,7 +1,6 @@
 'use server'
-import type { LoginResponseType } from 'shared-kommshop-types'
 import { HTTP_CODES_ENUM } from '@/enum'
-import { CausedServerErrorResponse, ServerErrorResponse } from '@/types'
+import { CausedServerErrorResponse, LoginResponse, ServerErrorResponse } from '@/types'
 import { setAuthCookies } from '../../get-cookies-list'
 import { revalidatePath } from 'next/cache'
 import { getApiPath } from '../../config'
@@ -21,7 +20,7 @@ export const signInCred = async ({
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-store',
     })
-    const json = (await response.json()) as LoginResponseType | CausedServerErrorResponse
+    const json = (await response.json()) as LoginResponse | CausedServerErrorResponse
     console.log(response, json)
     const success = response.status === HTTP_CODES_ENUM.OK
     if (!success || response.status < 200 || response.status > 399) {
@@ -30,7 +29,7 @@ export const signInCred = async ({
         serverErrors: parseServerErrors((json as CausedServerErrorResponse).cause),
       }
     }
-    await setAuthCookies(json as LoginResponseType)
+    await setAuthCookies(json as LoginResponse)
     revalidatePath('/')
     return { success }
   } catch (err) {
@@ -49,7 +48,7 @@ export const signinGoogle = async ({
     headers: { 'Content-Type': 'application/json' },
     cache: 'no-store',
   })
-  const json = (await response.json()) as ServerErrorResponse & LoginResponseType
+  const json = (await response.json()) as ServerErrorResponse & LoginResponse
 
   const success = response.status === HTTP_CODES_ENUM.OK
   if (success) {

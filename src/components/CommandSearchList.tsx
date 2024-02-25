@@ -8,7 +8,7 @@ import useSearchContext from '@/hooks/useSearchContext'
 import { cn } from '@/app/lib/utils'
 import useDeferredFilteredData from '@/hooks/useFilteredData'
 
-export const queryFn = async (value?: string) => {
+const queryFn = async (value?: string) => {
   return new Promise((resolve) => {
     setTimeout(async () => resolve(await getSuggestions(value)), 0)
   }) as Promise<Record<string, Suggestion<'product' | 'category'>[]> | null>
@@ -31,7 +31,7 @@ function CommandSearchList({
     retry: 3,
     retryDelay: 1000,
     _optimisticResults: 'optimistic',
-    // cacheTime: 50,
+    refetchOnWindowFocus: true,
     // suspense: true,
     // enabled: !!searchValue,
   })
