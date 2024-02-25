@@ -21,7 +21,7 @@ export default async function Page() {
         firstName={user.firstName}
         lastName={user.lastName}
         email={user.email}
-        photo={user?.photo}
+        // photo={user?.photo}
       />
     </Suspense>
   )

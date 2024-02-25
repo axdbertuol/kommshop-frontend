@@ -2,7 +2,7 @@ import getProducts from '@/app/lib/actions/getters/get-products'
 import { SearchParams } from '@/types'
 import 'server-only'
 
-export default function StoreLayout({
+export default async function StoreLayout({
   children, // will be a page or nested layout
   search,
   listing,
@@ -14,7 +14,6 @@ export default function StoreLayout({
   listing: React.ReactNode
 }) {
   getProducts(searchParams?.search).catch((err) => console.log(err))
-  console.log(search)
   return (
     <div className="flex">
       <div className="w-full">
