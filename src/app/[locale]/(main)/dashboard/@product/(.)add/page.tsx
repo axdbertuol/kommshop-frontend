@@ -1,20 +1,21 @@
+import getCategories from '@/app/lib/actions/getters/get-categories'
 import AddProduct from '@/components/forms/product/AddProduct'
 import { Modal } from '@/components/modals/Modal'
-import { Button } from '@/components/ui/button'
 
-type Props = {
-  children: React.ReactNode
-}
 const initialValues = {
   name: '',
   price: 0,
   category: '',
   success: false,
 }
-export default function Add({ children }: Props) {
+export default async function Add() {
+  const categories = await getCategories()
   return (
     <Modal>
-      <AddProduct initialValues={initialValues} />
+      <AddProduct
+        initialValues={initialValues}
+        categories={categories}
+      />
     </Modal>
   )
 }
