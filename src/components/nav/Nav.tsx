@@ -2,9 +2,9 @@
 import React, { Suspense } from 'react'
 import { MainNav } from './MainNav'
 import { MemoizedUserNav } from './UserNav'
-import { LoginResponseUserDto } from 'kommshop-types'
+import { LoginResponse } from '@/types'
 
-async function Nav({ user }: { user: LoginResponseUserDto | null }) {
+async function Nav({ user }: { user: LoginResponse['user'] | null }) {
   return (
     <div className="border-b">
       <div className="flex h-16 ml-16 items-center px-4">

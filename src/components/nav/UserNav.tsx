@@ -14,10 +14,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
-import { AuthProvidersEnum, LoginResponseUserDto } from 'kommshop-types'
+import { AuthProvidersEnum } from 'kommshop-types'
 import { googleLogout } from '@react-oauth/google'
+import { LoginResponse } from '@/types'
 
-export function UserNav({ user }: { user: LoginResponseUserDto | null }) {
+export function UserNav({ user }: { user: LoginResponse['user'] | null }) {
   const router = useRouter()
 
   if (!user) {
