@@ -18,7 +18,7 @@ async function HoverableImage({ children, imageRatio = 1 }: Props) {
           {separatedChildren?.[0]}
         </AspectRatio>
       </Suspense>
-      <div className="absolute top-[45%] left-[30%] z-20 transition-transform transform ease-in-out scale-0 group-hover:scale-100 ">
+      <div className="absolute top-[45%] left-[30%]  transition-transform transform ease-in-out scale-0 group-hover:scale-100 ">
         {separatedChildren?.[1]}
       </div>
     </div>

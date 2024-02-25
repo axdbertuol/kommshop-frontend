@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { useRouter, usePathname } from '@/navigation'
+import { useRouter } from '@/navigation'
 import { Product } from '@/types'
 import Image from 'next/image'
 import HoverableImage from '../HoverableImage'
@@ -21,7 +21,7 @@ export default function ProductCard(
   { name, price, description, id, slug, imageUrl }: ProductProps
 ) {
   const router = useRouter()
-  //TODO: pass it as a property
+
   const urlPath = '/product/' + slug
   return (
     <Card className="w-[300px]">

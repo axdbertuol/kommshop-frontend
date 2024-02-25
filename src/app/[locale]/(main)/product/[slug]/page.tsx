@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 }
 export default async function Page({ params }: { params: { slug: string } }) {
   const id = params.slug.split('-').at(-1)
-  // if (!id) return notFound()
+  if (!id) return notFound()
   // revalidatePath('/store/product/' + params.slug)
   // getProduct(id)
   return <ProductDetailSegment id={id ?? ''} />

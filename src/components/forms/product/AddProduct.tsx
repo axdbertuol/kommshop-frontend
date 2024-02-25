@@ -104,7 +104,7 @@ export default function AddProduct({ initialValues, categories }: Props) {
           disabled={pending}
           name="description"
           autoComplete="description"
-          placeholder="John"
+          // placeholder=""
           className={cn(
             'dark:border-secondary-black-400 transition-all focus-within:border-transparent placeholder:font-extralight'
           )}
@@ -132,7 +132,7 @@ export default function AddProduct({ initialValues, categories }: Props) {
         required={true}
         // disabled={pending}
         // aria-disabled={pending}
-        placeholder="John"
+        placeholder="22.0"
         // required={required}
         type="number"
         labelText={'Price'}
