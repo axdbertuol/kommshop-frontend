@@ -3,6 +3,7 @@ import { Input, InputProps } from '@/components/ui/input'
 import React, { ReactElement, useCallback, useEffect, useId, useState } from 'react'
 import WarningBox from '../../text/Error'
 import { Tooltip } from 'react-tooltip'
+import { useFormStatus } from 'react-dom'
 
 type Props = {
   labelText?: string
@@ -11,7 +12,7 @@ type Props = {
   InputProps
 
 function InputBox({
-  disabled,
+  disabled = false,
   id,
   labelText,
   required,
@@ -27,6 +28,7 @@ function InputBox({
   const [showWarning, setShowWarning] = useState(false)
   const _id = useId()
   const timeout = 10000
+  const { pending } = useFormStatus()
 
   useEffect(() => {
     if (hasErrors()) {
@@ -59,8 +61,8 @@ function InputBox({
               )}
               onInput={() => setShowWarning(false)}
               name={name}
-              disabled={disabled}
-              aria-disabled={disabled}
+              disabled={pending || disabled}
+              aria-disabled={pending || disabled}
               placeholder={placeholder}
               required={required}
               type={type}

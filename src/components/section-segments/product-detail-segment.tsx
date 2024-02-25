@@ -13,7 +13,7 @@ async function ProductDetailSegment({ id }: Props) {
     return r
   })
 
-  if (!data) return notFound()
+  if (!data) return null
 
   return (
     <div className="flex flex-col items-center gap-y-4">

@@ -50,7 +50,7 @@ function DefaultForm({
     const names = ['email', 'password', 'password2']
     names.forEach((value: string) => formData?.delete(value))
     await handleFormDataSubmission({ ...state }, formData).then(
-      (resp) => resp.success && router.push('/store')
+      (resp) => resp.success && router.push('/dashboard')
     )
   }
 
@@ -80,7 +80,7 @@ function DefaultForm({
           '/check-email?email=' + (state as SignupFormValues | SigninFormValues).email
         )
       } else {
-        router.push('/store')
+        router.push('/dashboard')
       }
     }
   }, [router, state])

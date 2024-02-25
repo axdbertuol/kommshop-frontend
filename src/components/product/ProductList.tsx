@@ -1,14 +1,16 @@
+'use client'
 import { Product } from '@/types'
 import { Suspense, memo } from 'react'
 import CardSkeleton from '../CardSkeleton'
 import ProductCard from './ProductCard'
+import { useRouter } from '@/navigation'
 
 type Props = {
   data: Product[] | null | undefined
 }
-function ProductList({ data }: Props) {
-  if (!data || data.length === 0) return <>Nothing was found :(</>
+export default function ProductList({ data }: Props) {
   // TODO: cleanup this
+  if (!data || data.length === 0) return null
   return (
     <>
       {data.map((product, index) => {
@@ -19,7 +21,7 @@ function ProductList({ data }: Props) {
           >
             <ProductCard
               id={product.id}
-              imgSrc={''}
+              imageUrl={product.imageUrl}
               name={product.name}
               price={product.price}
               description={product?.description ?? ''}
@@ -31,5 +33,3 @@ function ProductList({ data }: Props) {
     </>
   )
 }
-
-export default memo(ProductList)

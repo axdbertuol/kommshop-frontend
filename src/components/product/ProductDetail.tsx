@@ -2,19 +2,16 @@ import React, { Suspense } from 'react'
 import Image from 'next/image'
 import { Product } from '@/types'
 
-type ProductDetailProps = Product & { image?: string }
-
-const ProductDetail = ({ name, description, image, price }: ProductDetailProps) => {
+type ProductDetailProps = Product
+const defaultImg = process.env.DEFAULT_IMG_URL ?? ''
+const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProps) => {
   return (
     <div className="flex flex-col  md:justify-start bg-background md:w-8/12">
       <div className="flex flex-col lg:flex-row md:gap-2 rounded-lg p-4 w-full max-h-[calc(100vh-72px)]">
         <div className="bg-secondary md:max-h-[calc(100vh-72px)] w-full">
           <Suspense fallback={<>Loading...</>}>
             <Image
-              src={
-                image ??
-                'https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=300&dpr=2&q=80'
-              }
+              src={imageUrl ?? defaultImg}
               alt={name}
               width={300}
               height={300}

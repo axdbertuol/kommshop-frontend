@@ -15,15 +15,14 @@ import { Button } from '../ui/button'
 
 export type ProductProps = {
   imgSrc?: string
-} & Omit<Product, 'category'>
+} & Omit<Product, 'category' | 'categoryId'>
 export default function ProductCard(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { name, price, description, id, slug }: ProductProps
+  { name, price, description, id, slug, imageUrl }: ProductProps
 ) {
   const router = useRouter()
-  const pathname = usePathname()
-
-  const urlPath = pathname + '/product/' + slug
+  //TODO: pass it as a property
+  const urlPath = '/product/' + slug
   return (
     <Card className="w-[300px]">
       <CardHeader
@@ -32,7 +31,7 @@ export default function ProductCard(
       >
         <HoverableImage imageRatio={1}>
           <Image
-            src="https://images.unsplash.com/photo-1535025183041-0991a977e25b?w=300&dpr=2&q=80"
+            src={imageUrl ?? '/product-placeholder.webp'}
             alt="Image"
             width={300}
             height={150}
