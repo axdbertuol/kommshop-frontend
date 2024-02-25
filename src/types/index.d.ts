@@ -14,7 +14,9 @@ export type Product = {
   description?: string
   price: number
   category: Category
+  categoryId: number
   slug: string
+  imageUrl?: string
 }
 export type Category = {
   id: number
@@ -95,7 +97,53 @@ export type User = {
   firstName: string | null
   lastName: string | null
   username: string
-  id: numer
+  id: number
   role?: Role | null
   status?: Status
+  provider?: string
+}
+export type LoginResponse = Readonly<{
+  token: string
+  refreshToken: string
+  tokenExpires: number
+  user: User
+}>
+
+export type CreateProduct = {
+  name: string
+  description?: string
+  price: number
+  category: string
+  imageUrl?: string
+}
+export type CreateProductResponse = (CreateProduct & StatusErrors) & { id?: number }
+export interface ImageData {
+  id: string
+  title: string
+  url_viewer: string
+  url: string
+  display_url: string
+  width: string
+  height: string
+  size: string
+  time: string
+  expiration: string
+  image: ImageDetails
+  thumb: ImageDetails
+  medium: ImageDetails
+  delete_url: string
+}
+
+export interface ImageDetails {
+  filename: string
+  name: string
+  mime: string
+  extension: string
+  url: string
+}
+
+export interface ImgBBResponse {
+  data: ImageData
+  success: boolean
+  status: number
 }
