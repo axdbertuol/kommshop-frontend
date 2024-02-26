@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button'
-
 type Props = {
   children: React.ReactNode
 }
