@@ -9,7 +9,7 @@ import CommandSearchList from './CommandSearchList'
 import { cn } from '@/app/lib/utils'
 
 type Props = React.HTMLAttributes<HTMLElement> & {
-  suggestions: Record<string, Suggestion<'category' | 'product'>[]> | null
+  suggestions: Record<string, Suggestion<'product'>[]> | null
 }
 
 function CommandSearch({ ...props }: Props) {

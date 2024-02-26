@@ -5,7 +5,7 @@ import { CommandGroup } from './ui/command'
 import { cn } from '@/app/lib/utils'
 
 type Props = {
-  suggestions: Suggestion<'category' | 'product'>[]
+  suggestions: Suggestion<'product'>[]
   heading?: string
   onSelectSuggestion: (value: string) => void
 } & React.HTMLAttributes<HTMLDivElement>

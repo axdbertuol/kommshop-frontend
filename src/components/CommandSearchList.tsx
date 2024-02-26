@@ -11,7 +11,7 @@ import useDeferredFilteredData from '@/hooks/useFilteredData'
 const queryFn = async (value?: string) => {
   return new Promise((resolve) => {
     setTimeout(async () => resolve(await getSuggestions(value)), 0)
-  }) as Promise<Record<string, Suggestion<'product' | 'category'>[]> | null>
+  }) as Promise<Record<string, Suggestion<'product'>[]> | null>
 }
 
 function CommandSearchList({
@@ -19,7 +19,7 @@ function CommandSearchList({
   className,
   onSelectSuggestion,
 }: {
-  suggestions: Record<string, Suggestion<'product' | 'category'>[]> | null
+  suggestions: Record<string, Suggestion<'product'>[]> | null
   className: string
   onSelectSuggestion: (value: string) => void
 } & React.HTMLAttributes<HTMLElement>) {
@@ -31,7 +31,8 @@ function CommandSearchList({
     retry: 3,
     retryDelay: 1000,
     _optimisticResults: 'optimistic',
-    refetchOnWindowFocus: true,
+
+    // refetchOnWindowFocus: true,
     // suspense: true,
     // enabled: !!searchValue,
   })
@@ -39,7 +40,7 @@ function CommandSearchList({
   const callbackFilter = useCallback(
     () =>
       data
-        ? Object.entries(data as Record<string, Suggestion<'category' | 'product'>[]>)
+        ? Object.entries(data as Record<string, Suggestion<'product'>[]>)
             .filter((entry) => entry?.[1]?.length !== 0)
             .filter(Boolean)
         : [],
