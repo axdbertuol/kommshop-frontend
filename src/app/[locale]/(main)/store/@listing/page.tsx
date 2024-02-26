@@ -10,10 +10,7 @@ type Props = {
 }
 
 async function ListingPage({ searchParams }: Props) {
-  const { data } = await getProducts(searchParams?.search).then((r) => {
-    console.log('get products finished')
-    return r
-  })
+  const { data } = await getProducts(searchParams?.search, searchParams?.cat)
   if (!data) return null
   return (
     <div className="flex flex-col items-center gap-y-4 min-h-screen">

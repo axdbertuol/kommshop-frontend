@@ -6,7 +6,7 @@ export function Modal({ children }: { children: React.ReactNode }) {
   const router = useRouter()
 
   return (
-    <div className="fixed z-20 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+    <dialog className="fixed z-20 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
       <div className="p-8 border w-2/3 shadow-lg rounded-md bg-secondary">
         <button
           onClick={router.back}
@@ -16,6 +16,6 @@ export function Modal({ children }: { children: React.ReactNode }) {
         </button>
         {children}
       </div>
-    </div>
+    </dialog>
   )
 }

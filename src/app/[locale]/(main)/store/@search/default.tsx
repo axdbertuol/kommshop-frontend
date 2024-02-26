@@ -14,10 +14,10 @@ async function Default({ searchParams }: Props) {
   const suggestions = await getSuggestions(searchParams.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
-      <CategoriesBar searchParams={searchParams} />
       <Suspense fallback={<>Loading...</>}>
         {suggestions && <CommandSearch suggestions={suggestions} />}
       </Suspense>
+      <CategoriesBar searchParams={searchParams} />
     </div>
   )
 }

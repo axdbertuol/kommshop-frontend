@@ -1,9 +1,8 @@
 'use client'
 import { Product } from '@/types'
-import { Suspense, memo } from 'react'
+import { Suspense } from 'react'
 import CardSkeleton from '../CardSkeleton'
 import ProductCard from './ProductCard'
-import { useRouter } from '@/navigation'
 
 type Props = {
   data: Product[] | null | undefined

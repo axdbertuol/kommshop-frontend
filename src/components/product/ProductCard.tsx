@@ -32,6 +32,7 @@ export default function ProductCard(
         <HoverableImage imageRatio={1}>
           <Image
             src={imageUrl ?? '/product-placeholder.webp'}
+            priority={true}
             alt="Image"
             width={300}
             height={150}

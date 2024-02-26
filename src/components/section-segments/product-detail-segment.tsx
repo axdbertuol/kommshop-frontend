@@ -8,10 +8,7 @@ type Props = {
 }
 
 async function ProductDetailSegment({ id }: Props) {
-  const { data } = await getProduct(id).then((r) => {
-    console.log('get product finished')
-    return r
-  })
+  const { data } = await getProduct(id)
 
   if (!data) return null
 
