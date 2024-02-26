@@ -1,10 +1,17 @@
 'use server'
+import {
+  SigninFormValues,
+  SignupFormValues,
+  StatusErrors,
+  StatusSuccessful,
+  StatusUnsuccessful,
+} from '@/types'
 import { AuthProvidersEnum } from 'kommshop-types'
 import { z, ZodSchema } from 'zod'
 import {
-  googleSigninSchema,
   credSigninSchema,
   credSignupSchema,
+  googleSigninSchema,
   TCredSigninSchema,
   TCredSignupSchema,
   TGoogleSigninSchema,
@@ -12,19 +19,6 @@ import {
 import { signInCred, signinGoogle } from '../actions/form/signin'
 import { signupCred } from '../actions/form/signup'
 import { parseZodErrors } from '../utils'
-import {
-  CreateProduct,
-  CreateProductResponse,
-  ImgBBResponse,
-  SigninFormValues,
-  SignupFormValues,
-  StatusErrors,
-  StatusSuccessful,
-  StatusUnsuccessful,
-} from '@/types'
-import { postProduct } from '../actions/posters/post-product'
-import { postProdImageCached } from '../actions/posters/post-product-image'
-import { revalidateTag } from 'next/cache'
 
 export const getAuthMap = () => {
   const authMap = {
@@ -99,47 +93,4 @@ export async function validateAuth<T>(data: Record<string, any>, schema: ZodSche
     return parseZodErrors<T>(actionValidation.error)
   }
   return actionValidation
-}
-
-export async function handleProductSubmission(
-  prevState: CreateProductResponse,
-  formData: FormData
-): Promise<CreateProductResponse> {
-  let name = formData.get('name')?.toString()
-  let description = formData.get('description')?.toString()
-  let price = Number(formData.get('price')?.toString())
-  let category = formData.get('category')?.toString()
-  let prod = {} as CreateProduct
-  try {
-    name = formData.get('name')?.toString()
-    description = formData.get('description')?.toString()
-    price = Number(formData.get('price')?.toString())
-    category = formData.get('category')?.toString()
-    prod = { name, description, price, category } as CreateProduct
-  } catch (err) {
-    console.error(err)
-    return prevState
-  }
-
-  const image = formData.get('image')
-  if (image) {
-    const imgFormData = new FormData()
-    imgFormData.append('image', image)
-    const imgBbResp = (await postProdImageCached(imgFormData)) as ImgBBResponse
-    if (imgBbResp.success) {
-      prod = { ...prod, imageUrl: imgBbResp.data.url }
-    }
-  }
-
-  const actionResult = (await postProduct(prod as CreateProduct)) as CreateProductResponse
-  console.log(actionResult)
-  if (!actionResult.success) {
-    return {
-      ...prevState,
-      success: false,
-      serverErrors: actionResult.serverErrors,
-    } as CreateProductResponse
-  }
-  revalidateTag('get-products')
-  return { ...prod, success: true }
 }

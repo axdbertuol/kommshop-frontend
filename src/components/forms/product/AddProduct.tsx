@@ -1,5 +1,5 @@
 'use client'
-import { handleProductSubmission } from '@/app/lib/auth/utils'
+import { handleProductSubmission } from '@/app/lib/actions/form/submit-new-product'
 import { cn } from '@/app/lib/utils'
 import { Textarea } from '@/components/ui/textarea'
 import { CreateProductResponse, Suggestion } from '@/types'
@@ -23,11 +23,16 @@ type Props = {
   //   children: ReactElement<any, string>
   initialValues: CreateProductResponse
   categories: Suggestion<'category'>[] | null
+  revalidateProducts: () => void
   //   translatedErrors: Record<string, string | ReactElement<unknown, string>>
   //   intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
 } & React.HTMLAttributes<HTMLElement>
 
-export default function AddProduct({ initialValues, categories }: Props) {
+export default function AddProduct({
+  initialValues,
+  categories,
+  revalidateProducts,
+}: Props) {
   const [state, formAction] = useFormState<CreateProductResponse, FormData>(
     handleProductSubmission,
     initialValues
@@ -47,9 +52,10 @@ export default function AddProduct({ initialValues, categories }: Props) {
   useEffect(() => {
     if (state?.success) {
       // TODO: show success message
+      revalidateProducts()
       router.push('/dashboard')
     }
-  }, [router, state])
+  }, [router, state, revalidateProducts])
   return (
     <form
       ref={formRef}
@@ -75,6 +81,7 @@ export default function AddProduct({ initialValues, categories }: Props) {
           name="image"
           type="file"
           accept="image/*"
+          disabled={pending}
           onChange={handleImageChange}
         />
       </div>
