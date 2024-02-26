@@ -1,4 +1,3 @@
-import type { LoginResponseType } from 'kommshop-types'
 import { ReactElement } from 'react'
 
 export type LabelValue = {
@@ -13,7 +12,7 @@ export type Product = {
   name: string
   description?: string
   price: number
-  category: Category
+  category: string
   categoryId: number
   slug: string
   imageUrl?: string
@@ -21,9 +20,11 @@ export type Product = {
 export type Category = {
   id: number
   name: string
+  parentId?: number | null
+  children?: Category[] | null
 }
 
-export type Suggestion<T> = LabelValue & { type: T; id?: string | number }
+export type Suggestion<T> = LabelValue & { type: T; id?: number }
 export type ServerErrorResponse = {
   status?: number | string
   errors?: Record<string, string[]>
