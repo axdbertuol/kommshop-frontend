@@ -12,7 +12,7 @@ export const fetchProductsByOwnerId = async (
     headers: { 'Content-Type': 'application/json' },
     // TODO: when editing or adding new product, revalidate path
     // cache: 'no-store',
-    next: { tags: ['get-products'] },
+    next: { tags: ['get-products-ownerid'], revalidate: 120 },
   })
 
   const response = {

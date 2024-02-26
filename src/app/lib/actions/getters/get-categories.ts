@@ -1,18 +1,19 @@
+import { Category, FetchResponse, Suggestion } from '@/types'
 import { cache } from 'react'
-import { Category } from '@/types'
-import * as z from 'zod'
 import 'server-only'
-import { FetchResponse, Suggestion } from '@/types'
+import { z } from 'zod'
 import { parseServerErrors } from '../../utils'
 
-const schema = z
-  .array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-    })
-  )
-  .optional()
+const CategorySchema: any = z.lazy(() =>
+  z.object({
+    id: z.number(),
+    name: z.string(),
+    parentId: z.number().or(z.null()),
+    children: z.null().or(z.array(CategorySchema)).optional(),
+  })
+)
+const schema = z.array(CategorySchema).optional()
+
 export const fetchCategories = async (
   search?: string | null
 ): Promise<FetchResponse<Category[] | null | undefined>> => {
@@ -55,14 +56,18 @@ export const parseResults = async (json: Category[] | null | undefined) => {
     console.warn(err)
   }
   if (!data) return null
-  const result = data.map((category) => ({
-    value:
-      category.name.at(0)?.toLowerCase() +
-      category.name.substring(1, category.name.length),
-    label: category.name,
-    type: 'category',
-    id: category.id,
-  }))
+  const result = data
+    .map((category: Category) => ({
+      value:
+        category.name.at(0)?.toLowerCase() +
+        category.name.substring(1, category.name.length),
+      label: category.name,
+      type: 'category',
+      parentId: category?.parentId ?? null,
+      id: category.id,
+      children: category.children,
+    }))
+    .filter((cat) => cat.parentId == null)
   return result as Suggestion<'category'>[]
 }
 

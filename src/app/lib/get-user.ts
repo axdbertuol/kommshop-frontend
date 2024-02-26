@@ -1,5 +1,6 @@
 'use server'
-import { getEncryptedAuthCookie, getAuthTokens } from './get-cookies-list'
+import { unstable_cache } from 'next/cache'
+import { getAuthTokens, getEncryptedAuthCookie } from './get-cookies-list'
 
 export async function getUser() {
   const encryptedAuthCookie = await getEncryptedAuthCookie()
@@ -10,3 +11,5 @@ export async function getUser() {
   }
   return user
 }
+
+export const getCachedUser = unstable_cache(async () => getUser(), ['my-app-user'])

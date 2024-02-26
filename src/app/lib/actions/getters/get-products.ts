@@ -12,7 +12,8 @@ export const fetchProducts = async (
   if (category) url.searchParams.set('cat', category)
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
-    cache: 'no-store',
+    // cache: 'no-store',
+    next: { tags: ['get-products'] },
   })
   const response = {
     data: null,

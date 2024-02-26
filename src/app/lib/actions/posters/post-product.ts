@@ -4,7 +4,8 @@ import { cache } from 'react'
 import authFetch from '../../auth/auth-fetch'
 import { CreateProduct, ServerErrorResponse } from '@/types'
 import { parseServerErrors } from '../../utils'
-import { getAuthTokens, getEncryptedAuthCookie } from '../../get-cookies-list'
+import { getUser } from '../../get-user'
+import { revalidateTag } from 'next/cache'
 
 type CreateProductBody = CreateProduct & {
   ownerUsername: string
@@ -12,12 +13,7 @@ type CreateProductBody = CreateProduct & {
 }
 
 export const postProduct = async (body: CreateProduct) => {
-  const encryptedAuthCookie = await getEncryptedAuthCookie()
-  let user = null
-  if (encryptedAuthCookie) {
-    const authTokens = await getAuthTokens(encryptedAuthCookie)
-    user = authTokens.user
-  }
+  const user = await getUser()
   const newBody = {
     ...body,
     ownerId: user?.id,
@@ -32,7 +28,7 @@ export const postProduct = async (body: CreateProduct) => {
       },
       method: 'POST',
       body: JSON.stringify(newBody),
-      // cache: 'no-store',
+      cache: 'no-store',
     } as RequestInit & { user?: string })
     const json = (await myRequest.json()) as CreateProduct | ServerErrorResponse
     console.log('json', json, myRequest.status, myRequest.ok)
@@ -42,7 +38,8 @@ export const postProduct = async (body: CreateProduct) => {
         success: false,
       }
     }
-    return { ...(json as CreateProduct & { id: number }), success: myRequest.ok }
+    // revalidateTag('get-products')
+    return { ...(json as CreateProduct & { id: number }), success: true }
   } catch (err) {
     console.error(err, 'failed product post!')
   }

@@ -17,9 +17,8 @@ export const postProductImage = async (body: FormData) => {
     console.log('url', url)
     const myRequest = await authFetch(url, {
       method: 'POST',
-      //   headers: { 'Content-Type': 'multipart/form-data' },
       body,
-      // cache: 'no-store',
+      cache: 'no-store',
     } as RequestInit)
     const json = (await myRequest.json()) as ImgBBResponse
     console.log('json img', json, myRequest.status, myRequest.ok)
