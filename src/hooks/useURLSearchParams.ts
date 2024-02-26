@@ -2,14 +2,17 @@
 import { useCallback } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { usePathname, useRouter } from '@/navigation'
-
+type UpdateSearchParamsOptions = {
+  replace?: boolean
+  delete?: boolean
+}
 function useURLSearchParams() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const pathname = usePathname()
 
   const updateSearchParams = useCallback(
-    (name: string, value: string, options?: { replace: boolean }) => {
+    (name: string, value: string, options?: UpdateSearchParamsOptions) => {
       const params = new URLSearchParams(searchParams as unknown as URLSearchParams)
       const allParams = params.getAll(name)
       console.log(params, allParams, name, value, options)
