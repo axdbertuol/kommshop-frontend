@@ -16,6 +16,8 @@ export type Product = {
   categoryId: number
   slug: string
   imageUrl?: string
+  ownerId?: number
+  ownerUsername?: string
 }
 export type Category = {
   id: number
@@ -102,6 +104,14 @@ export type User = {
   role?: Role | null
   status?: Status
   provider?: string
+}
+
+export type UserProfile = {
+  firstName: string
+  lastName: string
+  username: string
+  userId: number
+  id: number
 }
 export type LoginResponse = Readonly<{
   token: string
