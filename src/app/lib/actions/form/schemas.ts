@@ -22,8 +22,20 @@ export const credSigninSchema = z
 export const credSignupSchema = credSigninSchema
   .merge(
     z.object({
-      firstName: z.string().regex(alphaRegex).min(2),
-      lastName: z.string().regex(alphaRegex).min(2),
+      firstName: z
+        .string()
+        .regex(alphaRegex)
+        .min(2)
+        .transform(
+          (arg) => arg[0].toLocaleUpperCase() + arg.substring(1).toLocaleLowerCase()
+        ),
+      lastName: z
+        .string()
+        .regex(alphaRegex)
+        .min(2)
+        .transform(
+          (arg) => arg[0].toLocaleUpperCase() + arg.substring(1).toLocaleLowerCase()
+        ),
       password: z
         .string()
         .regex(strongPasswordRegex, { message: 'passwordRegexInvalid' }),
