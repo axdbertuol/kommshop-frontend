@@ -7,6 +7,7 @@ export type AuthPathname =
   | 'refresh'
   | 'getMe'
   | 'google'
+  | 'patchMe'
 
 export type ProductPathname = 'post' | 'get' | 'delete' | 'put' | 'uploadimg' | 'getimg'
 
@@ -18,6 +19,8 @@ export const getAuthPathSwitch = (pathname: AuthPathname) => {
   switch (pathname) {
     case 'confirmEmail':
       return makeUrl(process.env.CONFIRM_EMAIL_ENDPOINT!)
+    case 'patchMe':
+      return makeUrl(process.env.GET_ME_ENDPOINT!)
     case 'signin':
       return makeUrl(process.env.SIGNIN_CREDENTIAL_ENDPOINT!)
     case 'signup':
