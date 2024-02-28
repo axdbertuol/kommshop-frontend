@@ -1,7 +1,7 @@
 'use server'
 import React, { Suspense } from 'react'
 import { MainNav } from './MainNav'
-import { MemoizedUserNav } from './UserNav'
+import { UserNav } from './UserNav'
 import { LoginResponse } from '@/types'
 
 async function Nav({ user }: { user: LoginResponse['user'] | null }) {
@@ -12,7 +12,7 @@ async function Nav({ user }: { user: LoginResponse['user'] | null }) {
         <MainNav className="ml-auto w-full" />
         <div className="ml-auto flex items-center space-x-4">
           <Suspense fallback={<>...Loading</>}>
-            <MemoizedUserNav user={user} />
+            <UserNav user={user} />
           </Suspense>
         </div>
       </div>

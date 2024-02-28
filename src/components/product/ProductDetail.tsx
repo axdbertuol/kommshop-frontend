@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Product } from '@/types'
 
 type ProductDetailProps = Product
-const defaultImg = process.env.DEFAULT_IMG_URL ?? ''
+const defaultImg = process.env.DEFAULT_PRODUCT_IMG_URL ?? ''
 const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProps) => {
   return (
     <div className="flex flex-col  md:justify-start bg-background md:w-8/12">

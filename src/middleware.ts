@@ -15,16 +15,17 @@ export async function middleware(request: NextRequest) {
   // const currentUser = request.cookies.get('user')?.value
   const [, , pathname] = request.nextUrl.pathname.split('/')
   const authKeyToken = process.env.AUTH_COOKIE_KEY!
+  const appUrl = process.env.APP_URL
 
   const encryptedAuthCookie = request.cookies.get(authKeyToken)?.value
   const authTokens = encryptedAuthCookie ? await getAuthTokens(encryptedAuthCookie) : null
-
   if (
     protectedRoutes.find((route) => route.test(pathname)) &&
     (!authTokens?.tokenExpires || isTokenExpired(authTokens.tokenExpires))
   ) {
     request.cookies.delete(authKeyToken)
-    const response = NextResponse.redirect(new URL('signin', request.url))
+
+    const response = NextResponse.redirect(new URL('/signin', appUrl))
     response.cookies.delete(authKeyToken)
 
     return response
@@ -34,7 +35,7 @@ export async function middleware(request: NextRequest) {
     authTokens &&
     Object.values(authTokens).every(Boolean)
   ) {
-    return NextResponse.redirect(new URL(`dashboard`, request.url))
+    return NextResponse.redirect(new URL(`/dashboard`, appUrl))
   }
 
   const response = handleI18nRouting(request)

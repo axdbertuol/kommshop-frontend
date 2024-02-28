@@ -14,7 +14,6 @@ export default async function authFetch(
   init: (RequestInit & { user?: string }) | undefined
 ) {
   const headers = new Headers(init?.headers)
-  console.log(headers)
   const encryptedAuthCookie = await getEncryptedAuthCookie()
   if (!encryptedAuthCookie) return Promise.reject()
 

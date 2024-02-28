@@ -17,10 +17,18 @@ import { useRouter } from '@/navigation'
 import { AuthProvidersEnum } from 'kommshop-types'
 import { googleLogout } from '@react-oauth/google'
 import { LoginResponse } from '@/types'
+import { useCallback } from 'react'
 
 export function UserNav({ user }: { user: LoginResponse['user'] | null }) {
   const router = useRouter()
-
+  const getInitials = useCallback(
+    () =>
+      user
+        ? (user?.firstName?.[0].toLocaleUpperCase() ?? 'X') +
+          user?.lastName?.[0].toLocaleUpperCase()
+        : 'XX',
+    [user]
+  )
   if (!user) {
     return (
       <Button
@@ -55,7 +63,7 @@ export function UserNav({ user }: { user: LoginResponse['user'] | null }) {
               src="/avatars/01.png"
               alt="@shadcn"
             />
-            <AvatarFallback>SC</AvatarFallback>
+            <AvatarFallback>{getInitials()}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
@@ -106,5 +114,3 @@ export function UserNav({ user }: { user: LoginResponse['user'] | null }) {
     </DropdownMenu>
   )
 }
-
-export const MemoizedUserNav = UserNav

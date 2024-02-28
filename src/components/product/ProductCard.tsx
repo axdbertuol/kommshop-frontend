@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
@@ -18,7 +19,7 @@ export type ProductProps = {
 } & Omit<Product, 'category' | 'categoryId'>
 export default function ProductCard(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { name, price, description, id, slug, imageUrl }: ProductProps
+  { name, price, ownerUsername, description, id, slug, imageUrl }: ProductProps
 ) {
   const router = useRouter()
 
@@ -60,9 +61,10 @@ export default function ProductCard(
           <LikeButton />
         </div>
       </CardContent>
-      {/* <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter> */}
+      <CardFooter className="gap-2 justify-end">
+        <small className="text-[0.5em]">from</small>
+        <p className="text-sm">{ownerUsername}</p>
+      </CardFooter>
     </Card>
   )
 }

@@ -18,14 +18,7 @@ export default function ProductList({ data }: Props) {
             key={index}
             fallback={<CardSkeleton />}
           >
-            <ProductCard
-              id={product.id}
-              imageUrl={product.imageUrl}
-              name={product.name}
-              price={product.price}
-              description={product?.description ?? ''}
-              slug={product.slug}
-            />
+            <ProductCard {...product} />
           </Suspense>
         )
       })}
