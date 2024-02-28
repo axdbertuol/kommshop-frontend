@@ -22,7 +22,6 @@ export const signupCred = async (credentials: Omit<TCredSignupSchema, 'provider'
       headers: { 'Content-Type': 'application/json' },
       cache: 'no-store',
     })
-    console.log('x', myRequest.status)
     if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
       const json: CausedServerErrorResponse = await myRequest.json()
       console.log('signupcred', myRequest, json)

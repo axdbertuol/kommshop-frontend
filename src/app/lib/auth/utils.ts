@@ -51,8 +51,6 @@ export const handleFormDataSubmission = async (
   prevState: StatusErrors & (SignupFormValues | SigninFormValues),
   formData: FormData
 ): Promise<StatusErrors & (SignupFormValues | SigninFormValues)> => {
-  console.log('prevState', prevState)
-  console.log('formData', Object.fromEntries(formData.entries()))
   if (!formData) return prevState
   const authMap = getAuthMap()
   const data = Object.fromEntries(
@@ -81,7 +79,6 @@ export const handleFormDataSubmission = async (
   if (!actionResult.success) {
     return { provider, formName, success: false, serverErrors: actionResult.serverErrors }
   }
-  console.log('actionResult ', actionResult)
 
   return { ...actionData, provider, formName, success: true } as StatusSuccessful &
     (SignupFormValues | SigninFormValues)

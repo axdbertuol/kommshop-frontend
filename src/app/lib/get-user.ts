@@ -9,6 +9,7 @@ export async function getUser() {
     const authTokens = await getAuthTokens(encryptedAuthCookie)
     user = authTokens.user
   }
+
   return user
 }
 

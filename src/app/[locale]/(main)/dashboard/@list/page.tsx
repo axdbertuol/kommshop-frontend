@@ -1,5 +1,5 @@
 import cachedGetProductsByOwnerid from '@/app/lib/actions/getters/get-products-ownerid'
-import { getCachedUser } from '@/app/lib/get-user'
+import { getUser } from '@/app/lib/get-user'
 import ProductList from '@/components/product/ProductList'
 import ProductListWrapper from '@/components/product/ProductListWrapper'
 import { redirect } from '@/navigation'
@@ -9,7 +9,7 @@ import 'server-only'
 
 export const revalidate = 60
 async function ListingPage() {
-  const user = await getCachedUser()
+  const user = await getUser()
   console.log('Listing', user)
   if (!user?.id) return redirect('/signin', RedirectType.replace)
   const { data } = await cachedGetProductsByOwnerid(user.id.toString())

@@ -21,7 +21,6 @@ export const signInCred = async ({
       cache: 'no-store',
     })
     const json = (await response.json()) as LoginResponse | CausedServerErrorResponse
-    console.log(response, json)
     const success = response.status === HTTP_CODES_ENUM.OK
     if (!success || response.status < 200 || response.status > 399) {
       return {

@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import authFetch from '../../auth/auth-fetch'
 import { HTTP_CODES_ENUM } from '@/enum'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { getApiPath } from '../../config'
 
 export const signOut = async () => {
@@ -21,6 +21,7 @@ export const signOut = async () => {
       const authCookieKey = process.env.AUTH_COOKIE_KEY!
       cookiesList.delete(authCookieKey)
       revalidatePath('/')
+      revalidateTag('my-app-user')
       return { success: true }
     }
   } catch (err) {

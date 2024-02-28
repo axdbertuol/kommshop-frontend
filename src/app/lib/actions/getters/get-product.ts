@@ -11,7 +11,7 @@ export const fetchProduct = async (
   const myRequest = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     // cache: 'no-store',
-    next: { tags: ['get-products'] },
+    next: { tags: ['get-product'] },
   })
 
   const response = {
