@@ -1,12 +1,12 @@
 'use client'
-import React, { FormEvent, KeyboardEvent, useRef } from 'react'
-import { CommandInput, Command } from './ui/command'
-import { Button } from './ui/button'
+import { cn } from '@/app/lib/utils'
+import useSearchContext from '@/hooks/useSearchContext'
 import useURLSearchParams from '@/hooks/useURLSearchParams'
 import { Suggestion } from '@/types'
-import useSearchContext from '@/hooks/useSearchContext'
+import React, { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react'
 import CommandSearchList from './CommandSearchList'
-import { cn } from '@/app/lib/utils'
+import { Button } from './ui/button'
+import { Command, CommandInput } from './ui/command'
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   suggestions: Record<string, Suggestion<'product'>[]> | null
@@ -17,6 +17,7 @@ function CommandSearch({ ...props }: Props) {
     useSearchContext()
   const { updateSearchParams } = useURLSearchParams()
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState('')
 
   function handleOnChange(search: string) {
     setSearchValue(search)
@@ -37,6 +38,15 @@ function CommandSearch({ ...props }: Props) {
     setSuggestionsListOpen(false)
     inputRef.current?.focus()
   }
+  useEffect(() => {
+    const debounceTimer = setTimeout(() => {
+      setDebouncedSearchValue(searchValue!)
+    }, 150) // Adjust the delay as needed
+
+    return () => {
+      clearTimeout(debounceTimer)
+    }
+  }, [searchValue])
 
   return (
     <form
@@ -70,6 +80,7 @@ function CommandSearch({ ...props }: Props) {
         {suggestionsListOpen && (
           <CommandSearchList
             suggestions={props.suggestions}
+            debouncedSearchValue={debouncedSearchValue}
             className={cn(
               suggestionsListOpen &&
                 'h-fit opacity-100 transition-transform translate-y-0'
