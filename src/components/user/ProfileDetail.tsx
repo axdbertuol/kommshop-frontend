@@ -1,53 +1,86 @@
-import React from 'react'
-import Image from 'next/image'
-import { CreateUserDto } from 'shared-kommshop-types'
+'use client'
+import React, { useEffect, useState } from 'react'
 
-type ProfileDetailProps = CreateUserDto & {
-  followers?: number
-  following?: number
+import { getUserProfile } from '@/app/lib/actions/form/get-user-profile'
+import getQueryClient from '@/app/lib/get-query-client'
+import { cn } from '@/app/lib/utils'
+import { Link, useRouter } from '@/navigation'
+import { UserProfile } from '@/types'
+import { useQuery } from '@tanstack/react-query'
+import { useSearchParams } from 'next/navigation'
+import ProfileDetailEdit from './ProfileDetailEdit'
+
+type ProfileDetailProps = {
+  email: string
+  userId: number
 }
 
-function ProfileDetail({
-  firstName,
-  lastName,
-  email,
-  followers,
-  following,
-  photo,
-}: ProfileDetailProps) {
+// TODO: change this ssr. remember this query is not updated quickly enough
+function ProfileDetail({ email, userId }: ProfileDetailProps) {
+  const timeout = 10000
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const [didSave, setDidSave] = useState(false)
+  const [isWaiting, setIsWaiting] = useState(false)
+  const queryClient = getQueryClient()
+
+  const { data, refetch } = useQuery(
+    {
+      queryKey: ['get-profile', userId],
+      queryFn: () => getUserProfile(userId) as Promise<UserProfile>,
+      _optimisticResults: 'optimistic',
+      notifyOnChangeProps: 'all',
+      refetchOnMount: true,
+    },
+    queryClient
+  )
+
+  const isEditMode = searchParams.get('edit') === 'true'
+
+  useEffect(() => {
+    if (didSave) {
+      setDidSave(false)
+      setIsWaiting(true)
+      setTimeout(async () => {
+        await refetch()
+        setIsWaiting(false)
+      }, timeout)
+    }
+  }, [didSave, router, refetch])
+
   return (
-    <div className="flex flex-col md:m-0 md:items-center justify-start bg-background h-screen md:h-[calc(100vh-72px)] w-full">
-      <div className="bg-card rounded-lg p-4 shadow-lg md:w-8/12 lg:w-9/12">
-        <div className="flex">
-          <Image
-            src={photo?.path ?? ''}
-            alt={firstName ?? 'pic'}
-            width={300}
-            height={300}
-            className="w-full h-48 lg:rounded-tr-none border-primary lg:w-2/12 object-cover rounded-t-lg"
-          />
-          <div className="hidden lg:flex lg:w-full lg:border-r-2 lg:rounded-tr-lg border-primary ">
-            banner
+    <>
+      {isEditMode && data ? (
+        <ProfileDetailEdit
+          data={data}
+          email={email}
+          userId={userId}
+          setDidSave={setDidSave}
+        />
+      ) : (
+        <div className="p-4 h-full bg-secondary border-b-2 border-r-2 border-primary rounded-b-lg lg:w-full transition-all">
+          {isWaiting && <>Updating your new data on our database...</>}
+          <div className={cn(isWaiting ? 'blur-sm' : '')}>
+            <div className="text-xs w-full text-right">
+              <Link
+                className="text-xs w-full text-right"
+                href={'/settings/profile?edit=true'}
+              >
+                edit
+              </Link>
+            </div>
+            <p>first name</p>
+            <p className="text-primary-light">{data?.firstName}</p>
+            <p>last name</p>
+            <p className="text-primary-light">{data?.lastName}</p>
+            <p>email</p>
+            <p className="text-primary-light">{email}</p>
+            <p>username</p>
+            <p className="text-primary-light">{data?.username}</p>
           </div>
         </div>
-        <div className="p-4 h-full bg-secondary border-b-2 border-r-2 border-primary rounded-b-lg lg:w-full">
-          <h1 className="text-2xl font-bold text-primary mb-2">
-            {firstName + ' ' + lastName}
-          </h1>
-          <p className="text-primary-light">{email}</p>
-          <div className="flex justify-between mt-4">
-            <div>
-              <p className="text-destructive-foreground font-bold">{followers ?? 0}</p>
-              <p className="text-primary-light">Followers</p>
-            </div>
-            <div>
-              <p className="text-destructive-foreground font-bold">{following ?? 0}</p>
-              <p className="text-primary-light">Following</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   )
 }
 
