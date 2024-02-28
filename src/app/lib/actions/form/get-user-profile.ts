@@ -16,7 +16,7 @@ export const getUserProfile = async (userId?: number) => {
       return { success: false }
     }
   }
-  const url = new URL(`user/profile/uid/${userId}`, process.env.ACCOUNTS_URL)
+  const url = new URL(`/user/profile/uid/${userId}`, process.env.ACCOUNTS_URL)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   try {
     const myRequest = await authFetch(url, {
