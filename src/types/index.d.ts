@@ -128,10 +128,11 @@ export type CreateProduct = {
   category?: string
   categoryId: number
   imageUrl?: string
+  slug: string
 }
 export type CreateProductResponse = (CreateProduct & StatusErrors) & { id?: number }
 
-export type EditProduct = Partial<CreateProduct> & { id: number }
+export type EditProduct = Partial<CreateProduct> & { id: number; slug: string }
 export type EditProductResponse = EditProduct & StatusErrors
 export interface ImageData {
   id: string
