@@ -1,7 +1,5 @@
-type Props = {
-  children: React.ReactNode
-}
+import { redirect } from '@/navigation'
 
-export default function Page({ children }: Props) {
-  return <></>
+export default function Page() {
+  redirect('/dashboard/overview')
 }
