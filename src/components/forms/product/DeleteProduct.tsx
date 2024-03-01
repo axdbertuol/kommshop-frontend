@@ -15,14 +15,16 @@ import { useRouter } from '@/navigation'
 export default function DeleteProduct({
   productId,
   revalidate,
+  slug,
 }: {
   productId: number
-  revalidate: () => Promise<void>
+  revalidate: (slug?: string, id?: number) => Promise<void>
+  slug: string
 }) {
   const router = useRouter()
   const handleDelete = async () => {
     await deleteProduct(productId)
-    await revalidate()
+    await revalidate(slug, productId)
     router.push('/dashboard?rv=true')
   }
   return (

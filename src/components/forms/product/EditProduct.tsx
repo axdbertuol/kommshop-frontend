@@ -24,7 +24,7 @@ type Props = {
   //   children: ReactElement<any, string>
   initialValues: EditProduct
   categories: Suggestion<'category'>[] | null
-  revalidateProducts: () => Promise<void>
+  revalidateProducts: (slug?: string, id?: number) => Promise<void>
   //   translatedErrors: Record<string, string | ReactElement<unknown, string>>
   //   intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
 } & React.HTMLAttributes<HTMLElement>
@@ -55,9 +55,11 @@ export default function EditProductForm({
   useEffect(() => {
     if (state?.success) {
       // TODO: show success message
-      revalidateProducts().then(() => router.push('/dashboard'))
+      revalidateProducts(initialValues.slug, initialValues.id).then(() =>
+        router.push('/dashboard')
+      )
     }
-  }, [router, state, revalidateProducts])
+  }, [router, state, revalidateProducts, initialValues.slug, initialValues.id])
 
   return (
     <form
