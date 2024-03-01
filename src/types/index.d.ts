@@ -18,6 +18,7 @@ export type Product = {
   imageUrl?: string
   ownerId?: number
   ownerUsername?: string
+  CreatedAt?: string
 }
 export type Category = {
   id: number
@@ -124,10 +125,14 @@ export type CreateProduct = {
   name: string
   description?: string
   price: number
-  category: string
+  category?: string
+  categoryId: number
   imageUrl?: string
 }
 export type CreateProductResponse = (CreateProduct & StatusErrors) & { id?: number }
+
+export type EditProduct = Partial<CreateProduct> & { id: number }
+export type EditProductResponse = EditProduct & StatusErrors
 export interface ImageData {
   id: string
   title: string
