@@ -13,58 +13,85 @@ import Image from 'next/image'
 import HoverableImage from '../HoverableImage'
 import LikeButton from '../buttons/LikeButton'
 import { Button } from '../ui/button'
+import { cn } from '@/app/lib/utils'
+import useCurrency from '@/hooks/useCurrency'
 
 export type ProductProps = {
   imgSrc?: string
+  omit?: string[]
+  width?: number
+  height?: number
 } & Omit<Product, 'category' | 'categoryId'>
 export default function ProductCard(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  { name, price, ownerUsername, description, id, slug, imageUrl }: ProductProps
+  {
+    name,
+    price,
+    ownerUsername,
+    omit = [],
+    width = 300,
+    height = 150,
+    slug,
+    imageUrl,
+  }: ProductProps
 ) {
   const router = useRouter()
-
+  const showImage = omit && !omit.includes('image')
+  const showAddCart = omit && !omit.includes('addCart')
+  const showContent = omit && !omit.includes('content')
+  const showFooter = omit && !omit.includes('footer')
   const urlPath = '/product/' + slug
+  const formattedPrice = useCurrency(price)
+
   return (
-    <Card className="w-[300px]">
-      <CardHeader
-        className="p-0 m-0 overflow-hidden"
-        onClick={() => router.push(urlPath)}
-      >
-        <HoverableImage imageRatio={1}>
-          <Image
-            src={imageUrl ?? '/product-placeholder.webp'}
-            priority={true}
-            alt="Image"
-            width={300}
-            height={150}
-            className="rounded-md object-cover"
-          />
-          <Button
-            className="w-[125px] "
-            onClick={() => console.log('click')}
-          >
-            Add to Cart
-          </Button>
-        </HoverableImage>
-      </CardHeader>
-      <CardContent
-        className="flex flex-1 flex-col justify-between pt-2 m-0 overflow-hidden"
-        onClick={() => router.push(urlPath)}
-      >
-        <span className="w-full  ">
-          <CardTitle className="text-sm font-thin truncate">{name}</CardTitle>
-        </span>
-        <div className="flex justify-between items-center">
-          <CardDescription className="text-primary-light text-lg">
-            R${price}
-          </CardDescription>
-          <LikeButton />
-        </div>
-      </CardContent>
-      <CardFooter className="gap-2 justify-end">
-        <small className="text-[0.5em]">from</small>
-        <p className="text-sm">{ownerUsername}</p>
-      </CardFooter>
+    <Card className={cn(`w-[${width}px] h-[${height}px] `)}>
+      {showImage && (
+        <CardHeader
+          className={cn('p-0 m-0 overflow-hidden')}
+          onClick={() => router.push(urlPath)}
+        >
+          <HoverableImage imageRatio={1}>
+            <Image
+              src={imageUrl ?? '/product-placeholder.webp'}
+              priority={true}
+              alt="Image"
+              width={width}
+              height={height}
+              className="rounded-md object-cover"
+            />
+            {showAddCart && (
+              <Button
+                className="w-[125px] "
+                onClick={() => console.log('click')}
+              >
+                Add to Cart
+              </Button>
+            )}
+          </HoverableImage>
+        </CardHeader>
+      )}
+      {showContent && (
+        <CardContent
+          className="flex flex-1 flex-col justify-between pt-2 m-0 overflow-hidden"
+          onClick={() => router.push(urlPath)}
+        >
+          <span className="w-full  ">
+            <CardTitle className="text-sm font-thin truncate">{name}</CardTitle>
+          </span>
+          <div className="flex justify-between items-center">
+            <CardDescription className="text-primary-light text-lg">
+              {formattedPrice}
+            </CardDescription>
+            <LikeButton />
+          </div>
+        </CardContent>
+      )}
+      {showFooter && (
+        <CardFooter className="gap-2 justify-end">
+          <small className="text-[0.5em]">from</small>
+          <p className="text-sm">{ownerUsername}</p>
+        </CardFooter>
+      )}
     </Card>
   )
 }
