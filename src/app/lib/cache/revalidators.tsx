@@ -1,7 +1,13 @@
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
-export async function revalidateProds() {
+export async function revalidateProds(slug?: string, id?: number) {
   'use server'
   revalidateTag('get-products-ownerid')
-  revalidateTag('get-product')
+  if (id) {
+    revalidateTag('get-product-' + id)
+    revalidateTag(id.toString())
+  }
+  if (slug) {
+    revalidatePath('/product/' + slug, 'page')
+  }
 }
