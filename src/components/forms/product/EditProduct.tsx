@@ -1,12 +1,12 @@
 'use client'
-import { handleProductSubmission } from '@/app/lib/actions/form/submit-new-product'
-import { cn } from '@/app/lib/utils'
-import { Textarea } from '@/components/ui/textarea'
-import { CreateProductResponse, Suggestion } from '@/types'
+
+import { EditProduct, Suggestion } from '@/types'
 import { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
-import InputBox from '../input/InputBox'
 
+import { handleProductEdit } from '@/app/lib/actions/form/submit-product-edit'
+import { cn } from '@/app/lib/utils'
+import { Button } from '@/components/ui/button'
 import {
   Select,
   SelectContent,
@@ -14,30 +14,33 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 import { useRouter } from '@/navigation'
 import Image from 'next/image'
-import { Button } from '../../ui/button'
+import InputBox from '../input/InputBox'
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   //   children: ReactElement<any, string>
-  initialValues: CreateProductResponse
+  initialValues: EditProduct
   categories: Suggestion<'category'>[] | null
   revalidateProducts: () => Promise<void>
   //   translatedErrors: Record<string, string | ReactElement<unknown, string>>
   //   intl: Partial<IntlMessages['Auth']['signup'] & IntlMessages['Auth']['signin']>
 } & React.HTMLAttributes<HTMLElement>
 
-export default function AddProduct({
+export default function EditProductForm({
   initialValues,
   categories,
   revalidateProducts,
 }: Props) {
-  const [state, formAction] = useFormState<CreateProductResponse, FormData>(
-    handleProductSubmission,
-    initialValues
+  const [state, formAction] = useFormState(handleProductEdit, {
+    ...initialValues,
+    success: false,
+  })
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    initialValues.imageUrl ?? null
   )
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
   const router = useRouter()
   const { pending } = useFormStatus()
   const formRef = useRef<HTMLFormElement>(null)
@@ -62,6 +65,13 @@ export default function AddProduct({
       action={formAction}
       className="flex flex-col w-[50%] m-auto gap-2"
     >
+      <input
+        id={'prodId'}
+        name="prodId"
+        type="hidden"
+        defaultValue={state.id}
+        readOnly={true}
+      />
       <div className="flex flex-col gap-3">
         {previewUrl && (
           <picture>
@@ -90,9 +100,10 @@ export default function AddProduct({
         id="name"
         name="name"
         required={true}
+        defaultValue={state.name}
         // disabled={pending}
         // aria-disabled={pending}
-        placeholder="John"
+        // placeholder="John"
         // required={required}
         type="text"
         labelText={'Name'}
@@ -110,6 +121,7 @@ export default function AddProduct({
           id="description"
           disabled={pending}
           name="description"
+          defaultValue={state.description}
           autoComplete="description"
           // placeholder=""
           className={cn(
@@ -120,11 +132,13 @@ export default function AddProduct({
       <Select
         required={true}
         name="categoryId"
+        defaultValue={state.categoryId?.toString() ?? state.category}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue
             placeholder="Select category"
             id="categoryId"
+            defaultValue={state.categoryId?.toString() ?? state.category}
           />
         </SelectTrigger>
         <SelectContent>
@@ -145,10 +159,11 @@ export default function AddProduct({
         required={true}
         // disabled={pending}
         // aria-disabled={pending}
-        placeholder="22.0"
+        // placeholder="22.0"
         // required={required}
         type="number"
         labelText={'Price'}
+        defaultValue={state.price}
         // errors={memoizedIntlErrors?.['firstName']}
       />
       <Button
