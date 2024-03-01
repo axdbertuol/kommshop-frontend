@@ -37,15 +37,15 @@ export default async function Layout({ list }: Props) {
           </div>
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={20}>
+        <ResizablePanel defaultSize={30}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={10}>
+            <ResizablePanel defaultSize={15}>
               <div className="flex h-full items-center justify-center p-6">
                 <span className="font-semibold">Two</span>
               </div>
             </ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel defaultSize={10}>
+            <ResizablePanel defaultSize={15}>
               <div className="flex h-full items-center justify-center p-6">
                 <span className="font-semibold">Three</span>
               </div>

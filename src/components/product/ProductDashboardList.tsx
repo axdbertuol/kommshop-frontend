@@ -14,7 +14,7 @@ export default function ProductDashboardList({ data }: Props) {
       </div>
     )
   return (
-    <div className="flex">
+    <div className="flex flex-wrap gap-1">
       {data.map((product, index) => {
         return (
           <Suspense
@@ -23,6 +23,7 @@ export default function ProductDashboardList({ data }: Props) {
           >
             <ProductCard
               omit={['content', 'addCart']}
+              width={150}
               {...product}
             />
           </Suspense>

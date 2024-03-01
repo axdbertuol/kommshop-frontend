@@ -88,8 +88,8 @@ export default function ProductCard(
       )}
       {showFooter && (
         <CardFooter className="gap-2 justify-end">
-          <small className="text-[0.5em]">from</small>
-          <p className="text-sm">{ownerUsername}</p>
+          <small className="text-[0.3em]">from</small>
+          <p className="text-xs">{ownerUsername}</p>
         </CardFooter>
       )}
     </Card>
