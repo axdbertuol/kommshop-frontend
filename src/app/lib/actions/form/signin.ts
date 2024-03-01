@@ -13,7 +13,6 @@ export const signInCred = async ({
 }: Omit<TCredSigninSchema, 'provider'>) => {
   try {
     const url = getApiPath('signin')
-    console.log('url: ' + url, email, password)
     const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify({ email, password }),

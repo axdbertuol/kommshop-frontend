@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 import { unstable_setRequestLocale } from 'next-intl/server'
-import { revalidatePath, revalidateTag } from 'next/cache'
+import { revalidateTag } from 'next/cache'
 
 type Props = {
   params: { locale: string }

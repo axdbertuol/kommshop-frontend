@@ -1,15 +1,19 @@
 import Nav from '@/components/nav/Nav'
 import React from 'react'
 import { ReactNode } from 'react'
-import { getAuthTokens, getEncryptedAuthCookie } from '../../lib/get-cookies-list'
+import { unstable_setRequestLocale } from 'next-intl/server'
+import { getUser } from '@/app/lib/get-user'
 
-export default async function Layout({ children }: { children: ReactNode }) {
-  const encryptedAuthCookie = await getEncryptedAuthCookie()
-  let user = null
-  if (encryptedAuthCookie) {
-    const authTokens = await getAuthTokens(encryptedAuthCookie)
-    user = authTokens.user
-  }
+export default async function Layout({
+  children,
+  params: { locale },
+}: {
+  children: ReactNode
+  params: { locale: string }
+}) {
+  unstable_setRequestLocale(locale)
+
+  const user = await getUser()
   return (
     <>
       <Nav user={user} />

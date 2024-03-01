@@ -1,3 +1,4 @@
+import { unstable_setRequestLocale } from 'next-intl/server'
 import 'server-only'
 
 const filtersMock = [
@@ -31,6 +32,13 @@ const getFilters = async () => {
   return res
 }
 
-export default async function StorePage({ children }: { children: React.ReactNode }) {
+export default async function StorePage({
+  children,
+  params: { locale },
+}: {
+  children: React.ReactNode
+  params: { locale: string }
+}) {
+  unstable_setRequestLocale(locale)
   return <>{children}</>
 }
