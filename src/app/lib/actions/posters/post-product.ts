@@ -31,7 +31,6 @@ export const postProduct = async (body: CreateProduct) => {
       cache: 'no-store',
     } as RequestInit & { user?: string })
     const json = (await myRequest.json()) as CreateProduct | ServerErrorResponse
-    console.log('json', json, myRequest.status, myRequest.ok)
     if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
       return {
         serverErrors: parseServerErrors(json as ServerErrorResponse),

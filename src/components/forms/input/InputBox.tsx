@@ -23,6 +23,7 @@ function InputBox({
   type,
   autoComplete,
   children,
+  defaultValue,
 }: Props) {
   const hasErrors = useCallback(() => errors && errors.length > 0, [errors])
   const [showWarning, setShowWarning] = useState(false)
@@ -67,6 +68,7 @@ function InputBox({
               required={required}
               type={type}
               autoComplete={autoComplete}
+              defaultValue={defaultValue}
             />
           )}
           {showWarning && (

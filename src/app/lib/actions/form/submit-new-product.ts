@@ -7,17 +7,17 @@ export async function handleProductSubmission(
   prevState: CreateProductResponse,
   formData: FormData
 ): Promise<CreateProductResponse> {
-  let name = formData.get('name')?.toString()
-  let description = formData.get('description')?.toString()
-  let price = Number(formData.get('price')?.toString())
-  let category = formData.get('category')?.toString()
+  let name
+  let description
+  let price
+  let categoryId
   let prod = {} as CreateProduct
   try {
     name = formData.get('name')?.toString()
     description = formData.get('description')?.toString()
     price = Number(formData.get('price')?.toString())
-    category = formData.get('category')?.toString()
-    prod = { name, description, price, category } as CreateProduct
+    categoryId = Number(formData.get('categoryId')?.toString())
+    prod = { name, description, price, categoryId } as CreateProduct
   } catch (err) {
     console.error(err)
     return prevState

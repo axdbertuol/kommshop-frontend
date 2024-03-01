@@ -21,7 +21,6 @@ export const postProductImage = async (body: FormData) => {
       cache: 'no-store',
     } as RequestInit)
     const json = (await myRequest.json()) as ImgBBResponse
-    console.log('json img', json, myRequest.status, myRequest.ok)
     if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
       return {
         // serverErrors: parseServerErrors(json as ServerErrorResponse),
