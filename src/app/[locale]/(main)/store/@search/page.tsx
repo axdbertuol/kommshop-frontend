@@ -10,7 +10,7 @@ type Props = {
   searchParams: SearchParams
 }
 
-async function SearchPage({ searchParams }: Props) {
+export default async function SearchPage({ searchParams }: Props) {
   const suggestions = await getSuggestions(searchParams.search)
   return (
     <div className="flex flex-col items-center gap-y-4 ">
@@ -21,5 +21,3 @@ async function SearchPage({ searchParams }: Props) {
     </div>
   )
 }
-
-export default SearchPage
