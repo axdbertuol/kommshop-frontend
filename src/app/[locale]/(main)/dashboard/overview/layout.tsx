@@ -12,44 +12,39 @@ import React from 'react'
 type Props = {
   children: React.ReactNode
   list: React.ReactNode
+  mvp: React.ReactNode
+  charts: React.ReactNode
 }
 
-export default async function Layout({ list }: Props) {
+export default async function Layout({ list, mvp, charts }: Props) {
   return (
-    <div className="mx-auto mt-8 max-w-[80vw] min-h-[80vh] rounded-lg border ">
+    <div className="container my-auto max-w-[80vw] min-h-[80vh] rounded-lg border  ">
       <ResizablePanelGroup
         direction="horizontal"
         className="min-h-max flex justify-center"
       >
-        <ResizablePanel defaultSize={80}>
+        <ResizablePanel
+          defaultSize={80}
+          className="border rounded border-slate-400"
+        >
           <div className="flex flex-col gap-2 w-full min-h-max  p-6">
-            <div>
-              <Button className="">
-                <Link
-                  className="text-white active:ring-ring active:ring rounded-sm px-1"
-                  href="/dashboard/add"
-                >
-                  <Plus />
-                </Link>
-              </Button>
-            </div>
+            <Button className="bg-primary w-24">
+              <Link
+                className="text-muted active:ring-ring active:ring rounded-sm px-1"
+                href="/dashboard/add"
+              >
+                <Plus />
+              </Link>
+            </Button>
             {list}
           </div>
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={30}>
+        <ResizablePanel defaultSize={20}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={15}>
-              <div className="flex h-full items-center justify-center p-6">
-                <span className="font-semibold">Two</span>
-              </div>
-            </ResizablePanel>
+            <ResizablePanel defaultSize={10}>{mvp}</ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel defaultSize={15}>
-              <div className="flex h-full items-center justify-center p-6">
-                <span className="font-semibold">Three</span>
-              </div>
-            </ResizablePanel>
+            <ResizablePanel defaultSize={10}>{charts}</ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>

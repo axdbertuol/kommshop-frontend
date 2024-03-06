@@ -2,25 +2,25 @@
 
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import Link from 'next/link'
-import { usePathname } from '@/navigation'
+import { useSearchParams } from 'next/navigation'
 
 export function TabsComp() {
-  const tab = usePathname().split('/').at(-1)
+  const tab = useSearchParams()
   return (
-    <Tabs defaultValue={tab}>
+    <Tabs defaultValue={tab.get('as')?.toString()}>
       <TabsList>
-        <TabsTrigger value="card-list">
+        <TabsTrigger value="as=card-list">
           <Link
-            className="text-white active:ring-ring active:ring rounded-sm px-1"
-            href="/dashboard/overview/card-list"
+            className="text-primary active:ring-ring active:ring rounded-sm px-1"
+            href="/dashboard/overview?as=card-list"
           >
             List
           </Link>
         </TabsTrigger>
-        <TabsTrigger value="data-table">
+        <TabsTrigger value="as=data-table">
           <Link
-            className="text-white"
-            href="/dashboard/overview/data-table"
+            className="text-primary"
+            href="/dashboard/overview?as=data-table"
           >
             Table
           </Link>
