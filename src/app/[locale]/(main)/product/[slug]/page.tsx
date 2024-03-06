@@ -24,5 +24,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (!data) return notFound()
 
-  return <ProductDetail {...data} />
+  return (
+    <div className="w-[100vw]">
+      <ProductDetail {...data} />
+    </div>
+  )
 }
