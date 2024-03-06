@@ -9,7 +9,7 @@ type Props = {
 
 export default async function Layout({ children }: Props) {
   return (
-    <section className="w-full  h-full">
+    <section className="w-full flex h-full">
       <Sidebar />
       {children}
     </section>
