@@ -1,6 +1,6 @@
 import 'server-only'
 import React from 'react'
-import { fetchProducts } from '@/app/lib/actions/getters/get-products'
+import fetchProducts from '@/app/lib/actions/getters/get-products'
 import { SearchParams } from '@/types'
 import ProductListWrapper from '@/components/product/ProductListWrapper'
 import ProductList from '@/components/product/ProductList'

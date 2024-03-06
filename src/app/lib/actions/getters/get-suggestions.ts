@@ -1,10 +1,10 @@
 'use server'
 
 import { cache } from 'react'
-import { fetchProducts } from './get-products'
+import fetchProducts from './get-products'
 import { Suggestion } from '@/types'
 
-export const fetchSuggestions = async (search?: string) => {
+export default async function fetchSuggestions(search?: string) {
   const products = await fetchProducts(search).then(
     ({ data }) =>
       data?.map(
@@ -22,5 +22,3 @@ export const fetchSuggestions = async (search?: string) => {
   return result as Record<string, Suggestion<'product'>[]>
 }
 const getSuggestions = cache(fetchSuggestions)
-
-export default getSuggestions

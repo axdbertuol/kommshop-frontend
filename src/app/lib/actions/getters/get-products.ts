@@ -1,12 +1,11 @@
+'use server'
 import { FetchResponse, Product, ServerErrorResponse } from '@/types'
-import { cache } from 'react'
 import { parseServerErrors } from '../../utils'
-import 'server-only'
 
-export const fetchProducts = async (
+export default async function fetchProducts(
   search?: string | null,
   category?: string | null
-): Promise<FetchResponse<Product[] | null | undefined>> => {
+): Promise<FetchResponse<Product[] | null | undefined>> {
   const url = new URL(`products`, process.env.NEXT_URL_PRODUCTS)
   if (search) url.searchParams.set('search', search)
   if (category) url.searchParams.set('cat', category)
@@ -28,11 +27,8 @@ export const fetchProducts = async (
         serverErrors: parseServerErrors(json as ServerErrorResponse),
       }
     }
-    return { ...response, data: json as Product[] | null | undefined, success: true }
+    return { ...response, data: json, success: true }
   } catch (err) {
     return response
   }
 }
-const getProducts = cache(fetchProducts)
-
-export default getProducts

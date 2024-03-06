@@ -1,18 +1,16 @@
 'use server'
 
-import { cache } from 'react'
 import authFetch from '../../auth/auth-fetch'
 import { CreateProduct, ServerErrorResponse } from '@/types'
 import { parseServerErrors } from '../../utils'
 import { getUser } from '../../get-user'
-import { revalidateTag } from 'next/cache'
 
 type CreateProductBody = CreateProduct & {
   ownerUsername: string
   ownerId: number
 }
 
-export const postProduct = async (body: CreateProduct) => {
+export default async function postProduct(body: CreateProduct) {
   const user = await getUser()
   const newBody = {
     ...body,
@@ -44,5 +42,3 @@ export const postProduct = async (body: CreateProduct) => {
   }
   return { success: false }
 }
-
-export const cachedPostProduct = cache(postProduct)

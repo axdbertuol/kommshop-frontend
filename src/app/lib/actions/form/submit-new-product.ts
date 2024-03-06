@@ -1,7 +1,7 @@
 'use server'
 import { CreateProduct, CreateProductResponse, ImgBBResponse } from '@/types'
-import { postProduct } from '../posters/post-product'
-import { postProductImage } from '../posters/post-product-image'
+import postProduct from '../posters/post-product'
+import postProductImage from '../posters/post-product-image'
 
 export async function handleProductSubmission(
   prevState: CreateProductResponse,

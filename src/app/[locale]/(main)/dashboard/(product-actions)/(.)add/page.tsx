@@ -1,7 +1,7 @@
 import getCategories from '@/app/lib/actions/getters/get-categories'
 import { revalidateProds } from '@/app/lib/cache/revalidators'
 import AddProduct from '@/components/forms/product/AddProduct'
-import { Modal } from '@/components/modals/Modal'
+import Modal from '@/components/modals/Modal'
 import { Suggestion } from '@/types'
 import { Suspense } from 'react'
 
