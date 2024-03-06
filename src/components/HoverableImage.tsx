@@ -9,7 +9,7 @@ type Props = {
 async function HoverableImage({ children, imageRatio = 1 }: Props) {
   const separatedChildren = React.Children.toArray(children)
   return (
-    <div className="relative group">
+    <div className="relative group overflow-hidden ">
       <Suspense fallback={<>Loading...</>}>
         <AspectRatio
           ratio={imageRatio}

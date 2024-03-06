@@ -17,7 +17,6 @@ import { cn } from '@/app/lib/utils'
 import useCurrency from '@/hooks/useCurrency'
 
 export type ProductProps = {
-  imgSrc?: string
   omit?: string[]
   width?: number
   height?: number
@@ -44,10 +43,10 @@ export default function ProductCard(
   const formattedPrice = useCurrency(price)
 
   return (
-    <Card className={cn(`w-[${width}px] h-[${height}px] `)}>
+    <Card className={cn(`bg-card w-[${width}px] h-[${height}px] `)}>
       {showImage && (
         <CardHeader
-          className={cn('p-0 m-0 overflow-hidden')}
+          className={cn('overflow-hidden')}
           onClick={() => router.push(urlPath)}
         >
           <HoverableImage imageRatio={1}>
@@ -72,7 +71,7 @@ export default function ProductCard(
       )}
       {showContent && (
         <CardContent
-          className="flex flex-1 flex-col justify-between pt-2 m-0 overflow-hidden"
+          className="flex flex-1 flex-col justify-between pt-2 m-0 overflow-hidden bg-card"
           onClick={() => router.push(urlPath)}
         >
           <span className="w-full  ">
