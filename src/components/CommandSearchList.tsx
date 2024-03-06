@@ -47,7 +47,7 @@ function CommandSearchList({
   return (
     <div
       className={cn(
-        'absolute top-10 flex flex-col z-30  opacity-0 w-full transition-transform rounded bg-secondary-black-400 px-4 py-2 ease-in-out',
+        'absolute top-10 flex flex-col z-30  opacity-0 w-full transition-transform rounded bg-background border-border border px-4 py-2 ease-in-out',
         className,
         isFetching && 'opacity-50'
       )}

@@ -7,6 +7,7 @@ import React, { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 're
 import CommandSearchList from './CommandSearchList'
 import { Button } from './ui/button'
 import { Command, CommandInput } from './ui/command'
+import { SendHorizontalIcon } from 'lucide-react'
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   suggestions: Record<string, Suggestion<'product'>[]> | null
@@ -88,14 +89,18 @@ function CommandSearch({ ...props }: Props) {
             onSelectSuggestion={handleSelect}
           />
         )}
+        <Button
+          type="submit"
+          value="Search"
+          variant={'destructive'}
+          className={'self-center w-12'}
+        >
+          <SendHorizontalIcon
+            color="white"
+            size={16}
+          />
+        </Button>
       </Command>
-      <Button
-        type="submit"
-        value="Search"
-        className={'ml-auto w-[1rem] h-full scale-y-125'}
-      >
-        {'>'}
-      </Button>
     </form>
   )
 }
