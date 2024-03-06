@@ -25,7 +25,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   if (!data) return notFound()
 
   return (
-    <div className="w-[100vw]">
+    <div className="mt-8 w-[100vw]">
       <ProductDetail {...data} />
     </div>
   )

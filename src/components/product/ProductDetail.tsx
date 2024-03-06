@@ -1,6 +1,5 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, use } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { Product } from '@/types'
 import { Button } from '../ui/button'
 import useCurrency from '@/hooks/useCurrency'
@@ -10,6 +9,7 @@ type ProductDetailProps = Product
 const defaultImg = process.env.DEFAULT_PRODUCT_IMG_URL ?? ''
 const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProps) => {
   const formattedPrice = useCurrency(price)
+
   return (
     <div className="container grid grid-cols-2 w-[80vw] min-h-screen justify-items-center">
       <div className="w-[30vw]">
@@ -25,11 +25,13 @@ const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProp
         <>more images...</>
       </div>
       <div className="container flex flex-col gap-4 w-[40vw]">
-        <div className="flex flex-col">
-          <span className="text-3xl ">{name}</span>
-          <p>{description}</p>
+        <div className="flex flex-col gap-2">
+          <span className="text-3xl max-h-[72px] text-clip-ellipsis overflow-hidden">
+            {name}
+          </span>
+          <span className="text-clip-ellipsis overflow-hidden">{description}</span>
         </div>
-        <div className="flex justify-around">
+        <div className="flex justify-evenly">
           <div className="flex flex-col">
             <span>Attr1</span>
             <span>content1</span>
