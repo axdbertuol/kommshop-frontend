@@ -24,9 +24,5 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   if (!data) return notFound()
 
-  return (
-    <div className="flex flex-col items-center gap-y-4">
-      <ProductDetail {...data} />
-    </div>
-  )
+  return <ProductDetail {...data} />
 }

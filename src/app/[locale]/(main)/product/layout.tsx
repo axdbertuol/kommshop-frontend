@@ -7,11 +7,7 @@ export default function Layout({
 }) {
   return (
     <div className="flex">
-      <div className="w-full">
-        <div className="flex flex-col gap-y-16 items-center bg-zinc-900 py-4">
-          {children}
-        </div>
-      </div>
+      <div className="flex flex-col gap-y-16 items-center py-4">{children}</div>
     </div>
   )
 }
