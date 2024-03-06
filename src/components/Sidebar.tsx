@@ -32,19 +32,19 @@ function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
     <Collapsible
       open={isOpen}
       onOpenChange={setIsOpen}
-      className={cn('fixed z-30 top-0 flex ', className)}
+      className={cn(' z-30 flex', className)}
       {...props}
     >
       <NavigationMenu
         data-orientation="vertical"
         className={cn(
-          'max-w-[4rem] min-w-[4rem] w-16 pt-7 border border-r-2  ring ring-primary rounded md:h-screen bg-neutral-950 bg-opacity-30 items-start',
-          isOpen ? `md:w-[13rem] md:min-w-[12rem]` : ''
+          'max-w-[4rem] min-w-[4rem] w-16 pt-7 border-r-2 border-primary-400 opacity-75 rounded-b md:h-screen items-start',
+          isOpen ? `md:w-[13rem] md:min-w-[12rem] ` : ''
         )}
       >
         <ul
           data-orientation="vertical"
-          className="w-full mt-32 flex flex-col divide-y border-t border-b"
+          className="w-full mt-32 flex flex-col divide-y"
         >
           {links.map((link, index) => (
             <SideNavLink
@@ -62,6 +62,7 @@ function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
         <AnimatedArrow
           direction={isOpen ? 'left' : 'right'}
           className={cn('z-20', `mt-${'24'} group-hover:block`)}
+          color="red"
         />
       </CollapsibleTrigger>
     </Collapsible>
