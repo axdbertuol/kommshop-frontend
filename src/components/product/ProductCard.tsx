@@ -26,8 +26,8 @@ export default function ProductCard(
   {
     name,
     price,
-    ownerUsername,
     omit = [],
+    owner: { username } = {},
     width = 300,
     height = 150,
     slug,
@@ -88,7 +88,7 @@ export default function ProductCard(
       {showFooter && (
         <CardFooter className="gap-2 justify-end">
           <small className="text-[0.3em]">from</small>
-          <p className="text-xs">{ownerUsername}</p>
+          <p className="text-xs">{username}</p>
         </CardFooter>
       )}
     </Card>

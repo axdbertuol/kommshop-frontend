@@ -1,4 +1,4 @@
-import React, { Suspense, use } from 'react'
+import React, { Suspense } from 'react'
 import Image from 'next/image'
 import { Product } from '@/types'
 import { Button } from '../ui/button'
@@ -7,7 +7,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 
 type ProductDetailProps = Product
 const defaultImg = process.env.DEFAULT_PRODUCT_IMG_URL ?? ''
-const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProps) => {
+const ProductDetail = ({
+  name,
+  description,
+  imageUrl,
+  price,
+  owner,
+}: ProductDetailProps) => {
   const formattedPrice = useCurrency(price)
 
   return (
@@ -30,6 +36,9 @@ const ProductDetail = ({ name, description, imageUrl, price }: ProductDetailProp
             {name}
           </span>
           <span className="text-clip-ellipsis overflow-hidden">{description}</span>
+          <span className="text-sm text-clip-ellipsis overflow-hidden">
+            {owner?.username ?? 'unknown seller'}
+          </span>
         </div>
         <div className="flex justify-evenly">
           <div className="flex flex-col">

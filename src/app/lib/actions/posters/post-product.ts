@@ -6,16 +6,14 @@ import { parseServerErrors } from '../../utils'
 import { getUser } from '../../get-user'
 
 type CreateProductBody = CreateProduct & {
-  ownerUsername: string
-  ownerId: number
+  userId: number
 }
 
 export default async function postProduct(body: CreateProduct) {
   const user = await getUser()
   const newBody = {
     ...body,
-    ownerId: user?.id,
-    ownerUsername: user?.username,
+    userId: user?.id,
   } as CreateProductBody
 
   try {

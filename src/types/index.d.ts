@@ -17,7 +17,10 @@ export type Product = {
   slug: string
   imageUrl?: string
   ownerId?: number
-  ownerUsername?: string
+  owner?: {
+    username?: string
+    userId?: number
+  }
   CreatedAt?: string
 }
 export type Category = {
