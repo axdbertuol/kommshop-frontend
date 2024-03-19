@@ -20,7 +20,7 @@ export const getAuthPathSwitch = (pathname: AuthPathname) => {
     case 'confirmEmail':
       return makeUrl(process.env.CONFIRM_EMAIL_ENDPOINT!)
     case 'patchMe':
-      return makeUrl(process.env.GET_ME_ENDPOINT!)
+      return makeUrl(process.env.PATCH_ME_ENDPOINT!)
     case 'signin':
       return makeUrl(process.env.SIGNIN_CREDENTIAL_ENDPOINT!)
     case 'signup':

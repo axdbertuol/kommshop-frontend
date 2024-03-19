@@ -12,12 +12,12 @@ import ProfileDetailEdit from './ProfileDetailEdit'
 
 type ProfileDetailProps = {
   email: string
-  userId: number
+  userId: string
 }
 
 // TODO: change this ssr. remember this query is not updated quickly enough
+const timeout = 1000
 function ProfileDetail({ email, userId }: ProfileDetailProps) {
-  const timeout = 10000
   const router = useRouter()
   const searchParams = useSearchParams()
   const [didSave, setDidSave] = useState(false)
@@ -29,7 +29,6 @@ function ProfileDetail({ email, userId }: ProfileDetailProps) {
       queryKey: ['get-profile', userId],
       queryFn: () => getUserProfile(userId) as Promise<UserProfile>,
       _optimisticResults: 'optimistic',
-      notifyOnChangeProps: 'all',
       refetchOnMount: true,
     },
     queryClient
