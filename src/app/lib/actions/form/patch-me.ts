@@ -1,17 +1,18 @@
 'use server'
 
-import { cache } from 'react'
 import authFetch from '../../auth/auth-fetch'
 import { getApiPath } from '../../config'
 import { CausedServerErrorResponse } from '@/types'
 import { parseServerErrors } from '../../utils'
 import { ProfileEdit } from './submit-user-edit'
+import { getUser } from '../../get-user'
 
-export const patchMe = async (profile: ProfileEdit) => {
+export async function patchMe(profile: ProfileEdit) {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   try {
-    const url = getApiPath('patchMe')
+    const user = await getUser()
+    const url = getApiPath('patchMe') + '/' + user?.id
     const myRequest = await authFetch(url, {
       headers: {
         'Content-Type': 'application/json',
@@ -33,5 +34,3 @@ export const patchMe = async (profile: ProfileEdit) => {
   }
   return { success: false }
 }
-
-export const cachedPatchMe = cache(patchMe)

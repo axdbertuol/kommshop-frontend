@@ -22,7 +22,7 @@ export const patchProduct = async (idParam: string, body: EditProduct) => {
         success: false,
       }
     }
-    // revalidateTag('get-products')
+
     return { ...(json as Product & { id: number }), success: true }
   } catch (err) {
     console.error(err, 'failed product post!')

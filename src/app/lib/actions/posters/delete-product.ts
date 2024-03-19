@@ -3,8 +3,9 @@
 import authFetch from '../../auth/auth-fetch'
 import { ServerErrorResponse } from '@/types'
 import { parseServerErrors } from '../../utils'
+import { revalidateProds } from '../../cache/revalidators'
 
-export const deleteProduct = async (id: number) => {
+export async function deleteProduct(id: number) {
   try {
     const url = new URL('/products/' + id.toString(), process.env.NEXT_URL_PRODUCTS)
     const myRequest = await authFetch(url, {
@@ -24,7 +25,7 @@ export const deleteProduct = async (id: number) => {
         success: false,
       }
     }
-    // revalidateTag('get-products')
+    await revalidateProds()
   } catch (err) {
     console.error(err, 'failed product post!')
   }

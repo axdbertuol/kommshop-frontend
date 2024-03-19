@@ -1,10 +1,9 @@
 'use server'
 
 import { ImgBBResponse } from '@/types'
-import { cache } from 'react'
 import authFetch from '../../auth/auth-fetch'
 
-export default async function postProductImage(body: FormData) {
+export async function postProductImage(body: FormData) {
   try {
     const bbImgUrl = process.env.BB_IMG_URL
     if (!bbImgUrl) return { success: false, error: 'bb IMG URL not provided' }

@@ -1,7 +1,6 @@
 'use server'
 import { CreateProductResponse, StatusErrors } from '@/types'
 import { patchMe } from './patch-me'
-import { revalidateTag } from 'next/cache'
 
 export type ProfileEdit = {
   username?: string
