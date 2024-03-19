@@ -1,10 +1,10 @@
 'use server'
 import SignupForm from '@/components/forms/SignupForm'
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server'
-import { IntlMessages, SignupFormValues } from '@/types'
-import { Link, redirect } from '@/navigation'
+import { IntlMessages } from '@/types'
+import { Link } from '@/navigation'
 import { generateTranslationObject } from '@/app/lib/intl-utils'
-import { AuthProvidersEnum } from 'kommshop-types'
+import { AuthProvidersEnum } from '@/enum'
 
 const initialSignupFormValues = {
   email: '',

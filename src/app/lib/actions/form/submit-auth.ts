@@ -17,7 +17,7 @@ import {
   credSignupSchema,
   googleSigninSchema,
 } from './schemas'
-import { AuthProvidersEnum } from 'kommshop-types'
+import { AuthProvidersEnum } from '@/enum'
 import { signinGoogle, signInCred } from './signin'
 import { signupCred } from './signup'
 

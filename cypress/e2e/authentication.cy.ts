@@ -1,5 +1,3 @@
-import { AuthProvidersEnum } from 'kommshop-types'
-
 describe('example to-do app', () => {
   const user = 'john.doe@example.com'
   const userPass = 'secret'
@@ -35,7 +33,7 @@ describe('example to-do app', () => {
     cy.intercept({ method: 'POST', url: /.*\/signin/ }).as('signin')
     cy.get('[data-testid="signin-button"]').should('exist').click()
     cy.wait('@signinPage').then(() => {
-      cy.get('[id="provider"]').should('have.value', AuthProvidersEnum.credentials)
+      cy.get('[id="provider"]').should('have.value', 'email')
       cy.get('[id="email"]').should('exist').type(user)
       cy.get('[id="password"]').should('exist').type('wrongpass')
       cy.get('[type="submit"').should('exist').click()
@@ -46,7 +44,7 @@ describe('example to-do app', () => {
 
     // signup
     cy.wait('@signupPage').then(() => {
-      cy.get('[id="provider"]').should('have.value', AuthProvidersEnum.credentials)
+      cy.get('[id="provider"]').should('have.value', 'email')
       cy.get('[id="email"]').should('exist').click().type(user)
       cy.get('[id="password"]').should('exist').type('wrongpass')
       cy.get('[id="password2"]').should('exist').type('wrongpass2')

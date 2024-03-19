@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useRouter } from '@/navigation'
-import { AuthProvidersEnum } from 'kommshop-types'
+import { AuthProvidersEnum } from '@/enum'
 import { googleLogout } from '@react-oauth/google'
 import { LoginResponse } from '@/types'
 import { useCallback } from 'react'

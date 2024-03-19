@@ -1,5 +1,3 @@
-import { AuthProvidersEnum } from 'shared-kommshop-types'
-export { AuthProvidersEnum }
 export enum HTTP_CODES_ENUM {
   OK = 200,
   CREATED = 201,
@@ -13,4 +11,11 @@ export enum HTTP_CODES_ENUM {
   INTERNAL_SERVER_ERROR = 500,
   SERVICE_UNAVAILABLE = 503,
   GATEWAY_TIMEOUT = 504,
+}
+export enum AuthProvidersEnum {
+  credentials = 'credentials',
+  facebook = 'facebook',
+  google = 'google',
+  twitter = 'twitter',
+  apple = 'apple',
 }
