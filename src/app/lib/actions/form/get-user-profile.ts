@@ -1,13 +1,12 @@
 'use server'
 
-import { cache } from 'react'
 import authFetch from '../../auth/auth-fetch'
 import { ServerErrorResponse, UserProfile } from '@/types'
 import { parseServerErrors } from '../../utils'
-import { getUser } from '../../get-user'
 import { QueryFunctionContext } from '@tanstack/react-query'
+import { getUser } from '../../get-user'
 
-export const getUserProfile = async (userId?: number) => {
+export async function getUserProfile(userId?: string) {
   if (!userId) {
     try {
       const user = await getUser()
@@ -16,7 +15,7 @@ export const getUserProfile = async (userId?: number) => {
       return { success: false }
     }
   }
-  const url = new URL(`/user/profile/uid/${userId}`, process.env.ACCOUNTS_URL)
+  const url = new URL(`/user/profile/${userId}`, process.env.ACCOUNTS_URL)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   try {
     const myRequest = await authFetch(url, {
@@ -24,7 +23,7 @@ export const getUserProfile = async (userId?: number) => {
         'Content-Type': 'application/json',
       },
       // cache: 'no-store',
-      // next: { tags: ['get-profile'], revalidate: 10 },
+      // next: { tags: ['get-profile'], revalidate: 1000 },
     } as RequestInit & { user?: string })
     const json = (await myRequest.json()) as UserProfile | ServerErrorResponse
     if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
@@ -41,10 +40,8 @@ export const getUserProfile = async (userId?: number) => {
   return { success: false }
 }
 
-export const cachedGetUserProfile = cache(getUserProfile)
-
 export async function fetchUserProfile({ queryKey }: QueryFunctionContext) {
   'use server'
   const [_, id] = queryKey
-  return (await getUserProfile(id as number)) as UserProfile
+  return (await getUserProfile(id as string)) as UserProfile
 }

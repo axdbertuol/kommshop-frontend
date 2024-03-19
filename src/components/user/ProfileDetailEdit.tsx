@@ -11,7 +11,7 @@ import getQueryClient from '@/app/lib/get-query-client'
 
 type ProfileDetailProps = {
   email: string
-  userId: number
+  userId: string
   data: UserProfile
   setDidSave: (did: boolean) => void
 }

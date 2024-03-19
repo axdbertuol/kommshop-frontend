@@ -1,12 +1,13 @@
 'use server'
 
 import authFetch from '../../auth/auth-fetch'
-import { CreateProduct, ServerErrorResponse } from '@/types'
+import { CreateProduct, Product, ServerErrorResponse } from '@/types'
 import { parseServerErrors } from '../../utils'
 import { getUser } from '../../get-user'
+import { revalidateProds } from '../../cache/revalidators'
 
 type CreateProductBody = CreateProduct & {
-  userId: number
+  userId: string
 }
 
 export default async function postProduct(body: CreateProduct) {
@@ -33,7 +34,7 @@ export default async function postProduct(body: CreateProduct) {
         success: false,
       }
     }
-    // revalidateTag('get-products')
+    await revalidateProds((json as Product).slug, (json as Product).id)
     return { ...(json as CreateProduct & { id: number }), success: true }
   } catch (err) {
     console.error(err, 'failed product post!')

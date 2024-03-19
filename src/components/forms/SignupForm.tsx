@@ -11,13 +11,13 @@ import {
 import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 import InputBox from './input/InputBox'
-import { AuthProvidersEnum } from 'kommshop-types'
 import { Button } from '../ui/button'
 import { Separator } from '@radix-ui/react-separator'
 import WarningBox from '../text/Error'
 import handleFormDataSubmission from '@/app/lib/actions/form/submit-auth'
 import { CredentialResponse, GoogleLogin } from '@react-oauth/google'
 import { useRouter } from '@/navigation'
+import { AuthProvidersEnum } from '@/enum'
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   children: ReactElement<any, string>
