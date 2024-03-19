@@ -19,7 +19,7 @@ export type Product = {
   ownerId?: number
   owner?: {
     username?: string
-    userId?: number
+    userId?: string
   }
   CreatedAt?: string
 }
@@ -104,7 +104,7 @@ export type User = {
   firstName: string | null
   lastName: string | null
   username: string
-  id: number
+  id: string
   role?: Role | null
   status?: Status
   provider?: string
@@ -114,8 +114,7 @@ export type UserProfile = {
   firstName: string
   lastName: string
   username: string
-  userId: number
-  id: number
+  id: string
 }
 export type LoginResponse = Readonly<{
   token: string
