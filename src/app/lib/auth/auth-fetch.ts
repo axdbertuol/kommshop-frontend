@@ -26,7 +26,8 @@ export default async function authFetch(
     ...init,
     headers,
   }
-
+  console.log('user, token, tokenExpires, refreshToken')
+  console.log(user, token, tokenExpires, refreshToken)
   if (refreshToken && isTokenExpired(tokenExpires)) {
     console.log('tokenExpired')
 

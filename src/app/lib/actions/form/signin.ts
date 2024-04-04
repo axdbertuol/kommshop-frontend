@@ -42,7 +42,7 @@ export const signinGoogle = async ({
   const url = getApiPath('google')
   const response = await fetch(url, {
     method: 'POST',
-    body: JSON.stringify({ idToken }),
+    body: JSON.stringify({ idToken, provider: 'google' }),
     headers: { 'Content-Type': 'application/json' },
     cache: 'no-store',
   })
