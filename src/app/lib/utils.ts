@@ -16,8 +16,13 @@ export const isGoodHTTPResponseStatus = (status: number | string): boolean =>
     HTTP_CODES_ENUM.NO_CONTENT,
   ].includes(Number(status))
 
-export const isTokenExpired = (expiration?: number): boolean =>
-  expiration ? expiration < Date.now() : false
+export const isTokenExpired = (expiration: number | string) => {
+  if (typeof expiration === 'number') {
+    return expiration ? expiration < Date.now() : false
+  }
+  const expiry = Date.parse(expiration)
+  return expiry < Date.now()
+}
 
 export function parseServerErrors(
   serverErrors: ServerErrorResponse
