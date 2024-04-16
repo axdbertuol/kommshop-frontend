@@ -61,7 +61,7 @@ function CommandSearch({ ...props }: Props) {
         <CommandInput
           ref={inputRef}
           data-testid="command-input"
-          className="text-primary-foreground flex-auto md:w-[25vw]"
+          className="text-primary flex-auto md:w-[25vw]"
           placeholder="Search products..."
           value={searchValue ?? undefined}
           onClick={() => {
