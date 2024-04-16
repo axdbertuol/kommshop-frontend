@@ -136,6 +136,19 @@ export type CreateProductResponse = (CreateProduct & StatusErrors) & { id?: numb
 
 export type EditProduct = Partial<CreateProduct> & { id: number; slug: string }
 export type EditProductResponse = EditProduct & StatusErrors
+
+export type ForgotPass = {
+  email?: string
+}
+export type ForgotPassResponse = ForgotPass & StatusErrors
+
+export type ResetPass = {
+  password: string
+  password2: string
+  token: string
+}
+export type ResetPassResponse = ResetPass & StatusErrors
+
 export interface ImageData {
   id: string
   title: string

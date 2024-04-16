@@ -48,6 +48,17 @@ export const credSignupSchema = credSigninSchema
     () => ({ message: `passwordsMustMatch`, path: ['password2'] })
   )
 
+export const resetPasswordSchema = z
+  .object({
+    password: z.string().regex(strongPasswordRegex, { message: 'passwordRegexInvalid' }),
+    password2: z.string(),
+  })
+  .refine(
+    (values) => values.password === values.password2,
+    () => ({ message: `passwordsMustMatch`, path: ['password2'] })
+  )
+
 export type TCredSignupSchema = z.infer<typeof credSignupSchema>
+export type TResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 export type TCredSigninSchema = z.infer<typeof credSigninSchema>
 export type TGoogleSigninSchema = z.infer<typeof googleSigninSchema>
