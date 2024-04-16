@@ -31,6 +31,19 @@
       "providersText": "Ou entre com um dos nossos provedores:",
       "googleText": "signin_with"
     },
+    "forgot": {
+      "success": "Enviamos com sucesso um e-mail com instruções para redefinir sua senha.",
+      "email": "Preencha o seu e-mail registrado",
+      "submit": "Enviar link de redefinição!",
+      "heading": "Esqueceu sua senha? Vamos redefini-la!"
+    },
+    "reset": {
+      "success": "Enviamos com sucesso um e-mail com instruções para redefinir sua senha.",
+      "password": "Sua nova senha",
+      "password2": "Confirme sua nova senha",
+      "submit": "Redefinir senha",
+      "heading": "Bom trabalho! Hora de redefinir sua senha..."
+    },
     "errors": {
       "needLoginViaProvider:google": "Parece que este e-mail já está vinculado a uma conta do Google.",
       "notFound": "Usuário não foi encontrado.",

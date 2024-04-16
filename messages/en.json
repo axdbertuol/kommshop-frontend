@@ -21,7 +21,6 @@
       "googleText": "signup_with"
     },
     "signin": {
-      "success": "",
       "email": "Your email",
       "password": "Your password",
       "submit": "Sign in",
@@ -30,6 +29,19 @@
       "heading": "Log in with your email address",
       "providersText": "Or use one of our providers:",
       "googleText": "signin_with"
+    },
+    "forgot": {
+      "success": "We've successfully sent you an email with instructions to reset your password.",
+      "email": "Fill it up with your registered email",
+      "submit": "Send Reset Link!",
+      "heading": "Forgot your password? Let's reset it!"
+    },
+    "reset": {
+      "success": "We've successfully sent you an email with instructions to reset your password.",
+      "password": "Your new password",
+      "password2": "Confirm your new password",
+      "submit": "Reset Password",
+      "heading": "Good job! Time to reset your password..."
     },
     "errors": {
       "needLoginViaProvider:google": "It seems that account is bound with a Google account.",
