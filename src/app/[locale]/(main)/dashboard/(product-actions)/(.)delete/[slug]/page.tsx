@@ -12,7 +12,7 @@ export default async function DeletePage({ params }: { params: { slug: string } 
   if (!user) return null
   const { data } = await fetchProduct(params.slug)
   if (!data) return null
-  if (data.ownerId !== user.id) {
+  if (data.owner?.userId !== user.id) {
     return notFound()
   }
   return (
