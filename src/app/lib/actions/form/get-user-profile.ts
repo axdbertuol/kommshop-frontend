@@ -23,7 +23,7 @@ export async function getUserProfile(userId?: string) {
         'Content-Type': 'application/json',
       },
       // cache: 'no-store',
-      // next: { tags: ['get-profile'], revalidate: 1000 },
+      next: { tags: ['get-profile', userId], revalidate: 1000 },
     } as RequestInit & { user?: string })
     const json = (await myRequest.json()) as UserProfile | ServerErrorResponse
     if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {

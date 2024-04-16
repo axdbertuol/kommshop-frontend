@@ -1,4 +1,3 @@
-'use server'
 import { fetchUserProfile } from '@/app/lib/actions/form/get-user-profile'
 import getQueryClient from '@/app/lib/get-query-client'
 import { getUser } from '@/app/lib/get-user'
@@ -11,8 +10,16 @@ import React, { Suspense } from 'react'
 
 const defaultImg = process.env.DEFAULT_USER_IMG_URL ?? ''
 
-export default async function Layout() {
+export default async function Layout({
+  params: { locale },
+}: {
+  params: { locale: string }
+}) {
   // TODO: fetch from user microservice the whole information
+  async function revalidate() {
+    'use server'
+    return revalidatePath('/' + locale + '/settings/profile')
+  }
   const user = await getUser()
   if (!user) return null
   const queryClient = getQueryClient()
@@ -41,6 +48,7 @@ export default async function Layout() {
               // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
               email={user.email ?? 'noEmailRegistered'}
               userId={user.id}
+              revalidate={revalidate}
             />
           </HydrationBoundary>
         </Suspense>

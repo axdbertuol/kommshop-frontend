@@ -1,11 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 
-import { getUserProfile } from '@/app/lib/actions/form/get-user-profile'
+import { fetchUserProfile } from '@/app/lib/actions/form/get-user-profile'
 import getQueryClient from '@/app/lib/get-query-client'
 import { cn } from '@/app/lib/utils'
 import { Link, useRouter } from '@/navigation'
-import { UserProfile } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 import { useSearchParams } from 'next/navigation'
 import ProfileDetailEdit from './ProfileDetailEdit'
@@ -13,11 +12,12 @@ import ProfileDetailEdit from './ProfileDetailEdit'
 type ProfileDetailProps = {
   email: string
   userId: string
+  revalidate: () => void
 }
 
 // TODO: change this ssr. remember this query is not updated quickly enough
 const timeout = 1000
-function ProfileDetail({ email, userId }: ProfileDetailProps) {
+function ProfileDetail({ email, userId, revalidate }: ProfileDetailProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [didSave, setDidSave] = useState(false)
@@ -27,13 +27,12 @@ function ProfileDetail({ email, userId }: ProfileDetailProps) {
   const { data, refetch } = useQuery(
     {
       queryKey: ['get-profile', userId],
-      queryFn: () => getUserProfile(userId) as Promise<UserProfile>,
+      queryFn: fetchUserProfile,
       _optimisticResults: 'optimistic',
       refetchOnMount: true,
     },
     queryClient
   )
-
   const isEditMode = searchParams.get('edit') === 'true'
 
   useEffect(() => {
@@ -42,10 +41,11 @@ function ProfileDetail({ email, userId }: ProfileDetailProps) {
       setIsWaiting(true)
       setTimeout(async () => {
         await refetch()
+        revalidate()
         setIsWaiting(false)
       }, timeout)
     }
-  }, [didSave, router, refetch])
+  }, [didSave, router, refetch, revalidate])
 
   return (
     <>
