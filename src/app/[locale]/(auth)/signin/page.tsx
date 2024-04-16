@@ -41,16 +41,26 @@ export default async function Page({
         intl={text}
         className="pt-12 px-16 md:px-0 w-full md:w-[33vw] lg:w-[20vw] flex flex-col flex-auto gap-4"
       >
-        <span className="text-center">
-          {text.notyet}{' '}
-          <Link
-            href={'/signup'}
-            className="underline"
-            data-testid="notyet"
-          >
-            {text.signup}
-          </Link>
-        </span>
+        <>
+          <span className="text-center">
+            <Link
+              href={'/forgot-password'}
+              className="underline"
+            >
+              Esqueceu a senha?
+            </Link>
+          </span>
+          <span className="text-center">
+            {text.notyet}{' '}
+            <Link
+              href={'/signup'}
+              className="underline"
+              data-testid="notyet"
+            >
+              {text.signup}
+            </Link>
+          </span>
+        </>
       </SigninForm>
     </div>
   )

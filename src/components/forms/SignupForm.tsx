@@ -218,7 +218,7 @@ function DefaultForm({
         </div>
       </div>
       <span className="text-center font-thin text-sm">{intl.providersText}</span>
-      <div className="flex w-full h-[5rem] items-center dark:bg-white bg-neutral-600 place-content-center gap-2 rounded-lg">
+      <div className="flex w-full py-2 items-center dark:bg-white bg-neutral-300 place-content-center gap-2 rounded-lg">
         <GoogleLogin
           onSuccess={handleGoogleAuthSuccess}
           // locale={getLocaleWebPattern(locale ?? defaultLocale)}
