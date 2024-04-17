@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 import { unstable_setRequestLocale } from 'next-intl/server'
 import { revalidateTag } from 'next/cache'
 
