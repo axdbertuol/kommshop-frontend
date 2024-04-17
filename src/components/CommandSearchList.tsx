@@ -1,37 +1,46 @@
 'use client'
-import getSuggestions from '@/app/lib/actions/getters/get-suggestions'
+
 import { cn } from '@/app/lib/utils'
 import useDeferredFilteredData from '@/hooks/useFilteredData'
 import { Suggestion } from '@/types'
 import { useQuery } from '@tanstack/react-query'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import CommandSearchSuggestions from './CommandSearchSuggestions'
+import fetchSuggestions from '@/app/lib/actions/getters/get-suggestions'
 
-const queryFn = async (value?: string) => {
-  return new Promise((resolve) => {
-    setTimeout(async () => resolve(await getSuggestions(value)), 0)
-  }) as Promise<Record<string, Suggestion<'product'>[]> | null>
-}
+type Props = {
+  suggestions: Record<string, Suggestion<'product'>[]> | null
+  className: string
+  debouncedSearchValue: string
+  onSelectSuggestion: (value: string) => void
+} & React.HTMLAttributes<HTMLElement>
 
 function CommandSearchList({
   suggestions,
   className,
   onSelectSuggestion,
   debouncedSearchValue,
-}: {
-  suggestions: Record<string, Suggestion<'product'>[]> | null
-  className: string
-  debouncedSearchValue: string
-  onSelectSuggestion: (value: string) => void
-} & React.HTMLAttributes<HTMLElement>) {
-  const { data, isSuccess, isFetching } = useQuery({
+}: Props) {
+  const { data, isSuccess, isFetching, refetch } = useQuery({
     queryKey: ['suggestions', debouncedSearchValue],
-    queryFn: () => queryFn(debouncedSearchValue),
+    queryFn: () => fetchSuggestions(debouncedSearchValue),
     initialData: suggestions,
     retry: 3,
     retryDelay: 1000,
     _optimisticResults: 'optimistic',
   })
+
+  useEffect(() => {
+    const fetchSuggestionsAsync = async () => {
+      if (debouncedSearchValue) {
+        await refetch()
+      }
+    }
+
+    fetchSuggestionsAsync()
+
+    // return () => {}
+  }, [debouncedSearchValue, refetch])
 
   const callbackFilter = useCallback(
     () =>
