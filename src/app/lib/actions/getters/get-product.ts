@@ -7,20 +7,18 @@ export const fetchProduct = async (
   id: string
 ): Promise<FetchResponse<Product | null | undefined>> => {
   const url = new URL(`products/${id}`, process.env.NEXT_URL_PRODUCTS)
-
-  const myRequest = await fetch(url, {
-    headers: { 'Content-Type': 'application/json' },
-    // cache: 'no-store',
-    next: { tags: ['get-product', id] },
-  })
-
   const response = {
     data: null,
     success: false,
     serverErrors: null,
   }
-
   try {
+    const myRequest = await fetch(url, {
+      headers: { 'Content-Type': 'application/json' },
+      // cache: 'no-store',
+      next: { tags: ['get-product', id] },
+    })
+
     const json = await myRequest.json()
     if (!myRequest.ok) {
       return {
