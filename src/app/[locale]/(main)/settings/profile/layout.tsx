@@ -1,7 +1,7 @@
 import { fetchUserProfile } from '@/app/lib/actions/form/get-user-profile'
 import getQueryClient from '@/app/lib/get-query-client'
 import { getUser } from '@/app/lib/get-user'
-import ProfileDetail from '@/components/user/ProfileDetail'
+import ProfileDetail from '@/components/user/ProfileDetailMe'
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { revalidatePath } from 'next/cache'
 import Image from 'next/image'
@@ -29,28 +29,29 @@ export default async function Layout({
     queryFn: fetchUserProfile,
   })
   return (
-    <div className="flex justify-center gap-y-4">
-      <div className="flex h-[70vh] w-[40vw]">
-        <div className="bg-card rounded-lg p-4 shadow-lg ">
+    <div className="flex flex-col bg-primary-foreground">
+      <div className="flex ml-32 justify-start gap-4 mt-4">
+        <div className="bg-card rounded-lg p-4 shadow-lg h-fit">
           <Suspense fallback={<>Loading...</>}>
             <Image
               src={defaultImg}
               alt={'pic'}
-              width={300}
-              height={300}
+              width={100}
+              height={50}
               className="w-full lg:rounded-tr-none border-primary object-cover rounded-t-lg"
             />
           </Suspense>
         </div>
         <Suspense fallback={<>Loading...</>}>
-          <HydrationBoundary state={dehydrate(queryClient)}>
-            <ProfileDetail
-              // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-              email={user.email ?? 'noEmailRegistered'}
-              userId={user.id}
-              revalidate={revalidate}
-            />
-          </HydrationBoundary>
+          <div className="rounded-md p-16">
+            <HydrationBoundary state={dehydrate(queryClient)}>
+              <ProfileDetail
+                email={user.email ?? 'noEmailRegistered'}
+                userId={user.id}
+                revalidate={revalidate}
+              />
+            </HydrationBoundary>
+          </div>
         </Suspense>
       </div>
     </div>
