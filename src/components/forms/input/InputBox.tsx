@@ -1,14 +1,24 @@
 import { cn } from '@/app/lib/utils'
 import { Input, InputProps } from '@/components/ui/input'
-import React, { ReactElement, useCallback, useEffect, useId, useState } from 'react'
+import React, {
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useId,
+  useState,
+} from 'react'
 import WarningBox from '../../text/Error'
 import { Tooltip } from 'react-tooltip'
 import { useFormStatus } from 'react-dom'
+import { ValidationError } from '@tanstack/react-form'
 
 type Props = {
+  horizontal?: boolean
   labelText?: string
-  errors?: (string | ReactElement<unknown, string>)[]
-} & React.HTMLAttributes<HTMLInputElement> &
+  errors?: (string | ReactElement<unknown, string> | ValidationError)[]
+} & DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> &
   InputProps
 
 function InputBox({
@@ -24,6 +34,9 @@ function InputBox({
   autoComplete,
   children,
   defaultValue,
+  value,
+  onChange,
+  horizontal,
 }: Props) {
   const hasErrors = useCallback(() => errors && errors.length > 0, [errors])
   const [showWarning, setShowWarning] = useState(false)
@@ -40,8 +53,10 @@ function InputBox({
 
   return (
     <>
-      <div className="flex flex-col ">
-        <div className="block mb-1">
+      <div className={cn('flex flex-col', horizontal && 'flex-row gap-4')}>
+        <div
+          className={cn('block mb-1', horizontal && 'flex items-center w-[5rem] text-sm')}
+        >
           <label
             htmlFor={id}
             className="font-extralight"
@@ -56,11 +71,12 @@ function InputBox({
               id={id}
               data-testid="input-box"
               className={cn(
-                'dark:border-secondary-black-400 transition-all focus-within:border-transparent placeholder:font-extralight',
+                'dark:border-secondary-black-400 transition-all focus-within:border-transparent placeholder:font-extralight ',
                 className,
                 showWarning && 'outline outline-yellow-300 '
               )}
               onInput={() => setShowWarning(false)}
+              onChange={onChange}
               name={name}
               disabled={pending || disabled}
               aria-disabled={pending || disabled}
@@ -68,6 +84,7 @@ function InputBox({
               required={required}
               type={type}
               autoComplete={autoComplete}
+              value={value}
               defaultValue={defaultValue}
             />
           )}
