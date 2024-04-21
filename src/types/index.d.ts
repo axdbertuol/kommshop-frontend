@@ -34,7 +34,7 @@ export type Suggestion<T> = LabelValue & { type: T; id?: number }
 export type ServerErrorResponse = {
   status?: number | string
   errors?: Record<string, string[]>
-  error?: string
+  error?: string | Record<string, string>
 }
 
 export type CausedServerErrorResponse = {
@@ -114,8 +114,14 @@ export type UserProfile = {
   firstName: string
   lastName: string
   username: string
+  email: string
+  createdAt: string
   id: string
 }
+
+export type ProfileMeEditReq = Omit<UserProfile, 'id' | 'createdAt'>
+export type ProfileMe = Omit<UserProfile, 'id'>
+
 export type LoginResponse = Readonly<{
   token: string
   refreshToken: string
