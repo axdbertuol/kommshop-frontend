@@ -3,22 +3,46 @@ import { cookies } from 'next/headers'
 import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { decryptSymmetric, encryptSymmetric } from './encryption'
 import { LoginResponse, Tokens } from '@/types'
+import { NextResponse } from 'next/server'
 
 export async function getCookiesList(): Promise<RequestCookie[]> {
   const cookieData = cookies().getAll()
   return new Promise((resolve) => resolve(cookieData))
 }
 
-export async function setAuthCookies(data: Tokens & { user: LoginResponse['user'] }) {
+export async function setAuthCookies(
+  data: Tokens & { user: LoginResponse['user'] },
+  response?: NextResponse
+) {
   const authKey = process.env.AUTH_COOKIE_KEY
-  if (!authKey) return Promise.reject('No auth key provided')
-  const cookiesList = cookies()
-  cookiesList.delete(authKey)
-  const encrypted = await encryptSymmetric(JSON.stringify(data))
-  cookiesList.set(authKey, JSON.stringify(encrypted), {
-    maxAge: 60 * 60 * 24 * 7, // one week,
-    secure: process.env.NODE_ENV === 'production',
-  })
+  if (!authKey) return
+
+  let encrypted: string
+  try {
+    encrypted = JSON.stringify(await encryptSymmetric(JSON.stringify(data)))
+  } catch (error) {
+    console.error(error)
+    return
+  }
+
+  if (response) {
+    response.cookies.set({
+      name: authKey,
+      value: encrypted,
+      maxAge: 60 * 60 * 24 * 7, // one week,
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+    })
+  } else {
+    const cookiesList = cookies()
+    cookiesList.set({
+      name: authKey,
+      value: encrypted,
+      maxAge: 60 * 60 * 24 * 7, // one week,
+      secure: process.env.NODE_ENV === 'production',
+      httpOnly: true,
+    })
+  }
 }
 
 export async function getEncryptedAuthCookie(): Promise<string | null> {

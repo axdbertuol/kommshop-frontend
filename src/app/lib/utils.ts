@@ -24,13 +24,10 @@ export const isTokenExpired = (expiration: number | string) => {
   return expiry < Date.now()
 }
 
-export function parseServerErrors(
-  serverErrors: ServerErrorResponse
-): Record<string, string[]> | undefined {
+export function parseServerErrors(serverErrors: ServerErrorResponse) {
   if (!(serverErrors?.error || serverErrors?.errors)) {
     return undefined
   }
-  console.log(serverErrors)
   const allErrors = {
     ...(serverErrors?.errors
       ? Object.fromEntries(
