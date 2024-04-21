@@ -2,12 +2,11 @@
 
 import authFetch from '../../auth/auth-fetch'
 import { getApiPath } from '../../config'
-import { CausedServerErrorResponse } from '@/types'
-import { parseServerErrors } from '../../utils'
-import { ProfileEdit } from './submit-user-edit'
+import { ProfileMeEditReq, ServerErrorResponse, UserProfile } from '@/types'
+import { isGoodHTTPResponseStatus, parseServerErrors } from '../../utils'
 import { getUser } from '../../get-user'
 
-export async function patchMe(profile: ProfileEdit) {
+export async function patchMe(profile: ProfileMeEditReq) {
   // const url = new URL(`http://localhost:3334/users/${id}`)
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   try {
@@ -21,14 +20,14 @@ export async function patchMe(profile: ProfileEdit) {
       body: JSON.stringify(profile),
       cache: 'no-store',
     } as RequestInit & { user?: string })
-    const json = (await myRequest.json()) as ProfileEdit | CausedServerErrorResponse
-    if (!myRequest.ok || myRequest.status < 200 || myRequest.status > 399) {
+    const json = (await myRequest.json()) as UserProfile | ServerErrorResponse
+    if (!myRequest.ok || !isGoodHTTPResponseStatus(myRequest.status)) {
       return {
-        serverErrors: parseServerErrors((json as CausedServerErrorResponse).cause),
+        serverErrors: parseServerErrors(json as ServerErrorResponse),
         success: false,
       }
     }
-    return { ...(json as ProfileEdit), success: true }
+    return { success: true }
   } catch (err) {
     console.error(err, 'patchMe!')
   }

@@ -7,6 +7,11 @@ import { QueryFunctionContext } from '@tanstack/react-query'
 import { getUser } from '../../get-user'
 
 export async function getUserProfile(userId?: string) {
+  const response = {
+    data: undefined,
+    success: false,
+    serverErrors: undefined,
+  }
   if (!userId) {
     try {
       const user = await getUser()
@@ -33,15 +38,26 @@ export async function getUserProfile(userId?: string) {
       }
     }
 
-    return { ...(json as UserProfile), success: true }
+    return { data: { ...(json as UserProfile) }, success: true }
   } catch (err) {
     console.error(err, 'getMe!')
   }
-  return { success: false }
+  return { ...response, success: false }
 }
 
 export async function fetchUserProfile({ queryKey }: QueryFunctionContext) {
   'use server'
   const [_, id] = queryKey
-  return (await getUserProfile(id as string)) as UserProfile
+  const profile = await getUserProfile(id as string)
+  if (profile.success) {
+    return {
+      email: profile.data?.email,
+      username: profile.data?.username,
+      firstName: profile.data?.firstName,
+      lastName: profile.data?.lastName,
+      createdAt: profile.data?.createdAt,
+      success: profile.success,
+    }
+  }
+  return { success: false }
 }
